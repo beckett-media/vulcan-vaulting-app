@@ -1,8 +1,8 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import IntakeForm from "./pages/IntakeForm";
-import OuttakeForm from "./pages/OuttakeForm";
+import IntakeForm from "./pages/IntakeForm/IntakeForm";
+import OuttakeForm from "./pages/OuttakeForm/OuttakeForm";
 
 function App() {
   return (
