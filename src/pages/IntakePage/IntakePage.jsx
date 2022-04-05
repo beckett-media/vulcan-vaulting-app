@@ -1,10 +1,13 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import "./intake-page.scss";
 import InttakeForm from "../../components/InttakeForm/InttakeForm";
+import { connectWallet, getCurrentWalletConnected } from "../../utils/interact";
 
 const IntakePage = () => {
   const firstNameRef = useRef("");
   const lastNameRef = useRef("");
+  const [walletAddress, setWallet] = useState("");
+  const [status, setStatus] = useState("");
 
   const formSubmissionHandler = (e) => {
     e.preventDefault();
@@ -12,7 +15,69 @@ const IntakePage = () => {
     console.log(lastNameRef.current.value);
   };
 
-  return <InttakeForm />;
+  const addWalletListener = async () => {
+    if (window.ethereum) {
+      window.ethereum.on("accountsChanged", (accounts) => {
+        if (accounts.length > 0) {
+          setWallet(accounts[0]);
+          setStatus("Write a message in the text-field above.");
+        } else {
+          setWallet("");
+          setStatus("Connect to Metamask using the top-right button.");
+        }
+      });
+    } else {
+      setStatus(
+        <p>
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href={`https://metamask.io/download.html`}
+          >
+            You must install Metamask, a virtual Ethereum wallet, in your
+            browser.
+          </a>
+        </p>
+      );
+    }
+  };
+
+  useEffect(() => {
+    async function fetchData() {
+      const getWallet = await getCurrentWalletConnected();
+      setStatus(getWallet.status);
+      setWallet(getWallet.address);
+    }
+    fetchData();
+    addWalletListener();
+  }, []);
+
+  const connectWalletPressed = async () => {
+    console.log("test");
+    const walletResponse = await connectWallet();
+    setStatus(walletResponse.status);
+    setWallet(walletResponse.address);
+  };
+
+  const onMintPressed = async () => {
+    //TODO: implement
+  };
+
+  return (
+    <>
+      <button id="walletButton" onClick={connectWalletPressed}>
+        {walletAddress.length > 0 ? (
+          "Connected: " +
+          String(walletAddress).substring(0, 6) +
+          "..." +
+          String(walletAddress).substring(38)
+        ) : (
+          <span>Connect Wallet</span>
+        )}
+      </button>
+      <InttakeForm />
+    </>
+  );
 };
 
 export default IntakePage;
