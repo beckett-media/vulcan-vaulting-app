@@ -1,7 +1,8 @@
 import { useRef } from "react";
 import "./intake-page.scss";
+import InttakeForm from "../../components/InttakeForm/InttakeForm";
 
-const IntakeForm = () => {
+const IntakePage = () => {
   const firstNameRef = useRef("");
   const lastNameRef = useRef("");
 
@@ -11,7 +12,7 @@ const IntakeForm = () => {
     console.log(lastNameRef.current.value);
   };
 
-  return "test";
+  return <InttakeForm />;
 };
 
-export default IntakeForm;
+export default IntakePage;

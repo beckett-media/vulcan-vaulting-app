@@ -1,7 +1,7 @@
 import React from "react";
 
-const OuttakeForm = () => {
-  return <div>OuttakeForm</div>;
+const OuttakePage = () => {
+  return <div>OuttakePage</div>;
 };
 
-export default OuttakeForm;
+export default OuttakePage;
