@@ -1,14 +1,14 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import IntakePage from "./pages/IntakePage/IntakePage";
-import OuttakePage from "./pages/OuttakePage/OuttakePage";
+import DepositPage from "./pages/DepositPage/DepositPage";
+import WithdrawPage from "./pages/WithdrawPage/WithdrawPage";
 
 function App() {
   return (
     <Routes>
-      <Route path="/deposit" element={<IntakePage />} />
-      <Route path="/withdraw" element={<OuttakePage />} />
+      <Route path="/deposit" element={<DepositPage />} />
+      <Route path="/withdraw" element={<WithdrawPage />} />
     </Routes>
   );
 }

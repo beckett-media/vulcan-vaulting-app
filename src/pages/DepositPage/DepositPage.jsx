@@ -1,9 +1,9 @@
 import { useRef, useState, useEffect } from "react";
-import "./intake-page.scss";
-import InttakeForm from "../../components/InttakeForm/InttakeForm";
+import "./deposit-page.scss";
+import DepositForm from "../../components/DepositForm/DepositForm";
 import { connectWallet, getCurrentWalletConnected } from "../../utils/interact";
 
-const IntakePage = () => {
+const DepositPage = () => {
   const firstNameRef = useRef("");
   const lastNameRef = useRef("");
   const [walletAddress, setWallet] = useState("");
@@ -75,9 +75,9 @@ const IntakePage = () => {
           <span>Connect Wallet</span>
         )}
       </button>
-      <InttakeForm />
+      <DepositForm />
     </>
   );
 };
 
-export default IntakePage;
+export default DepositPage;
