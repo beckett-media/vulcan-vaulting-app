@@ -65,7 +65,6 @@ const DepositPage = () => {
 
   return (
     <>
-      <div>THIS IS A TEST</div>
       <button id="walletButton" onClick={connectWalletPressed}>
         {walletAddress.length > 0 ? (
           "Connected: " +
