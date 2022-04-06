@@ -75,7 +75,7 @@ const DepositPage = () => {
           <span>Connect Wallet</span>
         )}
       </button>
-      <DepositForm />
+      <DepositForm additionalData={walletAddress} />
     </>
   );
 };
