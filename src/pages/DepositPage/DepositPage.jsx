@@ -65,7 +65,6 @@ const DepositPage = () => {
 
   return (
     <>
-      <div>THIS IS A TEST</div>
       <button id="walletButton" onClick={connectWalletPressed}>
         {walletAddress.length > 0 ? (
           "Connected: " +
@@ -76,7 +75,7 @@ const DepositPage = () => {
           <span>Connect Wallet</span>
         )}
       </button>
-      <DepositForm />
+      <DepositForm additionalData={walletAddress} />
     </>
   );
 };
