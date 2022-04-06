@@ -1,4 +1,5 @@
 {
   "projectPath": "/Volumes/5GTB/plainspokendigital/Beckett/vulcan-vaulting-app",
-  "envName": "dev"
+  "envName": "dev",
+  "defaultEditor": "vscode"
 }
