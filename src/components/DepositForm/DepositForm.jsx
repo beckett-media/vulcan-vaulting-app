@@ -235,13 +235,15 @@ const DepositForm = (props) => {
           name="itemDesc"
           as="textarea"
           placeholder="Vaulted item description"
-          className="form__field"
+          className="form__field form__textarea"
         />
         {/* <ErrorMessage name="itemDesc" /> */}
 
-        <button type="submit" className="btn">
-          Submit
-        </button>
+        <div className="u__w100 u__center">
+          <button type="submit" className="btn gradient__green">
+            Submit
+          </button>
+        </div>
       </Form>
     </Formik>
   );

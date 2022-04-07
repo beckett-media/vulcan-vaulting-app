@@ -41,6 +41,10 @@
     grid-column-gap: 1.6rem;
   }
 
+  &__textarea {
+    resize: none;
+  }
+
   &__error {
 
   }

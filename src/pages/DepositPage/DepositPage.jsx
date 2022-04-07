@@ -67,8 +67,11 @@ const DepositPage = () => {
   return (
     <div className="deposit u__center">
       <div className="deposit__hero u__center">
-        <Logo />
-        <h2 className="heading-secondary">Item Deposit</h2>
+        <Logo className="deposit__logo" />
+        <h2 className=" heading heading__secondary deposit__heading">
+          Item Deposit
+        </h2>
+
         <img className="deposit__hero-image" alt=""></img>
         <div className="deposit__hero-content u__center">
           <p>
@@ -80,23 +83,33 @@ const DepositPage = () => {
           </p>
         </div>
         <div className="deposit__wallet-buttons">
-          <button className="btn btn__outline--green deposit__btn">
-            I don't have a wallet
-          </button>
-          <button
-            className="btn btn__outline--orange deposit__btn"
-            id="walletButton"
-            onClick={connectWalletPressed}
-          >
-            {walletAddress.length > 0 ? (
-              "Connected: " +
-              String(walletAddress).substring(0, 6) +
-              "..." +
-              String(walletAddress).substring(38)
-            ) : (
-              <span>Connect Wallet</span>
-            )}
-          </button>
+          <div className="btn__outline--outer gradient__orange">
+            <button className="btn btn__outline--inner deposit__btn">
+              I don't have a wallet
+            </button>
+          </div>
+
+          <div className="btn__outline--outer gradient__green">
+            <button
+              className="btn btn__outline--inner deposit__btn u__flex flex__jcsa flex__aic"
+              id="walletButton"
+              onClick={connectWalletPressed}
+            >
+              {walletAddress.length > 0 ? (
+                "Connected: " +
+                String(walletAddress).substring(0, 6) +
+                "..." +
+                String(walletAddress).substring(38)
+              ) : (
+                <>
+                  <div>Connect Wallet</div>{" "}
+                  <div
+                    className={`status-dot ${false ? "bg__green" : "bg__grey"}`}
+                  ></div>
+                </>
+              )}
+            </button>
+          </div>
         </div>
       </div>
       <DepositForm additionalData={walletAddress} />

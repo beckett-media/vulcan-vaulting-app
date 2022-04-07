@@ -1,13 +1,38 @@
 .deposit {
   min-width: 100vw;
   min-height: 100vh;
-  background-color: black;
+  background-color: #000000;
   color: #fff;
+
+  &__logo {
+    margin: 4rem 0;
+  }
+
+  &__heading {
+    padding: 2rem;
+    margin-bottom: 4rem;
+
+    @supports (background-clip: text) or (-webkit-background-clip: text) {
+      background-clip: text;
+      -webkit-background-clip: text;
+      background-image: linear-gradient(
+        to right,
+        var(--green-light),
+        var(--purple-light)
+      );
+      color: transparent;
+    }
+  }
 
   &__hero {
 
     &-content {
-
+      width: 62rem;
+      display: grid;
+      text-align: center;
+      justify-items: center;
+      grid-row-gap: 2.4rem;
+      margin-bottom: 6.2rem;
     }
   }
 
@@ -16,6 +41,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 2.4rem;
+    margin-bottom: 8rem;
   }
 
   &__btn {

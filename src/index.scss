@@ -1,8 +1,11 @@
+
+
 ///////////////////////
 // Index
 // 1. Global styles reset
-// 2. Global styles
-// 3. Utility classes
+// 2. @'s
+// 3. Global styles
+// 4. Utility classes
 
 /////////////////////
 // Global styles reset
@@ -66,15 +69,44 @@ table {
 }
 
 /////////////////////
+// @'s
+
+@font-face {
+	font-family:  "Alliance Platt";
+	src: url("./static/Alliance-PlattMedium.otf") format('opentype');
+}
+
+/////////////////////
 // Global styles
 
 :root {
 	--purple: #302B40;
+	--purple-light: #D0DBFF;
 	--green-light: #BBFDE3;
 	--green-dark: #2BD9D5;
 	--orange-light: #FDD3BB;
 	--orange-dark: #D97F2B;
+	--grey: #c4c4c4;
+}
 
+.status-dot {
+	width: 1.4rem;
+	height: 1.4rem;
+	border-radius: 100%;
+}
+
+.bg {
+	&__green {
+		background-color: var(--green-dark);
+	}
+
+	&__orange {
+		background-color: var(--orange-dark);
+	}
+
+	&__grey {
+		background-color: var(--grey);
+	}
 }
 
 html {
@@ -95,23 +127,93 @@ body {
 	width: 30rem;
 	padding: 1.4rem 2.2rem;
 	border: none;
+	font-size: 2rem;
+	font-weight: 600;
+
+	&__outline {
+
+		&--outer {
+			background-color: white;
+			border-radius: 5.5rem;
+			padding: 1px;
+		}
+
+		&--inner {
+			background-color: black;
+			color: white;
+		}
+	}
 }
+
+.gradient {
+	&__green {
+		background-image: linear-gradient(to right, var(--green-light), var(--green-dark));
+	}
+
+	&__orange {
+		background-image: linear-gradient(to right, var(--orange-light), var(--orange-dark));
+	}
+}
+
+.heading {
+	font-family:  "Alliance Platt", Arial, sans-serif;
+	font-weight: 500;
+
+	&__primary{
+		line-height: 155%;
+		font-size: 4.7rem ;
+	}
+	
+	&__secondary {
+		font-family:  "Alliance Platt", Arial, sans-serif;
+		font-weight: 500;
+		font-size: 4.7rem ;
+	}
+}
+
+
 
 /////////////////////
 // Utility classes
 
-.u__flex {
-	display: flex;
+.u{
+	&__flex {
+		display: flex;
+	}
+	
+	&__center{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	
+	&__left{
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	&__w100 {
+		width: 100%;
+	}
 }
 
-.u__center{
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
+.flex {	
+	&__v {
+		flex-direction: column;
+	}
 
-.u__left{
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
+	&__jcsa {
+		justify-content: space-around;
+	}
+
+	&__jcc {
+		justify-content: center;
+	}
+
+	&__aic {
+		align-items: center;
+	}
+
+
 }
