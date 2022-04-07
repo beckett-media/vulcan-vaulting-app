@@ -91,13 +91,21 @@ const DepositForm = (props) => {
         firstName: Yup.string().required("Required"),
         lastName: Yup.string().required("Required"),
         email: Yup.string().email("Invalid email address").required("Required"),
-        month: Yup.string().required("Required"),
-        day: Yup.string().required("Required"),
-        year: Yup.string().required("Required"),
+        month: Yup.string()
+          .test("is-month", "Required", (value) => value !== "MM")
+          .required("Required"),
+        day: Yup.string()
+          .test("is-day", "Required", (value) => value !== "DD")
+          .required("Required"),
+        year: Yup.string()
+          .test("is-year", "Required", (value) => value !== "YYYY")
+          .required("Required"),
         address1: Yup.string().required("Required"),
         address2: "",
         city: Yup.string().required("Required"),
-        state: "",
+        state: Yup.string()
+          .test("is-state", "Required", (value) => value !== "state")
+          .required("Required"),
         zip: Yup.number().required("Required"),
         itemName: Yup.string().required("Required"),
         itemDesc: Yup.string().required("Required"),
@@ -162,6 +170,7 @@ const DepositForm = (props) => {
             return <option value={`${i}`}>{i}</option>;
           })}
         </Field>
+        <ErrorMessage name="state" />
 
         <Field name="zip" type="text" placeholder="Zip" />
         <ErrorMessage name="zip" />
