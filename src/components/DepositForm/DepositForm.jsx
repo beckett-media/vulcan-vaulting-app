@@ -124,9 +124,8 @@ const DepositForm = (props) => {
         <Field name="month" as="select" className="my-select">
           <option value="MM">MM</option>
           {monthsArray.map((i) => {
-            return (
-              <option value={`${i}`}>{i.toString().padStart(2, "0")}</option>
-            );
+            const month = i.toString().padStart(2, "0");
+            return <option value={`${month}`}>{month}</option>;
           })}
         </Field>
         <ErrorMessage name="month" />
@@ -134,9 +133,8 @@ const DepositForm = (props) => {
         <Field name="day" as="select" className="my-select">
           <option value="DD">DD</option>
           {daysArray.map((i) => {
-            return (
-              <option value={`${i}`}>{i.toString().padStart(2, "0")}</option>
-            );
+            const day = i.toString().padStart(2, "0");
+            return <option value={`${day}`}>{day}</option>;
           })}
         </Field>
         <ErrorMessage name="day" />
@@ -158,7 +156,7 @@ const DepositForm = (props) => {
         <Field name="city" type="text" placeholder="City" />
         <ErrorMessage name="city" />
 
-        <Field name="years" as="select" className="my-select">
+        <Field name="state" as="select" className="my-select">
           <option value="state">State</option>
           {statesArray.map((i) => {
             return <option value={`${i}`}>{i}</option>;
