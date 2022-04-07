@@ -1,0 +1,47 @@
+.form{
+  width: 82rem;
+
+  &__row{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 2rem;
+    grid-row-gap: 2.4rem;
+    background-color: red;
+
+    margin-bottom: 5.6rem;
+  }
+
+  &__field {
+    font-family: inherit;
+    font-size: 1.8rem;
+    width: 100%;
+    padding: 1.6rem 2rem;
+    background-color: var(--purple);
+    border-radius: 5.5rem;
+    border: none;
+    color: white;
+
+    &::placeholder {
+      font-size: inherit;
+      font-family: inherit;
+      color: inherit;
+    }
+  }
+
+  &__select-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 1.6rem;
+  }
+
+  &__state-zip {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-column-gap: 1.6rem;
+  }
+
+  &__error {
+
+  }
+}

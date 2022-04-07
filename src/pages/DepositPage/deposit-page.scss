@@ -1,5 +1,24 @@
-.intake{
-  &__wrapper {
-    background-color: aqua;
+.deposit {
+  min-width: 100vw;
+  min-height: 100vh;
+  background-color: black;
+  color: #fff;
+
+  &__hero {
+
+    &-content {
+
+    }
+  }
+
+  &__wallet-buttons {
+    width: 54rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 2.4rem;
+  }
+
+  &__btn {
+    width: 100%;
   }
 }

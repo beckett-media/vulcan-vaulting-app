@@ -1,5 +1,6 @@
 import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
+import "./deposit-form.scss";
 import * as Yup from "yup";
 
 const DepositForm = (props) => {
@@ -118,74 +119,129 @@ const DepositForm = (props) => {
         }, 400);
       }}
     >
-      <Form>
-        <Field name="firstName" type="text" placeholder="First Name" />
-        <ErrorMessage name="firstName" />
+      <Form className="form u__left">
+        <div className="form__row">
+          <Field
+            name="firstName"
+            type="text"
+            placeholder="First Name"
+            className="form__field"
+          />
+          {/* <ErrorMessage name="firstName" /> */}
 
-        <Field name="lastName" type="text" placeholder="Last Name" />
-        <ErrorMessage name="lastName" />
+          <Field
+            name="lastName"
+            type="text"
+            placeholder="Last Name"
+            className="form__field"
+          />
+          {/* <ErrorMessage name="lastName" /> */}
 
-        <Field name="email" type="email" placeholder="Email Address" />
-        <ErrorMessage name="email" />
+          <Field
+            name="email"
+            type="email"
+            placeholder="Email Address"
+            className="form__field"
+          />
+          {/* <ErrorMessage name="email" /> */}
+        </div>
 
-        <label htmlFor="month">Birthday</label>
-        <Field name="month" as="select" className="my-select">
-          <option value="MM">MM</option>
-          {monthsArray.map((i) => {
-            const month = i.toString().padStart(2, "0");
-            return <option value={`${month}`}>{month}</option>;
-          })}
-        </Field>
-        <ErrorMessage name="month" />
+        <div className="form__row">
+          <div className="form__col">
+            <label htmlFor="month">Birthday</label>
+            <div className="form__select-group">
+              <Field name="month" as="select" className="my-select form__field">
+                <option value="MM">MM</option>
+                {monthsArray.map((i) => {
+                  const month = i.toString().padStart(2, "0");
+                  return <option value={`${month}`}>{month}</option>;
+                })}
+              </Field>
+              {/* <ErrorMessage name="month" /> */}
 
-        <Field name="day" as="select" className="my-select">
-          <option value="DD">DD</option>
-          {daysArray.map((i) => {
-            const day = i.toString().padStart(2, "0");
-            return <option value={`${day}`}>{day}</option>;
-          })}
-        </Field>
-        <ErrorMessage name="day" />
+              <Field name="day" as="select" className="my-select form__field">
+                <option value="DD">DD</option>
+                {daysArray.map((i) => {
+                  const day = i.toString().padStart(2, "0");
+                  return <option value={`${day}`}>{day}</option>;
+                })}
+              </Field>
+              {/* <ErrorMessage name="day" /> */}
 
-        <Field name="year" as="select" className="my-select">
-          <option value="YYYY">YYYY</option>
-          {yearsArray.map((i) => {
-            return <option value={`${i}`}>{i}</option>;
-          })}
-        </Field>
-        <ErrorMessage name="year" />
+              <Field name="year" as="select" className="my-select form__field">
+                <option value="YYYY">YYYY</option>
+                {yearsArray.map((i) => {
+                  return <option value={`${i}`}>{i}</option>;
+                })}
+              </Field>
+              {/* <ErrorMessage name="year" /> */}
+            </div>
+          </div>
+        </div>
 
-        <Field name="address1" type="text" placeholder="Address 1" />
-        <ErrorMessage name="address1" />
+        <div className="form__row">
+          <Field
+            name="address1"
+            type="text"
+            placeholder="Address 1"
+            className="form__field"
+          />
+          {/* <ErrorMessage name="address1" /> */}
 
-        <Field name="address2" type="text" placeholder="Address 2" />
-        <ErrorMessage name="address2" />
+          <Field
+            name="address2"
+            type="text"
+            placeholder="Address 2"
+            className="form__field"
+          />
+          {/* <ErrorMessage name="address2" /> */}
 
-        <Field name="city" type="text" placeholder="City" />
-        <ErrorMessage name="city" />
+          <Field
+            name="city"
+            type="text"
+            placeholder="City"
+            className="form__field"
+          />
+          {/* <ErrorMessage name="city" /> */}
 
-        <Field name="state" as="select" className="my-select">
-          <option value="state">State</option>
-          {statesArray.map((i) => {
-            return <option value={`${i}`}>{i}</option>;
-          })}
-        </Field>
-        <ErrorMessage name="state" />
+          <div className="form__state-zip">
+            <Field name="state" as="select" className="my-select form__field">
+              <option value="state">State</option>
+              {statesArray.map((i) => {
+                return <option value={`${i}`}>{i}</option>;
+              })}
+            </Field>
+            {/* <ErrorMessage name="state" /> */}
 
-        <Field name="zip" type="text" placeholder="Zip" />
-        <ErrorMessage name="zip" />
+            <Field
+              name="zip"
+              type="text"
+              placeholder="Zip"
+              className="form__field"
+            />
+            {/* <ErrorMessage name="zip" /> */}
+          </div>
+        </div>
 
-        <Field name="itemName" type="text" placeholder="Vaulted item name" />
-        <ErrorMessage name="itemName" />
+        <Field
+          name="itemName"
+          type="text"
+          placeholder="Vaulted item name"
+          className="form__field"
+        />
+        {/* <ErrorMessage name="itemName" /> */}
 
         <Field
           name="itemDesc"
           as="textarea"
           placeholder="Vaulted item description"
+          className="form__field"
         />
-        <ErrorMessage name="itemDesc" />
+        {/* <ErrorMessage name="itemDesc" /> */}
 
-        <button type="submit">Submit</button>
+        <button type="submit" className="btn">
+          Submit
+        </button>
       </Form>
     </Formik>
   );

@@ -1,7 +1,24 @@
+///////////////////////
+// Index
+// 1. Global styles reset
+// 2. Global styles
+// 3. Utility classes
+
+/////////////////////
+// Global styles reset
+
 /* http://meyerweb.com/eric/tools/css/reset/ 
   v2.0 | 20110126
   License: none (public domain)
 */
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -30,6 +47,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	box-sizing: border-box;
 }
 ol, ul {
 	list-style: none;
@@ -47,11 +65,53 @@ table {
 	border-spacing: 0;
 }
 
-.u {
-	&-flex-v-tl {
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-start;
-		align-items: flex-start;
-	}
+/////////////////////
+// Global styles
+
+:root {
+	--purple: #302B40;
+	--green-light: #BBFDE3;
+	--green-dark: #2BD9D5;
+	--orange-light: #FDD3BB;
+	--orange-dark: #D97F2B;
+
+}
+
+html {
+  // This defines what 1rem is
+  font-size: 62.5%; // 1rem = 10px, 10/16 = 62.5%
+}
+
+body {
+  // font-size: $default-font-size;
+  font-family: "arial", sans-serif;
+	font-size: 2rem;
+  font-weight: 400;
+  line-height: 155%
+}
+
+.btn {
+	border-radius: 5.5rem;
+	width: 30rem;
+	padding: 1.4rem 2.2rem;
+	border: none;
+}
+
+/////////////////////
+// Utility classes
+
+.u__flex {
+	display: flex;
+}
+
+.u__center{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.u__left{
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
 }
