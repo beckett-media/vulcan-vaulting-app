@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import "./deposit-page.scss";
 import DepositForm from "../../components/DepositForm/DepositForm";
 import { connectWallet, getCurrentWalletConnected } from "../../utils/interact";
+import { ReactComponent as Logo } from "../../static/logo.svg";
 
 const DepositPage = () => {
   const firstNameRef = useRef("");
@@ -64,19 +65,55 @@ const DepositPage = () => {
   };
 
   return (
-    <>
-      <button id="walletButton" onClick={connectWalletPressed}>
-        {walletAddress.length > 0 ? (
-          "Connected: " +
-          String(walletAddress).substring(0, 6) +
-          "..." +
-          String(walletAddress).substring(38)
-        ) : (
-          <span>Connect Wallet</span>
-        )}
-      </button>
+    <div className="deposit u__center">
+      <div className="deposit__hero u__center">
+        <Logo className="deposit__logo" />
+        <h2 className=" heading heading__secondary deposit__heading">
+          Item Deposit
+        </h2>
+
+        <img className="deposit__hero-image" alt=""></img>
+        <div className="deposit__hero-content u__center">
+          <p>
+            Tell us about yourself and the collectible you would like to vault.
+          </p>
+          <p>
+            A personal concierge will reach out to walk you through the vaulting
+            and NFT-minting of your collectible.
+          </p>
+        </div>
+        <div className="deposit__wallet-buttons">
+          <div className="btn__outline--outer gradient__orange">
+            <button className="btn btn__outline--inner deposit__btn">
+              I don't have a wallet
+            </button>
+          </div>
+
+          <div className="btn__outline--outer gradient__green">
+            <button
+              className="btn btn__outline--inner deposit__btn u__flex flex__jcsa flex__aic"
+              id="walletButton"
+              onClick={connectWalletPressed}
+            >
+              {walletAddress.length > 0 ? (
+                "Connected: " +
+                String(walletAddress).substring(0, 6) +
+                "..." +
+                String(walletAddress).substring(38)
+              ) : (
+                <>
+                  <div>Connect Wallet</div>{" "}
+                  <div
+                    className={`status-dot ${false ? "bg__green" : "bg__grey"}`}
+                  ></div>
+                </>
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
       <DepositForm additionalData={walletAddress} />
-    </>
+    </div>
   );
 };
 

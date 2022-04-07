@@ -1,7 +1,27 @@
+
+
+///////////////////////
+// Index
+// 1. Global styles reset
+// 2. @'s
+// 3. Global styles
+// 4. Utility classes
+
+/////////////////////
+// Global styles reset
+
 /* http://meyerweb.com/eric/tools/css/reset/ 
   v2.0 | 20110126
   License: none (public domain)
 */
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -30,6 +50,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	box-sizing: border-box;
 }
 ol, ul {
 	list-style: none;
@@ -47,11 +68,152 @@ table {
 	border-spacing: 0;
 }
 
-.u {
-	&-flex-v-tl {
+/////////////////////
+// @'s
+
+@font-face {
+	font-family:  "Alliance Platt";
+	src: url("./static/Alliance-PlattMedium.otf") format('opentype');
+}
+
+/////////////////////
+// Global styles
+
+:root {
+	--purple: #302B40;
+	--purple-light: #D0DBFF;
+	--green-light: #BBFDE3;
+	--green-dark: #2BD9D5;
+	--orange-light: #FDD3BB;
+	--orange-dark: #D97F2B;
+	--grey: #c4c4c4;
+}
+
+.status-dot {
+	width: 1.4rem;
+	height: 1.4rem;
+	border-radius: 100%;
+}
+
+.bg {
+	&__green {
+		background-color: var(--green-dark);
+	}
+
+	&__orange {
+		background-color: var(--orange-dark);
+	}
+
+	&__grey {
+		background-color: var(--grey);
+	}
+}
+
+html {
+  // This defines what 1rem is
+  font-size: 62.5%; // 1rem = 10px, 10/16 = 62.5%
+}
+
+body {
+  // font-size: $default-font-size;
+  font-family: "arial", sans-serif;
+	font-size: 2rem;
+  font-weight: 400;
+  line-height: 155%
+}
+
+.btn {
+	border-radius: 5.5rem;
+	width: 30rem;
+	padding: 1.4rem 2.2rem;
+	border: none;
+	font-size: 2rem;
+	font-weight: 600;
+
+	&__outline {
+
+		&--outer {
+			background-color: white;
+			border-radius: 5.5rem;
+			padding: 1px;
+		}
+
+		&--inner {
+			background-color: black;
+			color: white;
+		}
+	}
+}
+
+.gradient {
+	&__green {
+		background-image: linear-gradient(to right, var(--green-light), var(--green-dark));
+	}
+
+	&__orange {
+		background-image: linear-gradient(to right, var(--orange-light), var(--orange-dark));
+	}
+}
+
+.heading {
+	font-family:  "Alliance Platt", Arial, sans-serif;
+	font-weight: 500;
+
+	&__primary{
+		line-height: 155%;
+		font-size: 4.7rem ;
+	}
+	
+	&__secondary {
+		font-family:  "Alliance Platt", Arial, sans-serif;
+		font-weight: 500;
+		font-size: 4.7rem ;
+	}
+}
+
+
+
+/////////////////////
+// Utility classes
+
+.u{
+	&__flex {
+		display: flex;
+	}
+	
+	&__center{
 		display: flex;
 		flex-direction: column;
-		justify-content: flex-start;
+		align-items: center;
+	}
+	
+	&__left{
+		display: flex;
+		flex-direction: column;
 		align-items: flex-start;
 	}
+
+	&__w100 {
+		width: 100%;
+	}
+}
+
+.flex {	
+	&__v {
+		flex-direction: column;
+	}
+
+	&__jcsa {
+		justify-content: space-around;
+	}
+
+	&__jcc {
+		justify-content: center;
+	}
+
+	&__aic {
+		align-items: center;
+	}
+
+
 }
