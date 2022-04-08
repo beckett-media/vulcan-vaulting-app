@@ -64,6 +64,10 @@ const DepositPage = () => {
     //TODO: implement
   };
 
+  const data = {
+    walletAddress,
+  };
+
   return (
     <div className="deposit u__center">
       <div className="deposit__hero u__center">
@@ -84,9 +88,20 @@ const DepositPage = () => {
         </div>
         <div className="deposit__wallet-buttons">
           <div className="btn__outline--outer gradient__orange">
-            <button className="btn btn__outline--inner deposit__btn">
-              I don't have a wallet
-            </button>
+            {walletAddress ? (
+              <button
+                className="btn btn__outline--inner deposit__btn"
+                onClick={() => {
+                  setWallet("");
+                }}
+              >
+                Disconnect Wallet
+              </button>
+            ) : (
+              <button className="btn btn__outline--inner deposit__btn">
+                I don't have a wallet
+              </button>
+            )}
           </div>
 
           <div className="btn__outline--outer gradient__green">
@@ -96,15 +111,25 @@ const DepositPage = () => {
               onClick={connectWalletPressed}
             >
               {walletAddress.length > 0 ? (
-                "Connected: " +
-                String(walletAddress).substring(0, 6) +
-                "..." +
-                String(walletAddress).substring(38)
+                <>
+                  <span>
+                    {String(walletAddress).substring(0, 6) +
+                      "..." +
+                      String(walletAddress).substring(38)}
+                  </span>
+                  <div
+                    className={`status-dot ${
+                      walletAddress ? "bg__green" : "bg__grey"
+                    }`}
+                  ></div>
+                </>
               ) : (
                 <>
                   <div>Connect Wallet</div>{" "}
                   <div
-                    className={`status-dot ${false ? "bg__green" : "bg__grey"}`}
+                    className={`status-dot ${
+                      walletAddress ? "bg__green" : "bg__grey"
+                    }`}
                   ></div>
                 </>
               )}
@@ -112,7 +137,9 @@ const DepositPage = () => {
           </div>
         </div>
       </div>
-      <DepositForm additionalData={walletAddress} />
+      <div className="deposit__form u__flex flex__jcc">
+        <DepositForm additionalData={data} />
+      </div>
     </div>
   );
 };

@@ -112,7 +112,7 @@ const DepositForm = (props) => {
         itemDesc: Yup.string().required("Required"),
       })}
       onSubmit={(values, { setSubmitting }) => {
-        values.walletAddress = walletAddress;
+        values.walletAddress = props.additionalData.walletAddress;
         setTimeout(() => {
           alert(JSON.stringify(values, null, 2));
           setSubmitting(false);
@@ -148,33 +148,56 @@ const DepositForm = (props) => {
 
         <div className="form__row">
           <div className="form__col">
-            <label htmlFor="month">Birthday</label>
+            <label htmlFor="month" className="mb16 u__block">
+              Birthday
+            </label>
             <div className="form__select-group">
-              <Field name="month" as="select" className="my-select form__field">
-                <option value="MM">MM</option>
-                {monthsArray.map((i) => {
-                  const month = i.toString().padStart(2, "0");
-                  return <option value={`${month}`}>{month}</option>;
-                })}
-              </Field>
-              {/* <ErrorMessage name="month" /> */}
+              <div className="form__select-wrapper u__flex flex__aic">
+                <div className="form__select-arrow"></div>
+                <Field
+                  name="month"
+                  as="select"
+                  className="form__select form__field"
+                >
+                  <option value="MM">MM</option>
+                  {monthsArray.map((i) => {
+                    const month = i.toString().padStart(2, "0");
+                    return <option value={`${month}`}>{month}</option>;
+                  })}
+                </Field>
+                {/* <ErrorMessage name="month" /> */}
+              </div>
 
-              <Field name="day" as="select" className="my-select form__field">
-                <option value="DD">DD</option>
-                {daysArray.map((i) => {
-                  const day = i.toString().padStart(2, "0");
-                  return <option value={`${day}`}>{day}</option>;
-                })}
-              </Field>
-              {/* <ErrorMessage name="day" /> */}
+              <div className="form__select-wrapper u__flex flex__aic">
+                <div className="form__select-arrow"></div>
+                <Field
+                  name="day"
+                  as="select"
+                  className="form__select form__field"
+                >
+                  <option value="DD">DD</option>
+                  {daysArray.map((i) => {
+                    const day = i.toString().padStart(2, "0");
+                    return <option value={`${day}`}>{day}</option>;
+                  })}
+                </Field>
+                {/* <ErrorMessage name="day" /> */}
+              </div>
 
-              <Field name="year" as="select" className="my-select form__field">
-                <option value="YYYY">YYYY</option>
-                {yearsArray.map((i) => {
-                  return <option value={`${i}`}>{i}</option>;
-                })}
-              </Field>
-              {/* <ErrorMessage name="year" /> */}
+              <div className="form__select-wrapper u__flex flex__aic">
+                <div className="form__select-arrow"></div>
+                <Field
+                  name="year"
+                  as="select"
+                  className="form__select form__field"
+                >
+                  <option value="YYYY">YYYY</option>
+                  {yearsArray.map((i) => {
+                    return <option value={`${i}`}>{i}</option>;
+                  })}
+                </Field>
+                {/* <ErrorMessage name="year" /> */}
+              </div>
             </div>
           </div>
         </div>
@@ -205,13 +228,20 @@ const DepositForm = (props) => {
           {/* <ErrorMessage name="city" /> */}
 
           <div className="form__state-zip">
-            <Field name="state" as="select" className="my-select form__field">
-              <option value="state">State</option>
-              {statesArray.map((i) => {
-                return <option value={`${i}`}>{i}</option>;
-              })}
-            </Field>
-            {/* <ErrorMessage name="state" /> */}
+            <div className="form__select-wrapper u__flex flex__aic">
+              <div className="form__select-arrow"></div>
+              <Field
+                name="state"
+                as="select"
+                className="form__select form__field"
+              >
+                <option value="state">State</option>
+                {statesArray.map((i) => {
+                  return <option value={`${i}`}>{i}</option>;
+                })}
+              </Field>
+              {/* <ErrorMessage name="state" /> */}
+            </div>
 
             <Field
               name="zip"
@@ -223,21 +253,25 @@ const DepositForm = (props) => {
           </div>
         </div>
 
-        <Field
-          name="itemName"
-          type="text"
-          placeholder="Vaulted item name"
-          className="form__field"
-        />
-        {/* <ErrorMessage name="itemName" /> */}
+        <div className="form__row">
+          <Field
+            name="itemName"
+            type="text"
+            placeholder="Vaulted item name"
+            className="form__field"
+          />
+          {/* <ErrorMessage name="itemName" /> */}
 
-        <Field
-          name="itemDesc"
-          as="textarea"
-          placeholder="Vaulted item description"
-          className="form__field form__textarea"
-        />
-        {/* <ErrorMessage name="itemDesc" /> */}
+          <div>&nbsp;</div>
+
+          <Field
+            name="itemDesc"
+            as="textarea"
+            placeholder="Vaulted item description"
+            className="form__field form__textarea grid__full"
+          />
+          {/* <ErrorMessage name="itemDesc" /> */}
+        </div>
 
         <div className="u__w100 u__center">
           <button type="submit" className="btn gradient__green">
