@@ -30,7 +30,14 @@
     }
 
     &:focus {
-      outline: none;
+      outline: 1px solid var(--purple-light);
+      outline-offset: -1px;
+    }
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover, 
+    &:-webkit-autofill:focus {
+      background-color: black;
     }
   }
 

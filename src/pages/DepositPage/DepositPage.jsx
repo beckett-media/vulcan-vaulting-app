@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import "./deposit-page.scss";
-import DepositForm from "../../components/DepositForm/DepositForm";
+import DepositForm from "../../components/Forms/DepositForm";
 import { connectWallet, getCurrentWalletConnected } from "../../utils/interact";
 import { ReactComponent as Logo } from "../../static/logo.svg";
 

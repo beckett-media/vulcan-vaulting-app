@@ -91,6 +91,11 @@ table {
 	--blue-dark: #161618;
 }
 
+body {
+	background-color: black;
+	overscroll-behavior: none;
+}
+
 .status-dot {
 	width: 1.4rem;
 	height: 1.4rem;
@@ -211,6 +216,10 @@ body {
 
 	&__jcsa {
 		justify-content: space-around;
+	}
+
+	&__jcsb {
+		justify-content: space-between;
 	}
 
 	&__jcc {
