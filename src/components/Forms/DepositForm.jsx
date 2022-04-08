@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import "./deposit-form.scss";
+import "./forms.scss";
 import * as Yup from "yup";
 
 const DepositForm = (props) => {
