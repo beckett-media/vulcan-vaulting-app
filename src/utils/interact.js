@@ -38,9 +38,7 @@ export const connectWallet = async () => {
 };
 
 export const getCurrentWalletConnected = async () => {
-  console.log("test2");
   if (window.ethereum) {
-    console.log("test3");
     try {
       const addressArray = await window.ethereum.request({
         method: "eth_accounts",
@@ -63,7 +61,6 @@ export const getCurrentWalletConnected = async () => {
       };
     }
   } else {
-    console.log("test4");
     return {
       address: "",
       status: (

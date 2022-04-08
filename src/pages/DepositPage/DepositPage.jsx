@@ -5,40 +5,18 @@ import { connectWallet, getCurrentWalletConnected } from "../../utils/interact";
 import { ReactComponent as Logo } from "../../static/logo.svg";
 
 const DepositPage = () => {
-  const firstNameRef = useRef("");
-  const lastNameRef = useRef("");
   const [walletAddress, setWallet] = useState("");
   const [status, setStatus] = useState("");
+  const [showTooltip, setShowTooltip] = useState(false);
 
-  const formSubmissionHandler = (e) => {
-    e.preventDefault();
-    console.log(firstNameRef.current.value);
-    console.log(lastNameRef.current.value);
-  };
+  console.log(status);
 
   const addWalletListener = async () => {
     if (window.ethereum) {
-      window.ethereum.on("accountsChanged", (accounts) => {
-        if (accounts.length > 0) {
-          setWallet(accounts[0]);
-          setStatus("Write a message in the text-field above.");
-        } else {
-          setWallet("");
-          setStatus("Connect to Metamask using the top-right button.");
-        }
-      });
+      window.ethereum.on("accountsChanged", (accounts) => {});
     } else {
       setStatus(
-        <p>
-          <a
-            target="_blank"
-            rel="noreferrer"
-            href={`https://metamask.io/download.html`}
-          >
-            You must install Metamask, a virtual Ethereum wallet, in your
-            browser.
-          </a>
-        </p>
+        "🦊 You must install Metamask, a virtual Ethereum wallet, in your browser."
       );
     }
   };
@@ -46,7 +24,6 @@ const DepositPage = () => {
   useEffect(() => {
     async function fetchData() {
       const getWallet = await getCurrentWalletConnected();
-      setStatus(getWallet.status);
       setWallet(getWallet.address);
     }
     fetchData();
@@ -54,10 +31,15 @@ const DepositPage = () => {
   }, []);
 
   const connectWalletPressed = async () => {
-    console.log("test");
     const walletResponse = await connectWallet();
-    setStatus(walletResponse.status);
     setWallet(walletResponse.address);
+
+    if (status.length !== 0) {
+      setShowTooltip(true);
+      setTimeout(() => {
+        setShowTooltip(false);
+      }, 3000);
+    }
   };
 
   const onMintPressed = async () => {
@@ -86,7 +68,7 @@ const DepositPage = () => {
             and NFT-minting of your collectible.
           </p>
         </div>
-        <div className="deposit__wallet-buttons">
+        <div className="deposit__wallet-buttons u__relative flex__aic">
           <div className="btn__outline--outer gradient__orange">
             {walletAddress ? (
               <button
@@ -134,6 +116,14 @@ const DepositPage = () => {
                 </>
               )}
             </button>
+          </div>
+          <div
+            className={`deposit__tooltip-wrapper u__absolute flex__aic ${
+              showTooltip ? "u__flex" : "u__hide"
+            }`}
+          >
+            <div className="deposit__tooltip-arrow"></div>
+            <div className="deposit__tooltip ">{status}</div>
           </div>
         </div>
       </div>

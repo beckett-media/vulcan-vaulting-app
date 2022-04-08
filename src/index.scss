@@ -87,8 +87,9 @@ table {
 	--green-dark: #2BD9D5;
 	--orange-light: #FDD3BB;
 	--orange-dark: #D97F2B;
-	--grey: #c4c4c4;
 	--blue-dark: #161618;
+	--grey: #c4c4c4;
+	--grey-dark: #303030;
 }
 
 body {
@@ -206,6 +207,18 @@ body {
 
 	&__block {
 		display: block;
+	}
+
+	&__relative {
+		position: relative;
+	}
+
+	&__absolute {
+		position: absolute;
+	}
+
+	&__hide {
+		display: none;
 	}
 }
 
