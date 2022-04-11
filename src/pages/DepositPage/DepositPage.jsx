@@ -4,7 +4,7 @@ import DepositForm from "../../components/Forms/DepositForm";
 import { connectWallet, getCurrentWalletConnected } from "../../utils/interact";
 import { ReactComponent as Logo } from "../../static/logo.svg";
 import gsap from "gsap";
-import { Flex } from "@aws-amplify/ui-react";
+import Tooltip from "../../components/Tooltip/Tooltip";
 
 const DepositPage = () => {
   const [walletAddress, setWallet] = useState("");
@@ -42,8 +42,8 @@ const DepositPage = () => {
     if (status.length !== 0) {
       gsap
         .timeline()
-        .to(q(".deposit__tooltip-wrapper"), { display: "flex", opacity: 1 })
-        .to(q(".deposit__tooltip-wrapper"), {
+        .to(q(".tooltip"), { display: "flex", opacity: 1 })
+        .to(q(".tooltip"), {
           opacity: 0,
           display: "none",
           delay: 4,
@@ -126,12 +126,7 @@ const DepositPage = () => {
               )}
             </button>
           </div>
-          <div
-            className={`deposit__tooltip-wrapper u__absolute flex__aic u__hide`}
-          >
-            <div className="deposit__tooltip-arrow"></div>
-            <div className="deposit__tooltip ">{status}</div>
-          </div>
+          <Tooltip className="deposit__tooltip" message={status} />
         </div>
       </div>
       <div className="deposit__form u__flex flex__jcc">
