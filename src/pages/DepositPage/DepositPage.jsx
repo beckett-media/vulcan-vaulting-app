@@ -3,11 +3,16 @@ import "./deposit-page.scss";
 import DepositForm from "../../components/Forms/DepositForm";
 import { connectWallet, getCurrentWalletConnected } from "../../utils/interact";
 import { ReactComponent as Logo } from "../../static/logo.svg";
+import gsap from "gsap";
+import { Flex } from "@aws-amplify/ui-react";
 
 const DepositPage = () => {
   const [walletAddress, setWallet] = useState("");
   const [status, setStatus] = useState("");
   const [showTooltip, setShowTooltip] = useState(false);
+
+  const el = useRef();
+  const q = gsap.utils.selector(el);
 
   console.log(status);
 
@@ -35,10 +40,14 @@ const DepositPage = () => {
     setWallet(walletResponse.address);
 
     if (status.length !== 0) {
-      setShowTooltip(true);
-      setTimeout(() => {
-        setShowTooltip(false);
-      }, 3000);
+      gsap
+        .timeline()
+        .to(q(".deposit__tooltip-wrapper"), { display: "flex", opacity: 1 })
+        .to(q(".deposit__tooltip-wrapper"), {
+          opacity: 0,
+          display: "none",
+          delay: 4,
+        });
     }
   };
 
@@ -51,7 +60,7 @@ const DepositPage = () => {
   };
 
   return (
-    <div className="deposit u__center">
+    <div className="deposit u__center" ref={el}>
       <div className="deposit__hero u__center">
         <Logo className="deposit__logo" />
         <h2 className=" heading heading__secondary deposit__heading">
@@ -118,9 +127,7 @@ const DepositPage = () => {
             </button>
           </div>
           <div
-            className={`deposit__tooltip-wrapper u__absolute flex__aic ${
-              showTooltip ? "u__flex" : "u__hide"
-            }`}
+            className={`deposit__tooltip-wrapper u__absolute flex__aic u__hide`}
           >
             <div className="deposit__tooltip-arrow"></div>
             <div className="deposit__tooltip ">{status}</div>
