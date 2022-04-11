@@ -3,42 +3,25 @@ import "./deposit-page.scss";
 import DepositForm from "../../components/Forms/DepositForm";
 import { connectWallet, getCurrentWalletConnected } from "../../utils/interact";
 import { ReactComponent as Logo } from "../../static/logo.svg";
+import gsap from "gsap";
+import { Flex } from "@aws-amplify/ui-react";
 
 const DepositPage = () => {
-  const firstNameRef = useRef("");
-  const lastNameRef = useRef("");
   const [walletAddress, setWallet] = useState("");
   const [status, setStatus] = useState("");
+  const [showTooltip, setShowTooltip] = useState(false);
 
-  const formSubmissionHandler = (e) => {
-    e.preventDefault();
-    console.log(firstNameRef.current.value);
-    console.log(lastNameRef.current.value);
-  };
+  const el = useRef();
+  const q = gsap.utils.selector(el);
+
+  console.log(status);
 
   const addWalletListener = async () => {
     if (window.ethereum) {
-      window.ethereum.on("accountsChanged", (accounts) => {
-        if (accounts.length > 0) {
-          setWallet(accounts[0]);
-          setStatus("Write a message in the text-field above.");
-        } else {
-          setWallet("");
-          setStatus("Connect to Metamask using the top-right button.");
-        }
-      });
+      window.ethereum.on("accountsChanged", (accounts) => {});
     } else {
       setStatus(
-        <p>
-          <a
-            target="_blank"
-            rel="noreferrer"
-            href={`https://metamask.io/download.html`}
-          >
-            You must install Metamask, a virtual Ethereum wallet, in your
-            browser.
-          </a>
-        </p>
+        "🦊 You must install Metamask, a virtual Ethereum wallet, in your browser."
       );
     }
   };
@@ -46,7 +29,6 @@ const DepositPage = () => {
   useEffect(() => {
     async function fetchData() {
       const getWallet = await getCurrentWalletConnected();
-      setStatus(getWallet.status);
       setWallet(getWallet.address);
     }
     fetchData();
@@ -54,10 +36,19 @@ const DepositPage = () => {
   }, []);
 
   const connectWalletPressed = async () => {
-    console.log("test");
     const walletResponse = await connectWallet();
-    setStatus(walletResponse.status);
     setWallet(walletResponse.address);
+
+    if (status.length !== 0) {
+      gsap
+        .timeline()
+        .to(q(".deposit__tooltip-wrapper"), { display: "flex", opacity: 1 })
+        .to(q(".deposit__tooltip-wrapper"), {
+          opacity: 0,
+          display: "none",
+          delay: 4,
+        });
+    }
   };
 
   const onMintPressed = async () => {
@@ -69,7 +60,7 @@ const DepositPage = () => {
   };
 
   return (
-    <div className="deposit u__center">
+    <div className="deposit u__center" ref={el}>
       <div className="deposit__hero u__center">
         <Logo className="deposit__logo" />
         <h2 className=" heading heading__secondary deposit__heading">
@@ -86,7 +77,7 @@ const DepositPage = () => {
             and NFT-minting of your collectible.
           </p>
         </div>
-        <div className="deposit__wallet-buttons">
+        <div className="deposit__wallet-buttons u__relative flex__aic">
           <div className="btn__outline--outer gradient__orange">
             {walletAddress ? (
               <button
@@ -134,6 +125,12 @@ const DepositPage = () => {
                 </>
               )}
             </button>
+          </div>
+          <div
+            className={`deposit__tooltip-wrapper u__absolute flex__aic u__hide`}
+          >
+            <div className="deposit__tooltip-arrow"></div>
+            <div className="deposit__tooltip ">{status}</div>
           </div>
         </div>
       </div>
