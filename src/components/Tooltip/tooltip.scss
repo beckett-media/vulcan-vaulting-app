@@ -4,11 +4,16 @@
   
   
   &-arrow {
-    clip-path: polygon(0% 50%, 100% 0%, 100% 100%);
     background-color: var(--grey-dark);
     width: 1rem;
     height: 1rem;
     
+    &--left{
+      clip-path: polygon(0% 50%, 100% 0%, 100% 100%);
+    }
+    &--right{
+      clip-path: polygon(0% 0%, 0% 100%, 100% 50%);
+    }
   }
   
   &-body{
