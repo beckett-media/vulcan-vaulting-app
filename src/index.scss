@@ -73,7 +73,7 @@ table {
 
 @font-face {
 	font-family:  "Alliance Platt";
-	src: url("./static/Alliance-PlattMedium.otf") format('opentype');
+	src: local("Alliance Platt"), url("./static/Alliance-PlattMedium.otf") format('opentype');
 }
 
 /////////////////////
