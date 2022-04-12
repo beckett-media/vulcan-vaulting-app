@@ -89,8 +89,8 @@ const DepositForm = (props) => {
         itemDesc: "",
       }}
       validationSchema={Yup.object({
-        firstName: Yup.string().lowercase().trim().required("Required"),
-        lastName: Yup.string().lowercase().trim().required("Required"),
+        firstName: Yup.string().required("Required"),
+        lastName: Yup.string().required("Required"),
         email: Yup.string().email("Invalid email address").required("Required"),
         month: Yup.string()
           .test("is-month", "Required", (value) => value !== "MM")
@@ -102,8 +102,8 @@ const DepositForm = (props) => {
           .test("is-year", "Required", (value) => value !== "YYYY")
           .required("Required"),
         address1: Yup.string().required("Required"),
-        address2: Yup.string(),
-        city: Yup.string().trimmed().required("Required"),
+        address2: "",
+        city: Yup.string().required("Required"),
         state: Yup.string()
           .test("is-state", "Required", (value) => value !== "state")
           .required("Required"),
