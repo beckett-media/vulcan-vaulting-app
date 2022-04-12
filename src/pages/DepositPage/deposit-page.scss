@@ -55,6 +55,11 @@
   }
 
   &__tooltip {
-    right: -58%;
+    &--right {
+      right: -58%;
+    }
+    &--left {
+      left: -58%;
+    }
   }
 }
