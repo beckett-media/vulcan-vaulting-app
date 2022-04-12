@@ -9,7 +9,6 @@ import Tooltip from "../../components/Tooltip/Tooltip";
 const DepositPage = () => {
   const [walletAddress, setWallet] = useState("");
   const [status, setStatus] = useState("");
-  const [showTooltip, setShowTooltip] = useState(false);
 
   const el = useRef();
   const q = gsap.utils.selector(el);
@@ -42,8 +41,8 @@ const DepositPage = () => {
     if (status.length !== 0) {
       gsap
         .timeline()
-        .to(q(".tooltip"), { display: "flex", opacity: 1 })
-        .to(q(".tooltip"), {
+        .to(q(".deposit__tooltip--right"), { display: "flex", opacity: 1 })
+        .to(q(".deposit__tooltip--right"), {
           opacity: 0,
           display: "none",
           delay: 4,
@@ -93,6 +92,7 @@ const DepositPage = () => {
                 I don't have a wallet
               </button>
             )}
+            <Tooltip className="deposit__tooltip--left" message={status} />
           </div>
 
           <div className="btn__outline--outer gradient__green">
@@ -126,7 +126,7 @@ const DepositPage = () => {
               )}
             </button>
           </div>
-          <Tooltip className="deposit__tooltip" message={status} />
+          <Tooltip className="deposit__tooltip--right" message={status} />
         </div>
       </div>
       <div className="deposit__form u__flex flex__jcc">
