@@ -18,13 +18,29 @@ const DepositPage = () => {
 
   const addWalletListener = async () => {
     if (window.ethereum) {
-      window.ethereum.on("accountsChanged", (accounts) => {});
+      handleEthereum();
+    } else {
+      window.addEventListener('ethereum#initialized', handleEthereum, {
+        once: true,
+      });
+    
+      // If the event is not dispatched by the end of the timeout,
+      // the user probably doesn't have MetaMask installed.
+      setTimeout(handleEthereum, 3000); // 3 seconds
+    }
+  };
+
+  function handleEthereum() {
+    const { ethereum } = window;
+    if (ethereum  && ethereum.isMetaMask) {
+      ethereum.on("accountsChanged", (accounts) => {});
     } else {
       setStatus(
         "🦊 You must install Metamask, a virtual Ethereum wallet, in your browser."
       );
     }
   };
+  }
 
   useEffect(() => {
     async function fetchData() {
