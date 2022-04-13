@@ -72,8 +72,6 @@ const DepositPage = () => {
 
     const web3 = new Web3(provider);
 
-    // await provider.enable();
-
     const accounts = await web3.eth.getAccounts();
 
     const address = accounts[0];
@@ -89,10 +87,6 @@ const DepositPage = () => {
   };
 
   const resetApp = async () => {
-    if (web3 && web3.currentProvider && web3.currentProvider.close) {
-      await web3.currentProvider.close();
-    }
-
     setWallet(INITIAL_STATE.walletAddress);
     setStatus(INITIAL_STATE.status);
     setWeb3(INITIAL_STATE.web3);
@@ -108,17 +102,28 @@ const DepositPage = () => {
     }
     provider.on('close', () => resetApp());
     provider.on('accountsChanged', async (accounts) => {
-      setWallet(accounts[0]);
+      if (connected) {
+        setWallet(accounts[0]);
+      }
     });
     provider.on('chainChanged', async (chainId) => {
-      const networkId = await web3.eth.net.getId();
-      setChainId(chainId);
-      setNetworkId(networkId);
+      if (connected) {
+        const networkId = await web3.eth.net.getId();
+        setChainId(chainId);
+        setNetworkId(networkId);
+      }
     });
     provider.on('networkChanged', async (networkId) => {
-      const chainId = await web3.eth.getChainId();
-      setChainId(chainId);
-      setNetworkId(networkId);
+      if (connected) {
+        const chainId = await web3.eth.getChainId();
+        setChainId(chainId);
+        setNetworkId(networkId);
+      }
+    });
+
+    // subscribe to session disconnection
+    provider.on('disconnect', (code, reason) => {
+      console.log(code, reason);
     });
   };
 
