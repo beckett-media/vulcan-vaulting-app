@@ -92,7 +92,6 @@ const DepositPage = () => {
     if (web3 && web3.currentProvider && web3.currentProvider.close) {
       await web3.currentProvider.close();
     }
-    await web3Modal.clearCachedProvider();
 
     setWallet(INITIAL_STATE.walletAddress);
     setStatus(INITIAL_STATE.status);
