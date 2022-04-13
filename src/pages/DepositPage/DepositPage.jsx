@@ -9,10 +9,25 @@ import Tooltip from "../../components/Tooltip/Tooltip";
 const DepositPage = () => {
   const [walletAddress, setWallet] = useState("");
   const [status, setStatus] = useState("");
-  const [showTooltip, setShowTooltip] = useState(false);
 
   const el = useRef();
   const q = gsap.utils.selector(el);
+
+  const fadeIn = (selector) => {
+    const t1 = gsap.timeline();
+    t1.to(q(`${selector}`), { display: "flex", opacity: 1 }).to(
+      q(`${selector}`),
+      {
+        opacity: 0,
+        display: "none",
+        delay: 4,
+      }
+    );
+
+    return () => {
+      t1.kill();
+    };
+  };
 
   console.log(status);
 
@@ -56,14 +71,7 @@ const DepositPage = () => {
     setWallet(walletResponse.address);
 
     if (status.length !== 0) {
-      gsap
-        .timeline()
-        .to(q(".tooltip"), { display: "flex", opacity: 1 })
-        .to(q(".tooltip"), {
-          opacity: 0,
-          display: "none",
-          delay: 4,
-        });
+      fadeIn(".deposit__tooltip--right");
     }
   };
 
@@ -94,6 +102,13 @@ const DepositPage = () => {
           </p>
         </div>
         <div className="deposit__wallet-buttons u__relative flex__aic">
+          <Tooltip
+            className="deposit__tooltip--left"
+            message={
+              "Please fill out the form below and your concierge will help you create one."
+            }
+            direction={"right"}
+          />
           <div className="btn__outline--outer gradient__orange">
             {walletAddress ? (
               <button
@@ -105,7 +120,10 @@ const DepositPage = () => {
                 Disconnect Wallet
               </button>
             ) : (
-              <button className="btn btn__outline--inner deposit__btn">
+              <button
+                className="btn btn__outline--inner deposit__btn"
+                onClick={() => fadeIn(".deposit__tooltip--left")}
+              >
                 I don't have a wallet
               </button>
             )}
@@ -142,7 +160,11 @@ const DepositPage = () => {
               )}
             </button>
           </div>
-          <Tooltip className="deposit__tooltip" message={status} />
+          <Tooltip
+            className="deposit__tooltip--right"
+            message={status}
+            direction={"left"}
+          />
         </div>
       </div>
       <div className="deposit__form u__flex flex__jcc">
