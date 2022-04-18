@@ -1,5 +1,6 @@
 import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
+import { API } from "aws-amplify";
 import "./forms.scss";
 import * as Yup from "yup";
 
@@ -71,6 +72,9 @@ const DepositForm = (props) => {
   ];
   const walletAddress = props.additionalData;
 
+  const apiName = "vulcanAPI";
+  const path = "/deposit";
+
   return (
     <Formik
       initialValues={{
@@ -113,10 +117,33 @@ const DepositForm = (props) => {
       })}
       onSubmit={(values, { setSubmitting }) => {
         values.walletAddress = props.additionalData.walletAddress;
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 400);
+
+        const createDateOfBirth = (values) => {
+          const dateOfBirth = `${values.year}-${values.month}-${values.day}`;
+          return dateOfBirth;
+        };
+
+        const myInit = {
+          body: {
+            ...values,
+            dateOfBirth: createDateOfBirth(values),
+          },
+        };
+
+        console.log(myInit);
+
+        API.put(apiName, path, myInit)
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error.response);
+          });
+
+        // setTimeout(() => {
+        //   alert(JSON.stringify(values, null, 2));
+        //   setSubmitting(false);
+        // }, 400);
       }}
     >
       <Form className="form u__left">
