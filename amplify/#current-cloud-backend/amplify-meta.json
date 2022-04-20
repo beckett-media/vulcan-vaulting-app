@@ -18,26 +18,26 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
       "dependsOn": [],
-      "lastBuildTimeStamp": "2022-04-19T14:23:05.780Z",
+      "lastBuildTimeStamp": "2022-04-20T02:37:19.984Z",
       "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2022-04-19T14:23:15.128Z",
-      "distZipFilename": "vulcanvaultingapp80edbc18-4154755875505958592b-build.zip",
+      "lastPackageTimeStamp": "2022-04-20T02:37:28.196Z",
+      "distZipFilename": "vulcanvaultingapp80edbc18-34622b6b6e6f36354861-build.zip",
       "s3Bucket": {
         "deploymentBucketName": "amplify-vulcanvaultingapp-dev-92832-deployment",
-        "s3Key": "amplify-builds/vulcanvaultingapp80edbc18-4154755875505958592b-build.zip"
+        "s3Key": "amplify-builds/vulcanvaultingapp80edbc18-34622b6b6e6f36354861-build.zip"
       },
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-vulcanvaultingapp-dev-92832-deployment/amplify-cfn-templates/function/vulcanvaultingapp80edbc18-cloudformation-template.json",
         "logicalId": "functionvulcanvaultingapp80edbc18"
       },
-      "lastPushTimeStamp": "2022-04-19T14:24:38.608Z",
+      "lastPushTimeStamp": "2022-04-20T02:38:50.568Z",
       "output": {
         "Region": "us-west-1",
         "Arn": "arn:aws:lambda:us-west-1:548281136650:function:vulcanvaultingapp80edbc18-dev",
         "Name": "vulcanvaultingapp80edbc18-dev",
         "LambdaExecutionRole": "vulcanvaultingappLambdaRolea0bb4a8a-dev"
       },
-      "lastPushDirHash": "wLvfAOP7oGh/4TP/8rHabW/fRZQ="
+      "lastPushDirHash": "t65PNj0afLCbFNuC1gkKjJBwqL4="
     }
   },
   "api": {
@@ -58,7 +58,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-vulcanvaultingapp-dev-92832-deployment/amplify-cfn-templates/api/vulcanAPI-cloudformation-template.json",
         "logicalId": "apivulcanAPI"
       },
-      "lastPushTimeStamp": "2022-04-19T14:24:37.859Z",
+      "lastPushTimeStamp": "2022-04-20T02:38:49.863Z",
       "output": {
         "ApiName": "vulcanAPI",
         "RootUrl": "https://wagopxisb6.execute-api.us-west-1.amazonaws.com/dev",
