@@ -30,7 +30,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-vulcanvaultingapp-dev-92832-deployment/amplify-cfn-templates/function/vulcanvaultingapp80edbc18-cloudformation-template.json",
         "logicalId": "functionvulcanvaultingapp80edbc18"
       },
-      "lastPushTimeStamp": "2022-04-20T02:38:50.568Z",
+      "lastPushTimeStamp": "2022-04-20T17:21:17.027Z",
       "output": {
         "Region": "us-west-1",
         "Arn": "arn:aws:lambda:us-west-1:548281136650:function:vulcanvaultingapp80edbc18-dev",
@@ -58,7 +58,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-vulcanvaultingapp-dev-92832-deployment/amplify-cfn-templates/api/vulcanAPI-cloudformation-template.json",
         "logicalId": "apivulcanAPI"
       },
-      "lastPushTimeStamp": "2022-04-20T02:38:49.863Z",
+      "lastPushTimeStamp": "2022-04-20T17:21:17.059Z",
       "output": {
         "ApiName": "vulcanAPI",
         "RootUrl": "https://wagopxisb6.execute-api.us-west-1.amazonaws.com/dev",
