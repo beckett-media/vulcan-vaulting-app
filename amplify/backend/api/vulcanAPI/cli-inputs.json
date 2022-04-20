@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/deposit": {
+      "name": "/deposit",
+      "lambdaFunction": "vulcanvaultingapp80edbc18",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}
