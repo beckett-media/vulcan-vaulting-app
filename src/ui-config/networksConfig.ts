@@ -49,6 +49,7 @@ export type NetworkConfig = {
   };
   vaultAddress: string;
   retrievalManagerAddress: string;
+  forwarderAddress: string;
 };
 
 export type BaseNetworkConfig = Omit<NetworkConfig, 'explorerLinkBuilder'>;
@@ -74,6 +75,7 @@ export const networkConfigs: Record<string, BaseNetworkConfig> = {
     ratesHistoryApiUrl: 'https://aave-api-v2.aave.com/data/rates-history',
     vaultAddress: '',
     retrievalManagerAddress: '',
+    forwarderAddress: '',
   },
   [ChainId.mumbai]: {
     name: 'Mumbai',
@@ -89,5 +91,6 @@ export const networkConfigs: Record<string, BaseNetworkConfig> = {
     networkLogoPath: '/icons/networks/polygon.svg',
     vaultAddress: '0x17E95B844F8BDb32f0bcf57542F1E5CD79A2B342',
     retrievalManagerAddress: '0x49c2376F01016362e41F23170ca2DB668C7f3b34',
+    forwarderAddress: '0x8F932dDCbAc96d7ae25053f3308FADe02936404a',
   },
 } as const;

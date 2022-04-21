@@ -1,7 +1,12 @@
 import { ChainId } from '@aave/contract-helpers';
+import { getNetworkConfig } from './networksConfig';
+import { getProvider } from './networksConfig';
+import { Contract } from 'ethers';
 
 import utils from 'web3-utils';
 const abi = require('web3-eth-abi');
+
+import forwarderABI from '../../abi/MinimalForwarder.json';
 
 export function hexToAscii(_hex: string): string {
   const hex = _hex.toString();
@@ -45,12 +50,12 @@ export const optimizedPath = (currentChainId: ChainId) => {
   );
 };
 
-export const getEIP712Data = (
-  nftId: number,
-  deadline: number,
-  chainId: number,
-  contractAddress: string
-) => {
+export const getEIP712ForwarderSignature = async (nftId: number, from: string, chainId: number) => {
+  const config = getNetworkConfig(chainId);
+  const provider = getProvider(chainId);
+  const userInputHash = utils.keccak256('testHash');
+  console.log('start', userInputHash);
+
   // types
   const domainTypes = [
     { name: 'type', type: 'bytes32' },
@@ -60,33 +65,78 @@ export const getEIP712Data = (
     { name: 'verifyingContract', type: 'address' },
   ];
 
-  const structHashTypes = [
-    { name: 'Token Id', type: 'uint256' },
-    { name: 'Expiration', type: 'uint64' },
+  const forwardRequestTypes = [
+    { name: 'type', type: 'bytes32' },
+    { name: 'from', type: 'address' },
+    { name: 'to', type: 'address' },
+    { name: 'value', type: 'uint256' },
+    { name: 'gas', type: 'uint256' },
+    { name: 'nonce', type: 'uint256' },
+    { name: 'data', type: 'bytes' },
   ];
 
   // data
-  const typeHash = utils.keccak256(
+  const typeHashDomain = utils.keccak256(
     'EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)'
   );
 
+  const typeHashStruct = utils.keccak256(
+    'ForwardRequest(address from,address to,uint256 value,uint256 gas,uint256 nonce,bytes data)'
+  );
+
   const domainData = {
-    type: typeHash,
-    name: 'BeckettVault',
-    version: 'v1',
+    type: typeHashDomain,
+    name: 'MinimalForwarder',
+    version: '0.0.1',
     chainId,
-    verifyingContract: contractAddress,
+    verifyingContract: config.forwarderAddress,
   };
 
+  // encode function call
+  const calldata = abi.encodeFunctionCall(
+    {
+      inputs: [
+        {
+          internalType: 'uint256',
+          name: 'tokenId_',
+          type: 'uint256',
+        },
+        {
+          internalType: 'bytes32',
+          name: 'hash_',
+          type: 'bytes32',
+        },
+      ],
+      name: 'lock',
+      type: 'function',
+    },
+    [nftId, userInputHash]
+  );
+
+  // estimate gas
+  const estimatedGas = await provider.estimateGas({
+    to: config.retrievalManagerAddress,
+    data: calldata,
+  });
+
+  // get nonce
+  const forwarder = new Contract(config.forwarderAddress, forwarderABI, provider);
+  const nonce = await forwarder.getNonce(from);
+
   var message = {
-    'Token Id': nftId,
-    Expiration: deadline,
+    type: typeHashStruct,
+    from,
+    to: config.retrievalManagerAddress,
+    value: 0,
+    gas: estimatedGas.toNumber(),
+    nonce: nonce.toNumber(),
+    data: calldata,
   };
 
   const data = JSON.stringify({
     types: {
       EIP712Domain: domainTypes,
-      Struct: structHashTypes,
+      Struct: forwardRequestTypes,
     },
     domain: domainData,
     primaryType: 'Struct',

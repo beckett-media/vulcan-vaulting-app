@@ -1,8 +1,7 @@
 import { useWalletModalContext } from '../../hooks/useWalletModal';
 import { useWeb3Context } from '../../libs/hooks/useWeb3Context';
 import { WalletModal } from './WalletModal';
-import { getEIP712Data } from '../../utils/utils';
-import { getNetworkConfig } from '../../utils/networksConfig';
+import { getEIP712ForwarderSignature } from '../../utils/utils';
 
 export const ConnectWalletButton = () => {
   const { setWalletModalOpen } = useWalletModalContext();
@@ -11,13 +10,11 @@ export const ConnectWalletButton = () => {
   const handleConnect = async () => {
     if (connected) {
       // 1 hour deadline
-      const deadline = Math.floor(Date.now() / 1000 + 3600);
       const tokenId = 1;
-      const config = getNetworkConfig(chainId);
-      const data = getEIP712Data(tokenId, deadline, chainId, config.vaultAddress);
+      const data = await getEIP712ForwarderSignature(tokenId, currentAccount, chainId);
+      console.log('end', data);
 
       const signature = await signTxData(data);
-      console.log(signature);
     } else {
       setWalletModalOpen(true);
     }
