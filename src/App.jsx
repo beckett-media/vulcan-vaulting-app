@@ -70,7 +70,7 @@ const formFields = {
       labelHidden: false,
       placeholder: "Username",
       isRequired: true,
-      label: "Email:",
+      label: "Username:",
     },
     password: {
       labelHidden: false,
