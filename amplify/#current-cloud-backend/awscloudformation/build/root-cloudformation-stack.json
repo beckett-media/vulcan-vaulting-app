@@ -232,6 +232,17 @@
           "breakCircularDependency": true,
           "useEnabledMfas": true,
           "dependsOn": "",
+          "thirdPartyAuth": false,
+          "userPoolGroups": false,
+          "adminQueries": false,
+          "triggers": "{}",
+          "hostedUI": false,
+          "userPoolGroupList": "",
+          "authProviders": "",
+          "parentStack": {
+            "Ref": "AWS::StackId"
+          },
+          "permissions": "",
           "env": "dev"
         }
       }

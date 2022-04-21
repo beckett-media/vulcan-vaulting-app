@@ -68,7 +68,7 @@ const formFields = {
   signIn: {
     username: {
       labelHidden: false,
-      placeholder: "Email",
+      placeholder: "Username",
       isRequired: true,
       label: "Email:",
     },
