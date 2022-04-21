@@ -15,17 +15,12 @@
     @supports (background-clip: text) or (-webkit-background-clip: text) {
       background-clip: text;
       -webkit-background-clip: text;
-      background-image: linear-gradient(
-        to right,
-        var(--green-light),
-        var(--purple-light)
-      );
+      background-image: linear-gradient(to right, var(--green-light), var(--purple-light));
       color: transparent;
     }
   }
 
   &__hero {
-
     &-content {
       width: 62rem;
       display: grid;
@@ -37,7 +32,6 @@
   }
 
   &__wallet-buttons {
-    width: 54rem;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 2.4rem;
@@ -49,7 +43,7 @@
   }
 
   &__form {
-    background-image: linear-gradient(to bottom, black, var(--purple-dark) );
+    background-image: linear-gradient(to bottom, black, var(--purple-dark));
     width: 100%;
     padding-bottom: 10rem;
   }
