@@ -15,8 +15,6 @@ export const getWallet = (
 ): AbstractConnector => {
   const supportedChainIds = getSupportedChainIds();
 
-  console.log(wallet);
-
   switch (wallet) {
     case WalletType.INJECTED:
       return new InjectedConnector({});

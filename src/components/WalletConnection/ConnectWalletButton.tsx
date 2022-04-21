@@ -1,17 +1,34 @@
 import { useWalletModalContext } from '../../hooks/useWalletModal';
 import { useWeb3Context } from '../../libs/hooks/useWeb3Context';
 import { WalletModal } from './WalletModal';
+import { getEIP712Data } from '../../utils/utils';
+import { getNetworkConfig } from '../../utils/networksConfig';
 
 export const ConnectWalletButton = () => {
   const { setWalletModalOpen } = useWalletModalContext();
-  const { currentAccount } = useWeb3Context();
+  const { connected, currentAccount, chainId } = useWeb3Context();
+
+  const handleConnect = () => {
+    if (connected) {
+      // 1 hour deadline
+      const deadline = Math.floor(Date.now() / 1000 + 3600);
+      const tokenId = 1;
+      const config = getNetworkConfig(chainId);
+
+      console.log(config);
+
+      alert(getEIP712Data(tokenId, deadline, chainId, config.vaultAddress));
+    } else {
+      setWalletModalOpen(true);
+    }
+  };
 
   return (
     <div className="btn__outline--outer gradient__green">
       <button
         className="btn btn__outline--inner deposit__btn u__flex flex__jcsa flex__aic"
         id="walletButton"
-        onClick={() => setWalletModalOpen(true)}
+        onClick={handleConnect}
       >
         {currentAccount.length > 0 ? (
           <>

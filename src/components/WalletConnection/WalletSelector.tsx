@@ -1,4 +1,4 @@
-import { Alert, Box, Button, Link, Typography } from '@mui/material';
+import { Alert, Box, Button, Typography } from '@mui/material';
 import { useWeb3Context } from '../../libs/hooks/useWeb3Context';
 import { WalletType } from '../../libs/web3-data-provider/WalletOptions';
 import { TxModalTitle } from './TxModalTitle';
