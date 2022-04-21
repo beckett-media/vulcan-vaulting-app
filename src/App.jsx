@@ -37,7 +37,7 @@ const components = {
       <View textAlign="center" style={{ marginBotton: 20 }}>
         <Image
           alt="Beckett media logo"
-          src="https://uploads-ssl.webflow.com/5e3335504b445e809f69e502/624368f205c22422f5fd98e6_shubham-dhage-fQL1DKNUQZw-unsplash.jpeg"
+          src={require("./static/Beckett-Logo-Full-Wordmark-0K.png")}
         />
       </View>
     );
@@ -46,7 +46,9 @@ const components = {
   Footer() {
     return (
       <View textAlign="center" marginTop="20px">
-        <Text>&copy; 2022 Beckett Media All Rights Reserved</Text>
+        <Text color="white" fontSize={"15px"}>
+          &copy; 2022 Beckett Media All Rights Reserved
+        </Text>
       </View>
     );
   },
