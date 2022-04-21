@@ -64,8 +64,46 @@ const WithdrawPage = () => {
   const withdrawModalContent = {
     heading: "Does this look correct?",
     body: "Once submitted, your information will be permanently added to the blockchain and cannot be altered",
-    buttonOne: 
+    buttonOne: { type: "solid", color: "orange", body: "Change" },
+    buttonTwo: { type: "solid", color: "green", body: "Confirm & Sign" },
   };
+
+  // [
+  //   {
+  //     variant: "header",
+  //     data: ["Does this look correct?"],
+  //   },
+  //   {
+  //     variant: "body",
+  //     data: [
+  //       "Once submitted, your information will be permanently added to the blockchain and cannot be altered",
+  //     ],
+  //   },
+  //   {
+  //     variant: "inner",
+  //     data: [],
+  //   },
+  //   {
+  //     variant: "button",
+  //     data: [
+  //       {
+  //         type: "solid",
+  //         color: "orange",
+  //         body: "Change",
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     variant: "button",
+  //     data: [
+  //       {
+  //         type: "solid",
+  //         color: "green",
+  //         body: "Confirm & Sign",
+  //       },
+  //     ],
+  //   },
+  // ];
 
   return (
     <div className="deposit u__center" ref={el}>
