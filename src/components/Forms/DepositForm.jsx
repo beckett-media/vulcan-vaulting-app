@@ -130,7 +130,6 @@ const DepositForm = (props) => {
           },
         };
 
-        console.log(myInit);
 
         API.put(apiName, path, myInit)
           .then((response) => {
