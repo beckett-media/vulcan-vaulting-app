@@ -46,7 +46,7 @@ const components = {
   Footer() {
     return (
       <View textAlign="center" marginTop="20px">
-        <Text color="white" fontSize={"15px"}>
+        <Text color="white" fontSize={"13px"}>
           &copy; 2022 Beckett Media All Rights Reserved
         </Text>
       </View>
