@@ -1,15 +1,8 @@
-<<<<<<< HEAD
 import React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
+import { API } from 'aws-amplify';
 import styles from './forms.module.scss';
 import * as Yup from 'yup';
-=======
-import React from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import { API } from "aws-amplify";
-import "./forms.scss";
-import * as Yup from "yup";
->>>>>>> develop
 
 const DepositForm = (props) => {
   const d = new Date();
@@ -79,8 +72,8 @@ const DepositForm = (props) => {
   ];
   const walletAddress = props.additionalData;
 
-  const apiName = "vulcanAPI";
-  const path = "/deposit";
+  const apiName = 'vulcanAPI';
+  const path = '/deposit';
 
   return (
     <Formik
