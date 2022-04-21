@@ -1,10 +1,18 @@
 import '../src/index.scss';
+import './auth.css';
+import Image from 'next/image';
 
 import { NextPage } from 'next';
 import { AppProps } from 'next/app';
-import Head from 'next/head';
-import * as React from 'react';
 
+import Head from 'next/head';
+import Amplify from 'aws-amplify';
+import { Authenticator, Heading, View, Text } from '@aws-amplify/ui-react';
+import * as React from 'react';
+import '@aws-amplify/ui-react/styles.css';
+Amplify.configure({ ...awsconfig, ssr: true });
+
+import awsconfig from '../src/aws-exports';
 import { Meta } from '../src/components/Meta';
 import { ConnectionStatusProvider } from '../src/hooks/useConnectionStatusContext';
 import { ModalContextProvider } from '../src/hooks/useModal';
@@ -30,29 +38,88 @@ interface MyAppProps extends AppProps {
 
 // Client-side cache, shared for the whole session of the user in the browser.
 
-export default function MyApp(props: MyAppProps) {
+function MyApp(props: MyAppProps) {
   const { Component, pageProps } = props;
   const getLayout = Component.getLayout ?? ((page: React.ReactNode) => page);
   return (
     <div>
-      <Head>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
-      </Head>
-      <Meta
-        title={'Beckett Vaulting'}
-        description={'Forms for Beckett Vaulting processes'}
-        imageUrl={'https://someicon.png'} // NOTE: Will update with ghost after release
-      />
-
-      <Web3ReactProvider getLibrary={getWeb3Library}>
-        <Web3ContextProvider>
-          <ConnectionStatusProvider>
-            <WalletModalContextProvider>
-              <ModalContextProvider>{getLayout(<Component {...pageProps} />)}</ModalContextProvider>
-            </WalletModalContextProvider>
-          </ConnectionStatusProvider>
-        </Web3ContextProvider>
-      </Web3ReactProvider>
+      <Authenticator hideSignUp={true} components={components} formFields={formFields}>
+        {({ signOut, user }) => (
+          <>
+            <Head>
+              <meta name="viewport" content="initial-scale=1, width=device-width" />
+            </Head>
+            <Meta
+              title={'Beckett Vaulting'}
+              description={'Forms for Beckett Vaulting processes'}
+              imageUrl={'https://someicon.png'} // NOTE: Will update with ghost after release
+            />
+            <Web3ReactProvider getLibrary={getWeb3Library}>
+              <Web3ContextProvider>
+                <ConnectionStatusProvider>
+                  <WalletModalContextProvider>
+                    <ModalContextProvider>
+                      {getLayout(<Component {...pageProps} />)}
+                    </ModalContextProvider>
+                  </WalletModalContextProvider>
+                </ConnectionStatusProvider>
+              </Web3ContextProvider>
+            </Web3ReactProvider>
+          </>
+        )}
+      </Authenticator>
     </div>
   );
 }
+
+const components = {
+  Header() {
+    return (
+      <View textAlign="center" style={{ marginBotton: 20 }}>
+        <Image
+          alt="Beckett media logo"
+          src={require('../public/Beckett-Logo-Full-Wordmark-0K.png')}
+        />
+      </View>
+    );
+  },
+
+  Footer() {
+    return (
+      <View textAlign="center" marginTop="20px">
+        <Text color="white" fontSize={'13px'}>
+          &copy; 2022 Beckett Media All Rights Reserved
+        </Text>
+      </View>
+    );
+  },
+
+  SignIn: {
+    Header() {
+      return (
+        <Heading style={{ marginTop: 30 }} textAlign={'center'} level={4}>
+          Sign in to your account
+        </Heading>
+      );
+    },
+  },
+};
+
+const formFields = {
+  signIn: {
+    username: {
+      labelHidden: false,
+      placeholder: 'Username',
+      isRequired: true,
+      label: 'Username:',
+    },
+    password: {
+      labelHidden: false,
+      placeholder: 'Password',
+      isRequired: true,
+      label: 'Password:',
+    },
+  },
+};
+
+export default MyApp;

@@ -18,26 +18,26 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
       "dependsOn": [],
-      "lastBuildTimeStamp": "2022-04-20T02:37:19.984Z",
-      "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2022-04-20T02:37:28.196Z",
-      "distZipFilename": "vulcanvaultingapp80edbc18-34622b6b6e6f36354861-build.zip",
-      "s3Bucket": {
-        "deploymentBucketName": "amplify-vulcanvaultingapp-dev-92832-deployment",
-        "s3Key": "amplify-builds/vulcanvaultingapp80edbc18-34622b6b6e6f36354861-build.zip"
-      },
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-vulcanvaultingapp-dev-92832-deployment/amplify-cfn-templates/function/vulcanvaultingapp80edbc18-cloudformation-template.json",
-        "logicalId": "functionvulcanvaultingapp80edbc18"
-      },
-      "lastPushTimeStamp": "2022-04-20T17:27:27.769Z",
       "output": {
         "Region": "us-west-1",
         "Arn": "arn:aws:lambda:us-west-1:548281136650:function:vulcanvaultingapp80edbc18-dev",
         "Name": "vulcanvaultingapp80edbc18-dev",
         "LambdaExecutionRole": "vulcanvaultingappLambdaRolea0bb4a8a-dev"
       },
-      "lastPushDirHash": "t65PNj0afLCbFNuC1gkKjJBwqL4="
+      "lastPushTimeStamp": "2022-04-21T21:13:57.230Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-vulcanvaultingapp-dev-92832-deployment/amplify-cfn-templates/function/vulcanvaultingapp80edbc18-cloudformation-template.json",
+        "logicalId": "functionvulcanvaultingapp80edbc18"
+      },
+      "lastBuildTimeStamp": "2022-04-21T21:12:23.043Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2022-04-21T21:12:30.570Z",
+      "distZipFilename": "vulcanvaultingapp80edbc18-736443394158675a3773-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-vulcanvaultingapp-dev-92832-deployment",
+        "s3Key": "amplify-builds/vulcanvaultingapp80edbc18-736443394158675a3773-build.zip"
+      },
+      "lastPushDirHash": "gp3zItpoXn0DvWPVN56gy+1evo8="
     }
   },
   "api": {
@@ -54,17 +54,58 @@
           ]
         }
       ],
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-vulcanvaultingapp-dev-92832-deployment/amplify-cfn-templates/api/vulcanAPI-cloudformation-template.json",
-        "logicalId": "apivulcanAPI"
-      },
-      "lastPushTimeStamp": "2022-04-20T17:27:27.779Z",
       "output": {
         "ApiName": "vulcanAPI",
         "RootUrl": "https://wagopxisb6.execute-api.us-west-1.amazonaws.com/dev",
         "ApiId": "wagopxisb6"
       },
-      "lastPushDirHash": "gLDcQcVOzWzcNAMIM10DTd54eK8="
+      "lastPushTimeStamp": "2022-04-21T21:13:56.320Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-vulcanvaultingapp-dev-92832-deployment/amplify-cfn-templates/api/vulcanAPI-cloudformation-template.json",
+        "logicalId": "apivulcanAPI"
+      },
+      "lastPushDirHash": "aqARaGdVxlWRuTjOtRh8y3gj7ug="
+    }
+  },
+  "auth": {
+    "vulcanvaultingapp": {
+      "service": "Cognito",
+      "serviceType": "managed",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "output": {
+        "UserPoolId": "us-west-1_J7Mue8ErD",
+        "AppClientIDWeb": "5992fq7e38vrjmai6cpo7t08of",
+        "AppClientID": "2sngm4sn7hafr0k8m4thioca7i",
+        "IdentityPoolId": "us-west-1:52bdd201-bfad-4a81-a848-40a285a3b069",
+        "UserPoolArn": "arn:aws:cognito-idp:us-west-1:548281136650:userpool/us-west-1_J7Mue8ErD",
+        "IdentityPoolName": "vulcanvaultingapp_identitypool_6b2c40ce__dev",
+        "UserPoolName": "vulcanvaultingapp_userpool_6b2c40ce"
+      },
+      "lastPushTimeStamp": "2022-04-21T21:13:56.416Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-vulcanvaultingapp-dev-92832-deployment/amplify-cfn-templates/auth/vulcanvaultingapp-cloudformation-template.json",
+        "logicalId": "authvulcanvaultingapp"
+      },
+      "lastPushDirHash": "Vy2I0eLRcxy3rSXkwjRwVZ3s+t0="
     }
   }
 }
