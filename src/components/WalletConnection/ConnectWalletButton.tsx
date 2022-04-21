@@ -6,18 +6,18 @@ import { getNetworkConfig } from '../../utils/networksConfig';
 
 export const ConnectWalletButton = () => {
   const { setWalletModalOpen } = useWalletModalContext();
-  const { connected, currentAccount, chainId } = useWeb3Context();
+  const { connected, currentAccount, chainId, signTxData } = useWeb3Context();
 
-  const handleConnect = () => {
+  const handleConnect = async () => {
     if (connected) {
       // 1 hour deadline
       const deadline = Math.floor(Date.now() / 1000 + 3600);
       const tokenId = 1;
       const config = getNetworkConfig(chainId);
+      const data = getEIP712Data(tokenId, deadline, chainId, config.vaultAddress);
 
-      console.log(config);
-
-      alert(getEIP712Data(tokenId, deadline, chainId, config.vaultAddress));
+      const signature = await signTxData(data);
+      console.log(signature);
     } else {
       setWalletModalOpen(true);
     }

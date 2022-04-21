@@ -176,11 +176,14 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
 
   // TODO: recheck that it works on all wallets
   const signTxData = async (unsignedData: string): Promise<SignatureLike> => {
+    console.log('eric', unsignedData, provider);
     if (provider && account) {
-      const signature: SignatureLike = await provider.send('eth_signTypedData_v4', [
-        account,
-        unsignedData,
-      ]);
+      let signature: SignatureLike;
+      if (connector instanceof WalletConnectConnector) {
+        signature = await provider.send('eth_signTypedData', [account, unsignedData]);
+      } else {
+        signature = await provider.send('eth_signTypedData_v4', [account, unsignedData]);
+      }
 
       return signature;
     }

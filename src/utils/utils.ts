@@ -51,22 +51,47 @@ export const getEIP712Data = (
   chainId: number,
   contractAddress: string
 ) => {
-  const structHash = utils.keccak256(
-    abi.encodeParameters(['uint256', 'uint64'], [nftId, deadline])
-  );
+  // types
+  const domainTypes = [
+    { name: 'type', type: 'bytes32' },
+    { name: 'name', type: 'string' },
+    { name: 'version', type: 'string' },
+    { name: 'chainId', type: 'uint256' },
+    { name: 'verifyingContract', type: 'address' },
+  ];
+
+  const structHashTypes = [
+    { name: 'Token Id', type: 'uint256' },
+    { name: 'Expiration', type: 'uint64' },
+  ];
+
+  // data
   const typeHash = utils.keccak256(
     'EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)'
   );
-  const nameHash = utils.keccak256('BeckettVault');
-  const versionHash = utils.keccak256('v1');
 
-  const domainSeparator = utils.keccak256(
-    abi.encodeParameters(
-      ['bytes32', 'bytes32', 'bytes32', 'uint256', 'address'],
-      [typeHash, nameHash, versionHash, chainId, contractAddress]
-    )
-  );
-  const hash = utils.soliditySha3('\x19\x01', domainSeparator, structHash);
+  const domainData = {
+    type: typeHash,
+    name: 'BeckettVault',
+    version: 'v1',
+    chainId,
+    verifyingContract: contractAddress,
+  };
 
-  return hash;
+  var message = {
+    'Token Id': nftId,
+    Expiration: deadline,
+  };
+
+  const data = JSON.stringify({
+    types: {
+      EIP712Domain: domainTypes,
+      Struct: structHashTypes,
+    },
+    domain: domainData,
+    primaryType: 'Struct',
+    message: message,
+  });
+
+  return data;
 };
