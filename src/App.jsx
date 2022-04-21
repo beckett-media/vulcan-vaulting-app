@@ -14,19 +14,20 @@ import "@aws-amplify/ui-react/styles.css";
 
 function App() {
   return (
-  
-    <Authenticator
-      hideSignUp={true}
-      components={components}
-      formFields={formFields}
-    >
-      {({ signOut, user }) => (
-        <Routes>
-          <Route path="/deposit" element={<DepositPage />} />
-          <Route path="/withdraw" element={<WithdrawPage />} />
-        </Routes>
-      )}
-    </Authenticator>
+    <div className="u__flex flex__jcc flex__aic u__vw100 u__vh100">
+      <Authenticator
+        hideSignUp={true}
+        components={components}
+        formFields={formFields}
+      >
+        {({ signOut, user }) => (
+          <Routes>
+            <Route path="/deposit" element={<DepositPage />} />
+            <Route path="/withdraw" element={<WithdrawPage />} />
+          </Routes>
+        )}
+      </Authenticator>
+    </div>
   );
 }
 

@@ -226,6 +226,14 @@ body {
 	&__hide {
 		display: none;
 	}
+
+	&__vw100 {
+		width: 100vw;
+	}
+
+	&__vh100 {
+		height: 100vh;
+	}
 }
 
 .flex {	
