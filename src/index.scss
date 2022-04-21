@@ -226,6 +226,10 @@ body {
 	&__hide {
 		display: none;
 	}
+
+	&__fixed {
+		position: fixed;
+	}
 }
 
 .flex {	

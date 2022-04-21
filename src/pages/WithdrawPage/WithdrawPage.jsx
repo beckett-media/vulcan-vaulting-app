@@ -5,6 +5,7 @@ import { connectWallet, getCurrentWalletConnected } from "../../utils/interact";
 import { ReactComponent as Logo } from "../../static/logo.svg";
 import gsap from "gsap";
 import Tooltip from "../../components/Tooltip/Tooltip";
+import Modal from "../../components/Modal/Modal";
 
 const WithdrawPage = () => {
   const [walletAddress, setWallet] = useState("");
@@ -57,6 +58,13 @@ const WithdrawPage = () => {
 
   const data = {
     walletAddress,
+  };
+
+  //MODAL CONTENT
+  const withdrawModalContent = {
+    heading: "Does this look correct?",
+    body: "Once submitted, your information will be permanently added to the blockchain and cannot be altered",
+    buttonOne: 
   };
 
   return (
@@ -132,6 +140,7 @@ const WithdrawPage = () => {
       <div className="deposit__form u__flex flex__jcc">
         <DepositForm additionalData={data} />
       </div>
+      <Modal content={withdrawModalContent} />
     </div>
   );
 };
