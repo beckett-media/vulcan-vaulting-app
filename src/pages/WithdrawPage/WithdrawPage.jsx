@@ -64,6 +64,7 @@ const WithdrawPage = () => {
   const withdrawModalContent = {
     heading: "Does this look correct?",
     body: "Once submitted, your information will be permanently added to the blockchain and cannot be altered",
+    inner: ,
     buttonOne: { type: "solid", color: "orange", body: "Change" },
     buttonTwo: { type: "solid", color: "green", body: "Confirm & Sign" },
   };

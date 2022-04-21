@@ -1,0 +1,30 @@
+.btn {
+	border-radius: 5.5rem;
+	width: 30rem;
+	padding: 1.4rem 2.2rem;
+	border: none;
+	font-size: 2rem;
+	font-weight: 600;
+	cursor:pointer;
+	transition: all 0.5s ease;  
+  color: black;
+  text-align: center;
+
+	&:hover {
+		box-shadow: 0 0 3rem -8px #fff;
+	}
+
+	&__outline {
+
+		&--outer {
+			background-color: white;
+			border-radius: 5.5rem;
+			padding: 1px;
+		}
+
+		&--inner {
+			background-color: black;
+			color: white;
+		}
+	}
+}
