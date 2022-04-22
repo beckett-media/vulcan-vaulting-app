@@ -120,18 +120,10 @@ const DepositForm = (props) => {
         
         const myInit = {
           body: {
-            "dateOfBirth": `${values.month}-${values.day}-${values.year}`,
-            "firstName": values.firstName,
-            "email": values.email,
-            "zip": values.zip,
-            "city": values.city, 
-            "lastName": values.lastName,
+            "dateOfBirth": `${values.year}-${values.month}-${values.day}`,
             "walletAddress": values.walletAddress,
-            "itemDesc": values.itemDesc,
-            "address1": values.address1,
-            "itemName": values.itemName,
-            "address2": values.address2,
-            "state": values.state,
+            ...values
+         
           },
         };
      
@@ -139,7 +131,6 @@ const DepositForm = (props) => {
         API.put(apiName, path, myInit).then((response) => {
           console.log(response);
           console.log("walletaddress:", walletAddress);
-          console.log("values.walletAddress:", values.walletAddress)
           setSubmitting(false);
         }).catch((error) => {
           console.log(error);

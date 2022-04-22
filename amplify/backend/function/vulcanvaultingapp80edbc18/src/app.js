@@ -242,7 +242,7 @@ app.put("/deposit", async function (req, res) {
       .catch((error) => {
         res.send({
           status: "error",
-          data: error.message,
+          data: options,
           status_code: error.response.status,
           status_message: error.response.statusText,
 
