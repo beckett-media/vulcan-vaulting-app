@@ -10,8 +10,8 @@
     "config": {
       "SourceDir": "src",
       "DistributionDir": "out",
-      "BuildCommand": "npm run-script build",
-      "StartCommand": "npm run-script start"
+      "BuildCommand": "yarn build",
+      "StartCommand": "yarn dev"
     }
   }
 }
