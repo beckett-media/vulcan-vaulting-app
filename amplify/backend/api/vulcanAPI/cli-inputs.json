@@ -14,13 +14,6 @@
       "permissions": {
         "setting": "open"
       }
-    },
-    "/NextjsForm": {
-      "name": "/NextjsForm",
-      "lambdaFunction": "vulcanvaultingapp80edbc18",
-      "permissions": {
-        "setting": "open"
-      }
     }
   }
 }

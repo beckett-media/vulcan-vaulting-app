@@ -45,109 +45,6 @@ app.use(function (req, res, next) {
  * put method for Vulcan Records *
  ****************************/
 
-app.put('/NextjsForm', async function(req, res) {
-  const axios = require("axios");
-  const aws = require("aws-sdk");
-  // const keccak256 = require("keccak256");
-  const { v4: uuidv4 } = require("uuid");
-  const crypto = require("crypto");
-
-  // ######################## FOUNDRY API PARAMS ############################
-
-  const riWrt =
-    "ri.ontology.main.ontology.b034a691-27e9-4959-9bcc-bc99b1552c97";
-  const createVaultingRecord =
-    "new-action-0cb194d6-882e-1c9e-3f8f-bacb0c93833b";
-  const applyAction_createObject = `https://beckett.palantirfoundry.com/api/v1/ontologies/${riWrt}/actions/${createVaultingRecord}/apply`;
-
-  //############################### GET TOKEN ############################
-  const { Parameters } = await new aws.SSM()
-    .getParameters({
-      Names: ["FOUNDRY_TOKEN"].map((secretName) => process.env[secretName]),
-      WithDecryption: true,
-    })
-    .promise();
-
-  const token = Parameters;
-
-  const date = new Date().toISOString(); // ISO 8601 format
-  const newId = uuidv4(); // UUID
-
-  //############################### GENERATE SALT ############################
-  var genRandomString = function (length) {
-    return crypto
-      .randomBytes(Math.ceil(length / 2))
-       .toString("hex") /** convert to hexadecimal format */
-      .slice(0, length); /**return required number of characters */
-  };
-
-  function saltHashValue() {
-    var salt = genRandomString(36); /** Gives us salt of length 36 */
-    return salt;
-  }
-
-  //################################ POST VAULTING RECORD ############################
-
-  const options = {
-    method: "POST",
-    url: applyAction_createObject,
-    headers: {
-      Authorization: "Bearer " + token[0].Value,
-      "Content-Type": "application/json",
-    },
-    data: {
-      "parameters": {
-        "date_of_birth": req.body.date_of_birth,//
-        "first_name": req.body.first_name,//
-        "email": req.body.email,//
-        "zip": req.body.zip,//
-        "city": req.body.city,//
-        "last_name": req.body.last_name,//
-        "wallet_address": req.body.wallet_address,//
-        "vaulted_item_description": req.body.vaulted_item_description,//
-        "address_line_1": req.body.address_line_1,//
-        "vaulted_item_name": req.body.vaulted_item_name,//
-        "state": req.body.state,//
-        "submitted_date": date,//
-        "vault_status": "deposit_request",//
-        "action_type": "Deposit",//
-        "vaulted_item_unique_id": `${newId}`,//
-        "salt": `${saltHashValue()}`,//
-        
-        // ############# NOT REQUIRED PARAMS ##############
-        
-        "address_line_2": req.address_line_2,
-        "image_filename": "",
-        "date_vaulted": "",
-        "date_received": "",
-      },
-    },
-  };
-
-  if (token[0].Value.length === 0) {
-    res.status(500).send("No API key found");
-  } else {
-    axios(options)
-      .then((response) => {
-        res.send({
-          status: "success",
-          status_code: response.status,
-          status_message: response.statusText,
-          data: response.data,
-          
-        });
-      })
-      .catch((error) => {
-        res.send({
-          status: "error",
-          data: error.message,
-          status_code: error.response.status,
-          status_message: error.response.statusText,
-        });
-      });
-  }
-});
-
 
 app.put("/deposit", async function (req, res) {
   const axios = require("axios");
@@ -242,7 +139,7 @@ app.put("/deposit", async function (req, res) {
       .catch((error) => {
         res.send({
           status: "error",
-          data: options,
+          data: error.message,
           status_code: error.response.status,
           status_message: error.response.statusText,
 
