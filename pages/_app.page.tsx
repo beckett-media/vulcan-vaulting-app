@@ -1,24 +1,23 @@
 import * as React from 'react';
-import '../src/index.scss';
-import './auth.css';
+import Head from 'next/head';
 import Image from 'next/image';
-
 import { NextPage } from 'next';
 import { AppProps } from 'next/app';
+import { Authenticator, Heading, View, Text } from '@aws-amplify/ui-react';
+import Amplify from 'aws-amplify';
+import { providers } from 'ethers';
+
+import '../src/index.scss';
+import './auth.css';
+import '@aws-amplify/ui-react/styles.css';
+
 import awsconfig from '../src/aws-exports';
 import { Meta } from '../src/components/Meta';
 import { ConnectionStatusProvider } from '../src/hooks/useConnectionStatusContext';
 import { ModalContextProvider } from '../src/hooks/useModal';
 import { Web3ContextProvider } from '../src/libs/web3-data-provider/Web3Provider';
 import { Web3ReactProvider } from '@web3-react/core';
-import { providers } from 'ethers';
 import { WalletModalContextProvider } from '../src/hooks/useWalletModal';
-
-import Head from 'next/head';
-import { Authenticator, Heading, View, Text } from '@aws-amplify/ui-react';
-import '@aws-amplify/ui-react/styles.css';
-
-import Amplify from 'aws-amplify';
 Amplify.configure({ ...awsconfig, ssr: true });
 
 
