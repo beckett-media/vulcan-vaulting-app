@@ -14,11 +14,12 @@ import "@aws-amplify/ui-react/styles.css";
 
 function App() {
   return (
-    <div className="u__flex flex__jcc flex__aic u__vw100 u__vh100">
+    <div>
       <Authenticator
         hideSignUp={true}
         components={components}
         formFields={formFields}
+        className="u__flex flex__jcc flex__aic u__vw100 u__vh100"
       >
         {({ signOut, user }) => (
           <Routes>
