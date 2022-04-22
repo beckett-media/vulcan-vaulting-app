@@ -24,20 +24,20 @@
         "Name": "vulcanvaultingapp80edbc18-dev",
         "LambdaExecutionRole": "vulcanvaultingappLambdaRolea0bb4a8a-dev"
       },
-      "lastPushTimeStamp": "2022-04-21T21:13:57.230Z",
+      "lastPushTimeStamp": "2022-04-21T21:39:03.845Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-vulcanvaultingapp-dev-92832-deployment/amplify-cfn-templates/function/vulcanvaultingapp80edbc18-cloudformation-template.json",
         "logicalId": "functionvulcanvaultingapp80edbc18"
       },
-      "lastBuildTimeStamp": "2022-04-21T21:12:23.043Z",
+      "lastBuildTimeStamp": "2022-04-21T21:37:20.906Z",
       "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2022-04-21T21:12:30.570Z",
-      "distZipFilename": "vulcanvaultingapp80edbc18-736443394158675a3773-build.zip",
+      "lastPackageTimeStamp": "2022-04-21T21:37:37.986Z",
+      "distZipFilename": "vulcanvaultingapp80edbc18-686568344f3566546572-build.zip",
       "s3Bucket": {
         "deploymentBucketName": "amplify-vulcanvaultingapp-dev-92832-deployment",
-        "s3Key": "amplify-builds/vulcanvaultingapp80edbc18-736443394158675a3773-build.zip"
+        "s3Key": "amplify-builds/vulcanvaultingapp80edbc18-686568344f3566546572-build.zip"
       },
-      "lastPushDirHash": "gp3zItpoXn0DvWPVN56gy+1evo8="
+      "lastPushDirHash": "UpTE5av179mF8n8Xi8f2XMx+1IU="
     }
   },
   "api": {
@@ -59,7 +59,7 @@
         "RootUrl": "https://wagopxisb6.execute-api.us-west-1.amazonaws.com/dev",
         "ApiId": "wagopxisb6"
       },
-      "lastPushTimeStamp": "2022-04-21T21:13:56.320Z",
+      "lastPushTimeStamp": "2022-04-21T21:39:03.198Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-vulcanvaultingapp-dev-92832-deployment/amplify-cfn-templates/api/vulcanAPI-cloudformation-template.json",
         "logicalId": "apivulcanAPI"
@@ -100,7 +100,7 @@
         "IdentityPoolName": "vulcanvaultingapp_identitypool_6b2c40ce__dev",
         "UserPoolName": "vulcanvaultingapp_userpool_6b2c40ce"
       },
-      "lastPushTimeStamp": "2022-04-21T21:13:56.416Z",
+      "lastPushTimeStamp": "2022-04-21T21:39:03.200Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-vulcanvaultingapp-dev-92832-deployment/amplify-cfn-templates/auth/vulcanvaultingapp-cloudformation-template.json",
         "logicalId": "authvulcanvaultingapp"

@@ -72,8 +72,8 @@ const DepositForm = (props) => {
   ];
   const walletAddress = props.additionalData;
 
-  const apiName = 'vulcanAPI';
-  const path = '/NextjsForm';
+  const apiName = "vulcanAPI";
+  const path = "/deposit";
 
   return (
     <Formik
@@ -118,30 +118,52 @@ const DepositForm = (props) => {
       onSubmit={(values, { setSubmitting }) => {
         values.walletAddress = props.additionalData.walletAddress;
 
+        // const myInit = {
+        //   body: {
+        //     "date_of_birth": `${values.month}/${values.day}/${values.year}`,
+        //     "first_name": values.firstName,
+        //     "email": values.email,
+        //     "zip": values.zip,
+        //     "city": values.city,
+        //     "last_name": values.lastName,
+        //     "wallet_address": values.walletAddress,
+        //     "vaulted_item_description": values.itemDesc,
+        //     "address_line_1": values.address1,
+        //     "vaulted_item_name": values.itemName,
+        //     "address_line_2": values.address2,
+        //     "state": values.state,
+        //   },
+        // };
+
+        // API.put(apiName, path, myInit).then((response) => {
+        //   console.log(response);
+        //   setSubmitting(false);
+        // }).catch((error) => {
+        //   console.log(error);
+        //   setSubmitting(false);
+        // });
+        const createDateOfBirth = (values) => {
+          const dateOfBirth = `${values.year}-${values.month}-${values.day}`;
+          return dateOfBirth;
+        };
+
         const myInit = {
           body: {
-            "date_of_birth": `${values.month}/${values.day}/${values.year}`,
-            "first_name": values.firstName,
-            "email": values.email,
-            "zip": values.zip,
-            "city": values.city,
-            "last_name": values.lastName,
-            "wallet_address": values.walletAddress,
-            "vaulted_item_description": values.itemDesc,
-            "address_line_1": values.address1,
-            "vaulted_item_name": values.itemName,
-            "address_line_2": values.address2,
-            "state": values.state,
+            ...values,
+            dateOfBirth: createDateOfBirth(values),
           },
         };
 
-        API.put(apiName, path, myInit).then((response) => {
-          console.log(response);
-          setSubmitting(false);
-        }).catch((error) => {
-          console.log(error);
-          setSubmitting(false);
-        });
+
+        API.put(apiName, path, myInit)
+          .then((response) => {
+            console.log(response);
+            setSubmitting(false);
+          })
+          .catch((error) => {
+            console.log(error.response);
+            setSubmitting(false);
+          });
       
 
         // setTimeout(() => {

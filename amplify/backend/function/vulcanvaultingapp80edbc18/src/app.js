@@ -127,11 +127,24 @@ app.put('/NextjsForm', async function(req, res) {
   if (token[0].Value.length === 0) {
     res.status(500).send("No API key found");
   } else {
-    res.json({
-      status: "success",
-      message: "Vulcan Vaulting Record TEST",
-    data: options
-    })
+    axios(options)
+      .then((response) => {
+        res.send({
+          status: "success",
+          status_code: response.status,
+          status_message: response.statusText,
+          data: response.data,
+          
+        });
+      })
+      .catch((error) => {
+        res.send({
+          status: "error",
+          data: error.message,
+          status_code: error.response.status,
+          status_message: error.response.statusText,
+        });
+      });
   }
 });
 
