@@ -36,4 +36,13 @@
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 2.4rem;
   }
+
+  &__close {
+    background-color: rgba(#fff, .2);
+    line-height: 1;
+    border-radius: 100%;
+    padding: 1rem 1.4rem;
+    right: 2rem;
+    top: 2rem;
+  }
 }

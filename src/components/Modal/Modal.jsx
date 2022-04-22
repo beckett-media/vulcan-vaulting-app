@@ -6,9 +6,14 @@ const Modal = (props) => {
   const content = props.content;
 
   return (
-    <div className="modal-background u__fixed u__flex flex__jcc flex__aic">
+    <div className={`modal-background u__fixed u__flex flex__jcc flex__aic`}>
       <div className="modal__outer u__flex flex__v flex__aic u__relative">
-        <div className="modal__close u__absolute">&times;</div>
+        <div
+          className="modal__close u__absolute"
+          onClick={() => props.setIsVisible(false)}
+        >
+          &times;
+        </div>
         <div className="modal__heading">{content.heading}</div>
         <div className="modal__body">{content.body}</div>
         <div className="modal__inner">test</div>

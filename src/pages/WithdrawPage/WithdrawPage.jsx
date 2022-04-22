@@ -11,12 +11,17 @@ const WithdrawPage = () => {
   const [walletAddress, setWallet] = useState("");
   const [status, setStatus] = useState("");
   const [showTooltip, setShowTooltip] = useState(false);
+  const [showModal, setShowModal] = useState(true);
 
+  // VARIABLES
   const el = useRef();
   const q = gsap.utils.selector(el);
 
-  console.log(status);
+  const data = {
+    walletAddress,
+  };
 
+  // FUNCTIONS
   const addWalletListener = async () => {
     if (window.ethereum) {
       window.ethereum.on("accountsChanged", (accounts) => {});
@@ -56,15 +61,16 @@ const WithdrawPage = () => {
     //TODO: implement
   };
 
-  const data = {
-    walletAddress,
+  const formSubmitHandler = (e) => {
+    setShowModal(true);
+    const formData = e.target.value;
   };
 
   //MODAL CONTENT
   const withdrawModalContent = {
     heading: "Does this look correct?",
     body: "Once submitted, your information will be permanently added to the blockchain and cannot be altered",
-    inner: ,
+    inner: "test",
     buttonOne: { type: "solid", color: "orange", body: "Change" },
     buttonTwo: { type: "solid", color: "green", body: "Confirm & Sign" },
   };
@@ -110,7 +116,7 @@ const WithdrawPage = () => {
     <div className="deposit u__center" ref={el}>
       <div className="deposit__hero u__center">
         <Logo className="deposit__logo" />
-        <h2 className=" heading heading__secondary deposit__heading">
+        <h2 className="heading heading__secondary deposit__heading">
           Item Deposit
         </h2>
 
@@ -177,9 +183,11 @@ const WithdrawPage = () => {
         </div>
       </div>
       <div className="deposit__form u__flex flex__jcc">
-        <DepositForm additionalData={data} />
+        <DepositForm additionalData={data} onSubmit={formSubmitHandler} />
       </div>
-      <Modal content={withdrawModalContent} />
+      {showModal && (
+        <Modal content={withdrawModalContent} setIsVisible={setShowModal} />
+      )}
     </div>
   );
 };
