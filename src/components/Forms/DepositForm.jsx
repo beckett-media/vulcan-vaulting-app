@@ -88,11 +88,6 @@ const DepositForm = (props) => {
 
   return (
     <div className="u__flex flex__v flex__aic">
-      {serverResponse === "success" && (
-        <div className="mb16">
-          Your response has been successfully submitted.
-        </div>
-      )}
       <Formik
         initialValues={{
           firstName: "",
@@ -338,6 +333,12 @@ const DepositForm = (props) => {
             />
             {/* <ErrorMessage name="itemDesc" /> */}
           </div>
+
+          {serverResponse === "success" && (
+            <div className="mb16 u__w100" style={{ textAlign: "center" }}>
+              Your response has been successfully submitted.
+            </div>
+          )}
 
           <div className="u__w100 u__center">
             <button type="submit" className="btn gradient__green">
