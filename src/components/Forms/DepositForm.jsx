@@ -75,6 +75,13 @@ const DepositForm = (props) => {
   const apiName = "vulcanAPI";
   const path = "/deposit";
 
+  // useState to check the server response
+  const [serverResponse, setServerResponse] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
+
+  console.log(serverResponse); // this is the server response from the server after the form is submitted
+  console.log(loading); // this is the loading state of the form after the form is submitted
+
   return (
     <Formik
       initialValues={{
@@ -118,6 +125,7 @@ const DepositForm = (props) => {
       onSubmit={(values, { setSubmitting }) => {
         values.walletAddress = props.additionalData.walletAddress;
 
+        // ####################### LOADING AND API POST REQUEST #####################################
         const createDateOfBirth = (values) => {
           const dateOfBirth = `${values.year}-${values.month}-${values.day}`;
           return dateOfBirth;
@@ -126,18 +134,38 @@ const DepositForm = (props) => {
         const myInit = {
           body: {
             ...values,
-            dateOfBirth: createDateOfBirth(values),
+            "dateOfBirth": createDateOfBirth(values),
           },
         };
 
+        // function that check the server response and drigger loading state
+        const handleSubmit = async (response, error) => {
+          setLoading(true); // set loading state to true
+          if (response.status_code === 200) {
+            // if the server response is 200
+            setServerResponse(response.status); // set the server response to the state
+            setLoading(false); // set the loading state to false
+            console.log(response.status);
+          } else {
+            // if the server response is not 200
+            setServerResponse(error.status); // set the server response to the state
+            console.log(error);
+            setLoading(false); // set the loading state to false
+          }
+        };
 
-        API.put(apiName, path, myInit)
+        API.put(apiName, path, myInit) // API call
           .then((response) => {
+            // if the server response is 200
             console.log(response);
+            handleSubmit(response); // call the function that check the server response
           })
           .catch((error) => {
+            // if the server response is not 200
             console.log(error.response);
+            handleSubmit(error.response); // call the function that check the server response
           });
+        // #############################################################################
 
         // setTimeout(() => {
         //   alert(JSON.stringify(values, null, 2));
