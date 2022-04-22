@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "paths": {
+    "/deposit": {
+      "name": "/deposit",
+      "lambdaFunction": "vulcanvaultingapp80edbc18",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/updatenftrecords": {
+      "name": "/updatenftrecords",
+      "lambdaFunction": "vulcanvaultingapp80edbc18",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/NextjsForm": {
+      "name": "/NextjsForm",
+      "lambdaFunction": "vulcanvaultingapp80edbc18",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}
