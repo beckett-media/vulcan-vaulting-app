@@ -1,0 +1,53 @@
+.modal {
+  &-background {
+    background-color: rgba(#000, 0.50);
+    width: 100%;
+    height: 100%;
+  }
+
+  &__outer {
+    background-color: var(--purple-mid);
+    width: 50%;
+    border-radius: 5.5rem;
+    padding: 3.2rem 3rem;
+    text-align: center;
+  }
+
+  &__heading {
+    font-size: 2.8rem;
+    margin-bottom: 1.2rem;
+  }
+
+  &__body {
+    font-size: 2rem;
+    margin-bottom: 3.2rem;
+  }
+
+  &__inner {
+    background-color: rgba(#000, 0.2);
+    border-radius: 3rem;
+    width: 100%;
+    margin-bottom: 4.8rem;
+  }
+
+  &__buttons {
+    width: max-content;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 2.4rem;
+  }
+
+  &__close {
+    background-color: rgba(#fff, .2);
+    line-height: 1;
+    border-radius: 100%;
+    padding: 1rem 1.4rem;
+    right: 2rem;
+    top: 2rem;
+  }
+
+  &__lottie {
+    height: 20rem;
+    width: 20rem;
+  }
+}

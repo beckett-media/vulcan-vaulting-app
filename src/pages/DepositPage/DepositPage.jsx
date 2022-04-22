@@ -5,6 +5,7 @@ import { connectWallet, getCurrentWalletConnected } from "../../utils/interact";
 import { ReactComponent as Logo } from "../../static/logo.svg";
 import gsap from "gsap";
 import Tooltip from "../../components/Tooltip/Tooltip";
+import Button from "../../components/Button/Button";
 
 const DepositPage = () => {
   const [walletAddress, setWallet] = useState("");
