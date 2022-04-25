@@ -1,0 +1,59 @@
+.deposit {
+  min-width: 100vw;
+  min-height: 100vh;
+  background-color: #000000;
+  color: #fff;
+
+  &__logo {
+    margin: 4rem 0;
+  }
+
+  &__heading {
+    padding: 2rem;
+    margin-bottom: 4rem;
+
+    @supports (background-clip: text) or (-webkit-background-clip: text) {
+      background-clip: text;
+      -webkit-background-clip: text;
+      background-image: linear-gradient(to right, var(--green-light), var(--purple-light));
+      color: transparent;
+    }
+  }
+
+  &__hero {
+    &-content {
+      width: 62rem;
+      display: grid;
+      text-align: center;
+      justify-items: center;
+      grid-row-gap: 2.4rem;
+      margin-bottom: 6.2rem;
+    }
+  }
+
+  &__wallet-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 2.4rem;
+    margin-bottom: 8rem;
+  }
+
+  &__btn {
+    width: 100%;
+  }
+
+  &__form {
+    background-image: linear-gradient(to bottom, black, var(--purple-dark));
+    width: 100%;
+    padding-bottom: 10rem;
+  }
+
+  &__tooltip {
+    &--right {
+      right: -51%;
+    }
+    &--left {
+      left: -50%;
+    }
+  }
+}

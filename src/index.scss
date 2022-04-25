@@ -1,57 +1,354 @@
+///////////////////////
+// Index
+// 1. Global styles reset
+// 2. @'s
+// 3. Global styles
+// 4. Utility classes
+
+/////////////////////
+// Global styles reset
+
 /* http://meyerweb.com/eric/tools/css/reset/ 
   v2.0 | 20110126
   License: none (public domain)
 */
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
-}
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
-}
-body {
-	line-height: 1;
-}
-ol, ul {
-	list-style: none;
-}
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
-}
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
 }
 
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+  box-sizing: border-box;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/////////////////////
+// @'s
+
+@font-face {
+  font-family: 'Alliance Platt';
+  src: local('Alliance Platt'), url('../public/Alliance-PlattMedium.otf') format('opentype');
+}
+
+/////////////////////
+// Global styles
+
+:root {
+  --purple: #302b40;
+  --purple-light: #d0dbff;
+  --purple-dark: #170f36;
+  --green-light: #bbfde3;
+  --green-dark: #2bd9d5;
+  --orange-light: #fdd3bb;
+  --orange-dark: #d97f2b;
+  --blue-dark: #161618;
+  --grey: #c4c4c4;
+  --grey-dark: #303030;
+}
+
+body {
+  background-color: black;
+  overscroll-behavior: none;
+}
+
+.status-dot {
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 100%;
+}
+
+.bg {
+  &__green {
+    background-color: var(--green-dark);
+  }
+
+  &__orange {
+    background-color: var(--orange-dark);
+  }
+
+  &__grey {
+    background-color: var(--grey);
+  }
+}
+
+html {
+  // This defines what 1rem is
+  font-size: 62.5%; // 1rem = 10px, 10/16 = 62.5%
+}
+
+body {
+  // font-size: $default-font-size;
+  font-family: 'arial', sans-serif;
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 155%;
+}
+
+.btn {
+  border-radius: 5.5rem;
+  width: 30rem;
+  padding: 1.4rem 2.2rem;
+  border: none;
+  font-size: 2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.5s ease;
+
+  &:hover {
+    box-shadow: 0 0 3rem -8px #fff;
+  }
+
+  &__outline {
+    &--outer {
+      background-color: white;
+      border-radius: 5.5rem;
+      padding: 1px;
+    }
+
+    &--inner {
+      background-color: black;
+      color: white;
+    }
+  }
+
+  &__inactive {
+    cursor: not-allowed;
+  }
+}
+
+.gradient {
+  &__green {
+    background-image: linear-gradient(to right, var(--green-light), var(--green-dark));
+  }
+
+  &__orange {
+    background-image: linear-gradient(to right, var(--orange-light), var(--orange-dark));
+  }
+}
+
+.heading {
+  font-family: 'Alliance Platt', Arial, sans-serif;
+  font-weight: 500;
+
+  &__primary {
+    line-height: 155%;
+    font-size: 4.7rem;
+  }
+
+  &__secondary {
+    font-family: 'Alliance Platt', Arial, sans-serif;
+    font-weight: 500;
+    font-size: 4.7rem;
+  }
+}
+
+/////////////////////
+// Utility classes
+
 .u {
-	&-flex-v-tl {
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-start;
-		align-items: flex-start;
-	}
+  &__flex {
+    display: flex;
+  }
+
+  &__center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  &__w100 {
+    width: 100%;
+  }
+
+  &__block {
+    display: block;
+  }
+
+  &__relative {
+    position: relative;
+  }
+
+  &__absolute {
+    position: absolute;
+  }
+
+  &__hide {
+    display: none;
+  }
+}
+
+.flex {
+  &__v {
+    flex-direction: column;
+  }
+
+  &__jcsa {
+    justify-content: space-around;
+  }
+
+  &__jcsb {
+    justify-content: space-between;
+  }
+
+  &__jcc {
+    justify-content: center;
+  }
+
+  &__aic {
+    align-items: center;
+  }
+}
+
+.grid {
+  &__full {
+    grid-column-start: 1;
+    grid-column-end: -1;
+  }
+}
+
+.mb16 {
+  margin-bottom: 1.6rem;
+}
+
+.opacity {
+  &-0 {
+    opacity: 0;
+  }
+}
+
+.bg {
+  &__grey {
+    background-color: var(--grey);
+  }
 }
