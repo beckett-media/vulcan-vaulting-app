@@ -158,7 +158,7 @@
         "TemplateURL": "https://s3.amazonaws.com/amplify-vulcanvaultingapp-dev-92832-deployment/amplify-cfn-templates/function/vulcanvaultingapp80edbc18-cloudformation-template.json",
         "Parameters": {
           "deploymentBucketName": "amplify-vulcanvaultingapp-dev-92832-deployment",
-          "s3Key": "amplify-builds/vulcanvaultingapp80edbc18-655a505068752f586d63-build.zip",
+          "s3Key": "amplify-builds/vulcanvaultingapp80edbc18-37357454696e45732f79-build.zip",
           "secretsPathAmplifyAppId": "d2c9h8fzhu3a6o",
           "env": "dev"
         }

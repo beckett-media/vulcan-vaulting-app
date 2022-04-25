@@ -18,26 +18,26 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
       "dependsOn": [],
-      "lastBuildTimeStamp": "2022-04-21T16:05:12.470Z",
-      "lastBuildType": "PROD",
-      "lastPackageTimeStamp": "2022-04-21T16:05:26.478Z",
-      "distZipFilename": "vulcanvaultingapp80edbc18-655a505068752f586d63-build.zip",
-      "s3Bucket": {
-        "deploymentBucketName": "amplify-vulcanvaultingapp-dev-92832-deployment",
-        "s3Key": "amplify-builds/vulcanvaultingapp80edbc18-655a505068752f586d63-build.zip"
-      },
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-vulcanvaultingapp-dev-92832-deployment/amplify-cfn-templates/function/vulcanvaultingapp80edbc18-cloudformation-template.json",
-        "logicalId": "functionvulcanvaultingapp80edbc18"
-      },
-      "lastPushTimeStamp": "2022-04-21T16:06:51.936Z",
       "output": {
         "Region": "us-west-1",
         "Arn": "arn:aws:lambda:us-west-1:548281136650:function:vulcanvaultingapp80edbc18-dev",
         "Name": "vulcanvaultingapp80edbc18-dev",
         "LambdaExecutionRole": "vulcanvaultingappLambdaRolea0bb4a8a-dev"
       },
-      "lastPushDirHash": "m6GA8+QXehpSDC4GkRwuc7nf80o="
+      "lastPushTimeStamp": "2022-04-25T13:27:39.873Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-vulcanvaultingapp-dev-92832-deployment/amplify-cfn-templates/function/vulcanvaultingapp80edbc18-cloudformation-template.json",
+        "logicalId": "functionvulcanvaultingapp80edbc18"
+      },
+      "lastBuildTimeStamp": "2022-04-25T13:26:34.714Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2022-04-25T13:26:38.032Z",
+      "distZipFilename": "vulcanvaultingapp80edbc18-37357454696e45732f79-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-vulcanvaultingapp-dev-92832-deployment",
+        "s3Key": "amplify-builds/vulcanvaultingapp80edbc18-37357454696e45732f79-build.zip"
+      },
+      "lastPushDirHash": "MwQwbDmOEe+XblZbd6axPpwdb8k="
     }
   },
   "api": {
@@ -54,15 +54,15 @@
           ]
         }
       ],
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-vulcanvaultingapp-dev-92832-deployment/amplify-cfn-templates/api/vulcanAPI-cloudformation-template.json",
-        "logicalId": "apivulcanAPI"
-      },
-      "lastPushTimeStamp": "2022-04-21T16:06:51.296Z",
       "output": {
         "ApiName": "vulcanAPI",
         "RootUrl": "https://wagopxisb6.execute-api.us-west-1.amazonaws.com/dev",
         "ApiId": "wagopxisb6"
+      },
+      "lastPushTimeStamp": "2022-04-25T13:27:39.873Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-vulcanvaultingapp-dev-92832-deployment/amplify-cfn-templates/api/vulcanAPI-cloudformation-template.json",
+        "logicalId": "apivulcanAPI"
       },
       "lastPushDirHash": "Xa9uRsNWUA98bhbI1VjMq0HLzbU="
     }
@@ -91,11 +91,6 @@
           "EMAIL"
         ]
       },
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-vulcanvaultingapp-dev-92832-deployment/amplify-cfn-templates/auth/vulcanvaultingapp-cloudformation-template.json",
-        "logicalId": "authvulcanvaultingapp"
-      },
-      "lastPushTimeStamp": "2022-04-21T16:06:51.936Z",
       "output": {
         "UserPoolId": "us-west-1_J7Mue8ErD",
         "AppClientIDWeb": "5992fq7e38vrjmai6cpo7t08of",
@@ -105,8 +100,12 @@
         "IdentityPoolName": "vulcanvaultingapp_identitypool_6b2c40ce__dev",
         "UserPoolName": "vulcanvaultingapp_userpool_6b2c40ce"
       },
-      "lastPushDirHash": "Vy2I0eLRcxy3rSXkwjRwVZ3s+t0=",
-      "customAuth": false
+      "lastPushTimeStamp": "2022-04-25T13:27:39.873Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-vulcanvaultingapp-dev-92832-deployment/amplify-cfn-templates/auth/vulcanvaultingapp-cloudformation-template.json",
+        "logicalId": "authvulcanvaultingapp"
+      },
+      "lastPushDirHash": "Vy2I0eLRcxy3rSXkwjRwVZ3s+t0="
     }
   }
 }
