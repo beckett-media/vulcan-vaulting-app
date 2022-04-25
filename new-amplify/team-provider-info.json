@@ -18,7 +18,7 @@
       "function": {
         "vulcanvaultingapp80edbc18": {
           "deploymentBucketName": "amplify-vulcanvaultingapp-dev-92832-deployment",
-          "s3Key": "amplify-builds/vulcanvaultingapp80edbc18-68714d4a6c526a614473-build.zip",
+          "s3Key": "amplify-builds/vulcanvaultingapp80edbc18-6a526f69493149736f6c-build.zip",
           "secretsPathAmplifyAppId": "d2c9h8fzhu3a6o"
         }
       }
