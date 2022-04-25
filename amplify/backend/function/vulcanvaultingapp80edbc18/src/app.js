@@ -150,6 +150,126 @@ app.put("/deposit", async function (req, res) {
       });
   }
 });
+
+/****************************
+ * (put) withdraw method for Vulcan Records *
+ ****************************/
+
+
+app.put("/withdraw", async function (req, res) {
+  const axios = require("axios");
+  const aws = require("aws-sdk");
+  const keccak256 = require('keccak256')
+
+  const { v4: uuidv4 } = require("uuid");
+  const crypto = require("crypto");
+
+  // ######################## FOUNDRY API PARAMS ############################
+
+  const riWrt =
+    "ri.ontology.main.ontology.b034a691-27e9-4959-9bcc-bc99b1552c97";
+
+  const createVaultingRecord =
+    "new-action-0cb194d6-882e-1c9e-3f8f-bacb0c93833b";
+  const applyAction_createObject = `https://beckett.palantirfoundry.com/api/v1/ontologies/${riWrt}/actions/${createVaultingRecord}/apply`;
+
+  //############################### GET TOKEN ############################
+  const { Parameters } = await new aws.SSM() // get the secret from SSM
+    .getParameters({
+      Names: ["FOUNDRY_TOKEN"].map((secretName) => process.env[secretName]), 
+      WithDecryption: true,   
+    })
+    .promise();
+
+  const token = Parameters;
+
+  const todayDate = new Date().toISOString(); // ISO format
+
+  const newId = uuidv4(); // UUID
+
+  //############################### GENERATE SALT ############################
+  var genRandomString = function (length) {
+    return crypto
+      .randomBytes(Math.ceil(length / 2))
+       .toString("hex") /** convert to hexadecimal format */
+      .slice(0, length); /**return required number of characters */
+  };
+
+  function saltHashValue() {
+    var salt = genRandomString(36); /** Gives us salt of length 36 */
+    return salt;
+  }
+  //############################### GENERATE HASH ONLY ############################
+
+  function hashValue(first_name) {
+    var hash = crypto.createHash("sha256");
+    hash.update(first_name);
+    var value = hash.digest("hex");
+    return value;
+  }
+
+  //################################ POST VAULTING RECORD ############################
+
+  const options = {
+    method: "POST",
+    url: applyAction_createObject,
+    headers: {
+      Authorization: "Bearer " + token[0].Value,
+      "Content-Type": "application/json",
+    },
+    data: {
+      "parameters": {
+        // ######## FORM DATA #########
+        "date_of_birth": req.body.dateOfBirth,
+        "first_name": req.body.firstName,
+        "email": req.body.email,
+        "zip": req.body.zip,
+        "city": req.body.city,
+        "last_name": req.body.lastName,
+        "wallet_address": req.body.walletAddress,
+        "vaulted_item_description": req.body.itemDesc,
+        "address_line_1": req.body.address1,
+        "vaulted_item_name": req.body.itemName,
+        "address_line_2": req.body.address2,
+        "state": req.body.state,
+
+        // ######## GENERATED VALUES #########
+        "submitted_date": todayDate,
+        "vault_status": "deposit_request",
+        "action_type": "Deposit",
+        "vaulted_item_unique_id": `${newId}`,
+        "salt": `${saltHashValue()}`,
+
+        // ############# NOT REQUIRED BY PALANTIR ##############
+        "image_filename": "",
+        "date_vaulted": "",
+        "date_received": "",
+      },
+    },
+  };
+
+  if (token[0].Value.length === 0) {
+    res.status(500).send("No API key found");
+  } else {
+
+    axios(options)
+      .then((response) => {
+        res.send({
+          status_code: response.status,
+          status_message: response.statusText,
+          hash: hashValue(req.body.firstName),
+        });
+      })
+      .catch((error) => {
+        res.send({
+          data: error.message,
+          status_code: error.response.status,
+          status_message: error.response.statusText,
+
+        });
+      });
+  }
+});
 /****************************
  * put method for NFT Records *
  ****************************/
