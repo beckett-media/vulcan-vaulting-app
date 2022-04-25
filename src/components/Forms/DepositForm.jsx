@@ -1,10 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { API } from 'aws-amplify';
+import Link from 'next/link'
 import styles from './forms.module.scss';
 import * as Yup from 'yup';
+import { Button } from '@aws-amplify/ui-react';
+import { useRouter } from 'next/router';
+
+
+
 
 const DepositForm = (props) => {
+  const router = useRouter();
   const d = new Date();
   const daysArray = [...Array(32).keys()].slice(1);
   const monthsArray = [...Array(13).keys()].slice(1);
@@ -74,6 +81,10 @@ const DepositForm = (props) => {
 
   const apiName = "vulcanAPI";
   const path = "/deposit";
+  const [success, setSuccess] = useState(false);
+  const [serverMessage, setServerMessage] = useState('');
+
+    
 
   return (
     <Formik
@@ -131,9 +142,15 @@ const DepositForm = (props) => {
         API.put(apiName, path, myInit).then((response) => {
           console.log(response);
           console.log("walletaddress:", walletAddress);
+          setSuccess(true);
+          setServerMessage(response.message);
+          router.push('/success');
+          // 
+          
           setSubmitting(false);
         }).catch((error) => {
           console.log(error);
+          setServerMessage(error.message);
           setSubmitting(false);
         });
         // const createDateOfBirth = (values) => {
@@ -310,9 +327,8 @@ const DepositForm = (props) => {
           />
           {/* <ErrorMessage name="itemDesc" /> */}
         </div>
-
         <div className="u__w100 u__center">
-          <button type="submit" className="btn gradient__green">
+          <button type="submit" className="btn gradient__green" >
             Submit
           </button>
         </div>
