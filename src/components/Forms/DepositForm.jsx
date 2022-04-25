@@ -138,7 +138,8 @@ const DepositForm = (props) => {
 
         API.put(apiName, path, myInit)
           .then((response) => {
-            console.log(response.hash);
+            console.log(response.status_code);
+            console.log(response.message);
             setSuccess(true);
             setSubmitting(false);
           })
