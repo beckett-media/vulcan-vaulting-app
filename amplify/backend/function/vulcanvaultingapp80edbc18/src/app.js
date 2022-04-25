@@ -166,12 +166,12 @@ app.put("/withdraw", async function (req, res) {
 
   // ######################## FOUNDRY API PARAMS ############################
 
-  const riWrt =
-    "ri.ontology.main.ontology.b034a691-27e9-4959-9bcc-bc99b1552c97";
+  // const riWrt =
+  //   "ri.ontology.main.ontology.b034a691-27e9-4959-9bcc-bc99b1552c97";
 
-  const createVaultingRecord =
-    "new-action-0cb194d6-882e-1c9e-3f8f-bacb0c93833b";
-  const applyAction_createObject = `https://beckett.palantirfoundry.com/api/v1/ontologies/${riWrt}/actions/${createVaultingRecord}/apply`;
+  // const createVaultingRecord =
+  //   "new-action-0cb194d6-882e-1c9e-3f8f-bacb0c93833b";
+  // const applyAction_createObject = `https://beckett.palantirfoundry.com/api/v1/ontologies/${riWrt}/actions/${createVaultingRecord}/apply`;
 
   //############################### GET TOKEN ############################
   const { Parameters } = await new aws.SSM() // get the secret from SSM
@@ -210,64 +210,68 @@ app.put("/withdraw", async function (req, res) {
 
   //################################ POST VAULTING RECORD ############################
 
-  const options = {
-    method: "POST",
-    url: applyAction_createObject,
-    headers: {
-      Authorization: "Bearer " + token[0].Value,
-      "Content-Type": "application/json",
-    },
-    data: {
-      "parameters": {
-        // ######## FORM DATA #########
-        "date_of_birth": req.body.dateOfBirth,
-        "first_name": req.body.firstName,
-        "email": req.body.email,
-        "zip": req.body.zip,
-        "city": req.body.city,
-        "last_name": req.body.lastName,
-        "wallet_address": req.body.walletAddress,
-        "vaulted_item_description": req.body.itemDesc,
-        "address_line_1": req.body.address1,
-        "vaulted_item_name": req.body.itemName,
-        "address_line_2": req.body.address2,
-        "state": req.body.state,
+  // const options = {
+  //   method: "POST",
+  //   url: applyAction_createObject,
+  //   headers: {
+  //     Authorization: "Bearer " + token[0].Value,
+  //     "Content-Type": "application/json",
+  //   },
+  //   data: {
+  //     "parameters": {
+  //       // ######## FORM DATA #########
+  //       "date_of_birth": req.body.dateOfBirth,
+  //       "first_name": req.body.firstName,
+  //       "email": req.body.email,
+  //       "zip": req.body.zip,
+  //       "city": req.body.city,
+  //       "last_name": req.body.lastName,
+  //       "wallet_address": req.body.walletAddress,
+  //       "vaulted_item_description": req.body.itemDesc,
+  //       "address_line_1": req.body.address1,
+  //       "vaulted_item_name": req.body.itemName,
+  //       "address_line_2": req.body.address2,
+  //       "state": req.body.state,
 
-        // ######## GENERATED VALUES #########
-        "submitted_date": todayDate,
-        "vault_status": "deposit_request",
-        "action_type": "Deposit",
-        "vaulted_item_unique_id": `${newId}`,
-        "salt": `${saltHashValue()}`,
+  //       // ######## GENERATED VALUES #########
+  //       "submitted_date": todayDate,
+  //       "vault_status": "deposit_request",
+  //       "action_type": "Deposit",
+  //       "vaulted_item_unique_id": `${newId}`,
+  //       "salt": `${saltHashValue()}`,
 
-        // ############# NOT REQUIRED BY PALANTIR ##############
-        "image_filename": "",
-        "date_vaulted": "",
-        "date_received": "",
-      },
-    },
-  };
+  //       // ############# NOT REQUIRED BY PALANTIR ##############
+  //       "image_filename": "",
+  //       "date_vaulted": "",
+  //       "date_received": "",
+  //     },
+  //   },
+  // };
 
   if (token[0].Value.length === 0) {
     res.status(500).send("No API key found");
   } else {
 
-    axios(options)
-      .then((response) => {
-        res.send({
-          status_code: response.status,
-          status_message: response.statusText,
-          hash: hashValue(req.body.firstName),
-        });
-      })
-      .catch((error) => {
-        res.send({
-          data: error.message,
-          status_code: error.response.status,
-          status_message: error.response.statusText,
+    // axios(options)
+    //   .then((response) => {
+    //     res.send({
+    //       status_code: response.status,
+    //       status_message: response.statusText,
+    //       hash: hashValue(req.body.firstName),
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     res.send({
+    //       data: error.message,
+    //       status_code: error.response.status,
+    //       status_message: error.response.statusText,
 
-        });
-      });
+    //     });
+    //   });
+    res.send({
+      hash: hashValue(req.body.firstName),
+      status_code: 200,
+    });
   }
 });
 /****************************
