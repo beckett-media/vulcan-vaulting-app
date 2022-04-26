@@ -1,7 +1,7 @@
 import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 
 import { hexToAscii } from '../../utils/utils';
-import { getNetworkConfig } from '../../utils/networksConfig';
+import { getExpectedChainId, getNetworkConfig } from '../../utils/networksConfig';
 
 import { Web3Context } from '../hooks/useWeb3Context';
 import { getWallet, WalletType } from './WalletOptions';
@@ -33,6 +33,7 @@ export type Web3Data = {
   loading: boolean;
   provider: JsonRpcProvider | undefined;
   chainId: number;
+  isExpectedChain: boolean;
   switchNetwork: (chainId: number) => Promise<void>;
   getTxError: (txHash: string) => Promise<string>;
   sendTx: (txData: transactionType) => Promise<TransactionResponse>;
@@ -282,7 +283,8 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
           provider,
           connected: active,
           loading,
-          chainId: chainId || 1,
+          chainId,
+          isExpectedChain: chainId === getExpectedChainId(),
           switchNetwork,
           getTxError,
           sendTx,

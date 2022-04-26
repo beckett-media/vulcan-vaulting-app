@@ -11,7 +11,7 @@ import Tooltip from '../src/components/Tooltip/Tooltip';
 import gsap from 'gsap';
 
 export default function DepositPage() {
-  const { currentAccount, loading: web3Loading, disconnectWallet } = useWeb3Context();
+  const { currentAccount, loading: web3Loading, disconnectWallet, isExpectedChain } = useWeb3Context();
 
   const el = useRef();
   const q = gsap.utils.selector(el);
