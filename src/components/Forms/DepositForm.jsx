@@ -182,29 +182,35 @@ const DepositForm = (props) => {
     >
       <Form className={`${styles.form} u__left`}>
         <div className={`${styles.form__row}`}>
-          <Field
-            name="firstName"
-            type="text"
-            placeholder="First Name"
-            className={`${styles.form__field}`}
-          />
-          {/* <ErrorMessage name="firstName" /> */}
+          <div className="u__relative">
+            <Field
+              name="firstName"
+              type="text"
+              placeholder="First Name"
+              className={`${styles.form__field}`}
+            />
+            <ErrorMessage name="firstName" />
+          </div>
 
-          <Field
-            name="lastName"
-            type="text"
-            placeholder="Last Name"
-            className={`${styles.form__field}`}
-          />
-          {/* <ErrorMessage name="lastName" /> */}
+          <div className="u__relative">
+            <Field
+              name="lastName"
+              type="text"
+              placeholder="Last Name"
+              className={`${styles.form__field}`}
+            />
+            <ErrorMessage name="lastName" />
+          </div>
 
-          <Field
-            name="email"
-            type="email"
-            placeholder="Email Address"
-            className={`${styles.form__field}`}
-          />
-          {/* <ErrorMessage name="email" /> */}
+          <div className="u__relative">
+            <Field
+              name="email"
+              type="email"
+              placeholder="Email Address"
+              className={`${styles.form__field}`}
+            />
+            <ErrorMessage name="email" />
+          </div>
         </div>
 
         <div className={`${styles.form__row}`}>
@@ -215,49 +221,55 @@ const DepositForm = (props) => {
             <div className={`${styles['form__select-group']}`}>
               <div className={`${styles['form__select-wrapper']} u__flex flex__aic`}>
                 <div className={`${styles['form__select-arrow']}`}></div>
-                <Field
-                  name="month"
-                  as="select"
-                  className={`${styles.form__select} ${styles.form__field}`}
-                >
-                  <option value="MM">MM</option>
-                  {monthsArray.map((i) => {
-                    const month = i.toString().padStart(2, '0');
-                    return <option value={`${month}`}>{month}</option>;
-                  })}
-                </Field>
-                {/* <ErrorMessage name="month" /> */}
+                <div className="u">
+                  <Field
+                    name="month"
+                    as="select"
+                    className={`${styles.form__select} ${styles.form__field}`}
+                  >
+                    <option value="MM">MM</option>
+                    {monthsArray.map((i) => {
+                      const month = i.toString().padStart(2, '0');
+                      return <option value={`${month}`}>{month}</option>;
+                    })}
+                  </Field>
+                  <ErrorMessage name="month" />
+                </div>
               </div>
 
               <div className={`${styles['form__select-wrapper']} u__flex flex__aic`}>
                 <div className={`${styles['form__select-arrow']}`}></div>
-                <Field
-                  name="day"
-                  as="select"
-                  className={`${styles.form__select} ${styles.form__field}`}
-                >
-                  <option value="DD">DD</option>
-                  {daysArray.map((i) => {
-                    const day = i.toString().padStart(2, '0');
-                    return <option value={`${day}`}>{day}</option>;
-                  })}
-                </Field>
-                {/* <ErrorMessage name="day" /> */}
+                <div className="u__relative">
+                  <Field
+                    name="day"
+                    as="select"
+                    className={`${styles.form__select} ${styles.form__field}`}
+                  >
+                    <option value="DD">DD</option>
+                    {daysArray.map((i) => {
+                      const day = i.toString().padStart(2, '0');
+                      return <option value={`${day}`}>{day}</option>;
+                    })}
+                  </Field>
+                  <ErrorMessage name="day" />
+                </div>
               </div>
 
               <div className={`${styles['form__select-wrapper']} u__flex flex__aic`}>
                 <div className={`${styles['form__select-arrow']}`}></div>
-                <Field
-                  name="year"
-                  as="select"
-                  className={`${styles.form__select} ${styles.form__field}`}
-                >
-                  <option value="YYYY">YYYY</option>
-                  {yearsArray.map((i) => {
-                    return <option value={`${i}`}>{i}</option>;
-                  })}
-                </Field>
-                {/* <ErrorMessage name="year" /> */}
+                <div className="u__relative">
+                  <Field
+                    name="year"
+                    as="select"
+                    className={`${styles.form__select} ${styles.form__field}`}
+                  >
+                    <option value="YYYY">YYYY</option>
+                    {yearsArray.map((i) => {
+                      return <option value={`${i}`}>{i}</option>;
+                    })}
+                  </Field>
+                  <ErrorMessage name="year" />
+                </div>
               </div>
             </div>
           </div>
@@ -270,7 +282,7 @@ const DepositForm = (props) => {
             placeholder="Address 1"
             className={`${styles.form__field}`}
           />
-          {/* <ErrorMessage name="address1" /> */}
+          <ErrorMessage name="address1" />
 
           <Field
             name="address2"
@@ -278,10 +290,10 @@ const DepositForm = (props) => {
             placeholder="Address 2"
             className={`${styles.form__field}`}
           />
-          {/* <ErrorMessage name="address2" /> */}
+          <ErrorMessage name="address2" />
 
           <Field name="city" type="text" placeholder="City" className={`${styles.form__field}`} />
-          {/* <ErrorMessage name="city" /> */}
+          <ErrorMessage name="city" />
 
           <div className={`${styles['form__state-zip']}`}>
             <div className={`${styles['form__select-wrapper']} u__flex flex__aic`}>
@@ -296,11 +308,11 @@ const DepositForm = (props) => {
                   return <option value={`${i}`}>{i}</option>;
                 })}
               </Field>
-              {/* <ErrorMessage name="state" /> */}
+              <ErrorMessage name="state" />
             </div>
 
             <Field name="zip" type="text" placeholder="Zip" className={`${styles.form__field}`} />
-            {/* <ErrorMessage name="zip" /> */}
+            <ErrorMessage name="zip" />
           </div>
         </div>
 
@@ -311,7 +323,7 @@ const DepositForm = (props) => {
             placeholder="Vaulted item name"
             className={`${styles.form__field}`}
           />
-          {/* <ErrorMessage name="itemName" /> */}
+          <ErrorMessage name="itemName" />
 
           <div>&nbsp;</div>
 
@@ -321,7 +333,7 @@ const DepositForm = (props) => {
             placeholder="Vaulted item description"
             className={`${styles.form__field} ${styles.form__textarea} grid__full`}
           />
-          {/* <ErrorMessage name="itemDesc" /> */}
+          <ErrorMessage name="itemDesc" />
         </div>
         <div className="u__w100 u__center">
           <button type="submit" className="btn gradient__green">
