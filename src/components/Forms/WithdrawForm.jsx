@@ -75,7 +75,7 @@ const WithdrawForm = (props) => {
   const walletAddress = props.additionalData;
 
   const apiName = 'vulcanAPI';
-  const path = '/deposit';
+  const path = '/withdraw';
   const [success, setSuccess] = useState(false);
   const [serverMessage, setServerMessage] = useState('');
 
