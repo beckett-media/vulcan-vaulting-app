@@ -78,9 +78,9 @@ const DepositForm = (props) => {
 
   const apiName = 'vulcanAPI';
   // ####### API PATH #######
-  const path = '/withdraw'; // path to the API endpoint
+  const path = '/deposit'; // path to the API endpoint
   // ########################
-  
+
   const [success, setSuccess] = useState(false);
   const [serverMessage, setServerMessage] = useState('');
 
