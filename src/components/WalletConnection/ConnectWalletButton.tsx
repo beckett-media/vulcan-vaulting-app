@@ -5,7 +5,7 @@ import { getEIP712ForwarderSignature } from '../../utils/utils';
 
 export const ConnectWalletButton = () => {
   const { setWalletModalOpen } = useWalletModalContext();
-  const { connected, currentAccount, chainId, signTxData } = useWeb3Context();
+  const { connected, currentAccount, chainId, signTxData, isExpectedChain } = useWeb3Context();
 
   const handleConnect = async () => {
     if (connected) {
@@ -20,8 +20,11 @@ export const ConnectWalletButton = () => {
     }
   };
 
+  console.log(isExpectedChain);
+  
+
   return (
-    <div className="btn__outline--outer gradient__green">
+    <div className={`btn__outline--outer gradient__green ${(currentAccount && !isExpectedChain) && 'gradient__orange'}`}>
       <button
         className="btn btn__outline--inner deposit__btn u__flex flex__jcsa flex__aic"
         id="walletButton"

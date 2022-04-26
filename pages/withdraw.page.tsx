@@ -3,6 +3,7 @@ import styles from './deposit.module.scss';
 import { useRef } from 'react';
 import { useWeb3Context } from '../src/libs/hooks/useWeb3Context';
 import { ConnectWalletButton } from '../src/components/WalletConnection/ConnectWalletButton';
+import { getExpectedChainId } from '../src/utils/networksConfig';
 
 import Logo from '../public/logo.svg';
 
@@ -11,7 +12,7 @@ import Tooltip from '../src/components/Tooltip/Tooltip';
 import gsap from 'gsap';
 
 export default function DepositPage() {
-  const { currentAccount, loading: web3Loading, disconnectWallet, isExpectedChain } = useWeb3Context();
+  const { currentAccount, loading: web3Loading, disconnectWallet, isExpectedChain, switchNetwork} = useWeb3Context();
 
   const el = useRef();
   const q = gsap.utils.selector(el);
@@ -28,6 +29,16 @@ export default function DepositPage() {
       t1.kill();
     };
   };
+
+  const handleSwitchClick = async () => {
+    console.log('success');
+    
+    if (isExpectedChain) {
+      return;
+    }
+
+    await switchNetwork(getExpectedChainId());
+  }
 
   return (
     <div className={`${styles.deposit} u__center`} ref={el}>
@@ -66,6 +77,7 @@ export default function DepositPage() {
 
           <ConnectWalletButton />
         </div>
+        {!isExpectedChain && <div>Please connect to Polygon two use this service by clicking here: <span onClick={() => handleSwitchClick()}>Switch to Polygon</span></div>}
       </div>
       <div className={`${styles['deposit__form']} u__flex flex__jcc`}>
         <WithdrawForm additionalData={{ currentAccount }} />
