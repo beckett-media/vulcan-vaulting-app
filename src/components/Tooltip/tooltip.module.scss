@@ -1,6 +1,7 @@
 .tooltip {
-  display: none;
-  opacity: 0;
+  // display: none;
+  // opacity: 0;
+  z-index: 1000;
   
   
   &-arrow {
@@ -22,7 +23,7 @@
     line-height: 155%;
     padding: 8px;
     border-radius: 1rem;
-    width: 29.5rem;
+    max-width: 29.5rem;
     text-align: center;
   }
 }
