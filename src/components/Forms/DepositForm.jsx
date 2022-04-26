@@ -1,14 +1,11 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { API } from 'aws-amplify';
-import Link from 'next/link'
+import Link from 'next/link';
 import styles from './forms.module.scss';
 import * as Yup from 'yup';
 import { Button } from '@aws-amplify/ui-react';
 import { useRouter } from 'next/router';
-
-
-
 
 const DepositForm = (props) => {
   const router = useRouter();
@@ -79,13 +76,18 @@ const DepositForm = (props) => {
   ];
   const walletAddress = props.additionalData;
 
-  const apiName = "vulcanAPI";
-  const path = "/deposit";
+  const apiName = 'vulcanAPI';
+  // ####### API PATH #######
+  const path = '/deposit'; // path to the API endpoint
+  // ########################
+
   const [success, setSuccess] = useState(false);
   const [serverMessage, setServerMessage] = useState('');
 
-    
-
+  // if sucess, redirect to router.push('/success');
+  if (success) {
+    router.push('/success');
+  }
   return (
     <Formik
       initialValues={{
@@ -127,32 +129,28 @@ const DepositForm = (props) => {
         itemDesc: Yup.string().required('Required'),
       })}
       onSubmit={(values, { setSubmitting }) => {
-        values.walletAddress = props.additionalData.currentAccount
-        
+        values.walletAddress = props.additionalData.currentAccount;
+
         const myInit = {
           body: {
-            "dateOfBirth": `${values.year}-${values.month}-${values.day}`,
-            "walletAddress": values.walletAddress,
-            ...values
-         
+            dateOfBirth: `${values.year}-${values.month}-${values.day}`,
+            walletAddress: values.walletAddress,
+            ...values,
           },
         };
-     
 
-        API.put(apiName, path, myInit).then((response) => {
-          console.log(response);
-          console.log("walletaddress:", walletAddress);
-          setSuccess(true);
-          setServerMessage(response.message);
-          router.push('/success');
-          // 
-          
-          setSubmitting(false);
-        }).catch((error) => {
-          console.log(error);
-          setServerMessage(error.message);
-          setSubmitting(false);
-        });
+        API.put(apiName, path, myInit)
+          .then((response) => {
+            console.log(response.status_code);
+            console.log(response);
+            setSuccess(true);
+            setSubmitting(false);
+          })
+          .catch((error) => {
+            console.log(error);
+            setServerMessage(error.message);
+            setSubmitting(false);
+          });
         // const createDateOfBirth = (values) => {
         //   const dateOfBirth = `${values.year}-${values.month}-${values.day}`;
         //   return dateOfBirth;
@@ -166,7 +164,6 @@ const DepositForm = (props) => {
         //   },
         // };
 
-
         // API.put(apiName, path, myInit)
         //   .then((response) => {
         //     console.log(response);
@@ -176,7 +173,6 @@ const DepositForm = (props) => {
         //     console.log(error.response);
         //     setSubmitting(false);
         //   });
-      
 
         // setTimeout(() => {
         //   alert(JSON.stringify(values, null, 2));
@@ -328,7 +324,7 @@ const DepositForm = (props) => {
           {/* <ErrorMessage name="itemDesc" /> */}
         </div>
         <div className="u__w100 u__center">
-          <button type="submit" className="btn gradient__green" >
+          <button type="submit" className="btn gradient__green">
             Submit
           </button>
         </div>
