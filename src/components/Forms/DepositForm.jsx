@@ -6,6 +6,10 @@ import styles from './forms.module.scss';
 import * as Yup from 'yup';
 import { Button } from '@aws-amplify/ui-react';
 import { useRouter } from 'next/router';
+import Tooltip from '../Tooltip/Tooltip';
+import { gsap } from 'gsap';
+import Lottie from 'lottie-react';
+import loadingSpinner from '../../../public/loading-lottie.json';
 
 const DepositForm = (props) => {
   const router = useRouter();
@@ -83,6 +87,7 @@ const DepositForm = (props) => {
 
   const [success, setSuccess] = useState(false);
   const [serverMessage, setServerMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   // if sucess, redirect to router.push('/success');
   if (success) {
@@ -129,6 +134,7 @@ const DepositForm = (props) => {
         itemDesc: Yup.string().required('Required'),
       })}
       onSubmit={(values, { setSubmitting }) => {
+        setIsLoading(true);
         values.walletAddress = props.additionalData.currentAccount;
 
         const myInit = {
@@ -141,12 +147,14 @@ const DepositForm = (props) => {
 
         API.put(apiName, path, myInit)
           .then((response) => {
+            setIsLoading(false);
             console.log(response.status_code);
             console.log(response);
             setSuccess(true);
             setSubmitting(false);
           })
           .catch((error) => {
+            setIsLoading(false);
             console.log(error);
             setServerMessage(error.message);
             setSubmitting(false);
@@ -325,7 +333,10 @@ const DepositForm = (props) => {
         </div>
         <div className="u__w100 u__center">
           <button type="submit" className="btn gradient__green">
-            Submit
+            {isLoading && (
+              <Lottie animationData={loadingSpinner} loop={true} className="btn__loading" />
+            )}
+            {!isLoading && 'Submit'}
           </button>
         </div>
       </Form>
