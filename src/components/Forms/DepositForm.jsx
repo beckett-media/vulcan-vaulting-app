@@ -77,7 +77,10 @@ const DepositForm = (props) => {
   const walletAddress = props.additionalData;
 
   const apiName = 'vulcanAPI';
-  const path = '/deposit';
+  // ####### API PATH #######
+  const path = '/deposit'; // path to the API endpoint
+  // ########################
+
   const [success, setSuccess] = useState(false);
   const [serverMessage, setServerMessage] = useState('');
 
@@ -139,7 +142,7 @@ const DepositForm = (props) => {
         API.put(apiName, path, myInit)
           .then((response) => {
             console.log(response.status_code);
-            console.log(response.message);
+            console.log(response);
             setSuccess(true);
             setSubmitting(false);
           })

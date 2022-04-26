@@ -79,10 +79,6 @@ const WithdrawForm = (props) => {
   const [success, setSuccess] = useState(false);
   const [serverMessage, setServerMessage] = useState('');
 
-  // if sucess, redirect to router.push('/success');
-  if (success) {
-    router.push('/success');
-  }
   return (
     <Formik
       initialValues={{
@@ -302,7 +298,7 @@ const WithdrawForm = (props) => {
             name="tokenId"
             type="number"
             placeholder="NFT Token ID"
-            className={`${styles.form__field}`}
+            className={`${styles.form__field} u__w100`}
           />
           {/* <ErrorMessage name="tokenId" /> */}
 

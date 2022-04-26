@@ -38,11 +38,7 @@ export default function DepositPage() {
 
         <img className={`${styles['deposit__hero-image']}`} alt=""></img>
         <div className={`${styles['deposit__hero-content']} u__center`}>
-          <p>Tell us about yourself and the collectible you would like to vault.</p>
-          <p>
-            A personal concierge will reach out to walk you through the vaulting and NFT-minting of
-            your collectible.
-          </p>
+          <p>Tell us about yourself and the collectible you would like to withdraw. If you originally vaulted this collectible, check the box below and tell us your wallet address and NFT ID to continue.</p>
         </div>
         <div className={`${styles['deposit__wallet-buttons']} u__relative flex__aic`}>
           <Tooltip
@@ -50,7 +46,7 @@ export default function DepositPage() {
             message={'Please fill out the form below and your concierge will help you create one.'}
             direction={'right'}
           />
-          <div className={`btn__outline--outer gradient__orange`}>
+          <div className={`btn__outline--outer bg__grey`}>
             {currentAccount ? (
               <button
                 className={`btn__outline--inner btn ${styles.deposit__btn}`}

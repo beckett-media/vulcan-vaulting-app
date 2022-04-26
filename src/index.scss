@@ -235,6 +235,10 @@ body {
       color: white;
     }
   }
+
+  &__inactive {
+    cursor: not-allowed;
+  }
 }
 
 .gradient {
@@ -340,5 +344,11 @@ body {
 .opacity {
   &-0 {
     opacity: 0;
+  }
+}
+
+.bg {
+  &__grey {
+    background-color: var(--grey);
   }
 }
