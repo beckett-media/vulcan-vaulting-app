@@ -159,19 +159,18 @@ app.put("/deposit", async function (req, res) {
 app.put("/withdraw", async function (req, res) {
   const axios = require("axios");
   const aws = require("aws-sdk");
-  const keccak256 = require('keccak256')
 
   const { v4: uuidv4 } = require("uuid");
   const crypto = require("crypto");
 
   // ######################## FOUNDRY API PARAMS ############################
 
-  // const riWrt =
-  //   "ri.ontology.main.ontology.b034a691-27e9-4959-9bcc-bc99b1552c97";
+  const riWrt =
+    "ri.ontology.main.ontology.b034a691-27e9-4959-9bcc-bc99b1552c97";
 
-  // const createVaultingRecord =
-  //   "new-action-0cb194d6-882e-1c9e-3f8f-bacb0c93833b";
-  // const applyAction_createObject = `https://beckett.palantirfoundry.com/api/v1/ontologies/${riWrt}/actions/${createVaultingRecord}/apply`;
+  const createVaultingRecord =
+    "new-action-0cb194d6-882e-1c9e-3f8f-bacb0c93833b";
+  const applyAction_createObject = `https://beckett.palantirfoundry.com/api/v1/ontologies/${riWrt}/actions/${createVaultingRecord}/apply`;
 
   //############################### GET TOKEN ############################
   const { Parameters } = await new aws.SSM() // get the secret from SSM
@@ -207,6 +206,15 @@ app.put("/withdraw", async function (req, res) {
     var value = hash.digest("hex");
     return value;
   }
+
+  res.send({
+    status_code: 200,
+    status_message: "Success",
+    data: {
+      hash: hashValue(req.body.firstName),
+    },
+  });
+
 
   //################################ POST VAULTING RECORD ############################
 
@@ -248,31 +256,27 @@ app.put("/withdraw", async function (req, res) {
   //   },
   // };
 
-  if (token[0].Value.length === 0) {
-    res.status(500).send("No API key found");
-  } else {
+  // if (token[0].Value.length === 0) {
+  //   res.status(500).send("No API key found");
+  // } else {
 
-    // axios(options)
-    //   .then((response) => {
-    //     res.send({
-    //       status_code: response.status,
-    //       status_message: response.statusText,
-    //       hash: hashValue(req.body.firstName),
-    //     });
-    //   })
-    //   .catch((error) => {
-    //     res.send({
-    //       data: error.message,
-    //       status_code: error.response.status,
-    //       status_message: error.response.statusText,
+  //   axios(options)
+  //     .then((response) => {
+  //       res.send({
+  //         status_code: response.status,
+  //         status_message: response.statusText,
+  //         hash: hashValue(req.body.firstName),
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       res.send({
+  //         data: error.message,
+  //         status_code: error.response.status,
+  //         status_message: error.response.statusText,
 
-    //     });
-    //   });
-    res.send({
-      hash: hashValue(req.body.firstName),
-      status_code: 200,
-    });
-  }
+  //       });
+  //     });
+  // }
 });
 /****************************
  * put method for NFT Records *
