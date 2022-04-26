@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import { Button } from '@aws-amplify/ui-react';
 import { useRouter } from 'next/router';
 import Tooltip from '../Tooltip/Tooltip';
+import { gsap } from 'gsap';
 
 const DepositForm = (props) => {
   const router = useRouter();
@@ -354,7 +355,7 @@ const DepositForm = (props) => {
         </div>
         <div className="u__w100 u__center">
           <button type="submit" className="btn gradient__green">
-            Submit
+            {isLoading ? 'loading' : 'Submit'}
           </button>
         </div>
       </Form>
