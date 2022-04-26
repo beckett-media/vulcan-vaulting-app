@@ -6,6 +6,7 @@ import styles from './forms.module.scss';
 import * as Yup from 'yup';
 import { Button } from '@aws-amplify/ui-react';
 import { useRouter } from 'next/router';
+import Tooltip from '../Tooltip/Tooltip';
 
 const DepositForm = (props) => {
   const router = useRouter();
@@ -186,114 +187,119 @@ const DepositForm = (props) => {
             <Field
               name="firstName"
               type="text"
-              placeholder="First Name"
+              placeholder="First Name*"
               className={`${styles.form__field}`}
             />
-            <ErrorMessage name="firstName" />
+            <ErrorMessage name="firstName" component={Tooltip} className={styles.error} />
           </div>
 
           <div className="u__relative">
             <Field
               name="lastName"
               type="text"
-              placeholder="Last Name"
+              placeholder="Last Name*"
               className={`${styles.form__field}`}
             />
-            <ErrorMessage name="lastName" />
+            <ErrorMessage name="lastName" component={Tooltip} className={styles.error} />
           </div>
 
           <div className="u__relative">
             <Field
               name="email"
               type="email"
-              placeholder="Email Address"
+              placeholder="Email Address*"
               className={`${styles.form__field}`}
             />
-            <ErrorMessage name="email" />
+            <ErrorMessage name="email" component={Tooltip} className={styles.error} />
           </div>
         </div>
 
         <div className={`${styles.form__row}`}>
           <div className={`${styles.form__col}`}>
             <label htmlFor="month" className="mb16 u__block">
-              Birthday
+              Birthday*
             </label>
             <div className={`${styles['form__select-group']}`}>
               <div className={`${styles['form__select-wrapper']} u__flex flex__aic`}>
                 <div className={`${styles['form__select-arrow']}`}></div>
-                <div className="u">
-                  <Field
-                    name="month"
-                    as="select"
-                    className={`${styles.form__select} ${styles.form__field}`}
-                  >
-                    <option value="MM">MM</option>
-                    {monthsArray.map((i) => {
-                      const month = i.toString().padStart(2, '0');
-                      return <option value={`${month}`}>{month}</option>;
-                    })}
-                  </Field>
-                  <ErrorMessage name="month" />
-                </div>
+                <Field
+                  name="month"
+                  as="select"
+                  className={`${styles.form__select} ${styles.form__field}`}
+                >
+                  <option value="MM">MM</option>
+                  {monthsArray.map((i) => {
+                    const month = i.toString().padStart(2, '0');
+                    return <option value={`${month}`}>{month}</option>;
+                  })}
+                </Field>
+                <ErrorMessage name="month" component={Tooltip} className={styles.error} />
               </div>
 
               <div className={`${styles['form__select-wrapper']} u__flex flex__aic`}>
                 <div className={`${styles['form__select-arrow']}`}></div>
-                <div className="u__relative">
-                  <Field
-                    name="day"
-                    as="select"
-                    className={`${styles.form__select} ${styles.form__field}`}
-                  >
-                    <option value="DD">DD</option>
-                    {daysArray.map((i) => {
-                      const day = i.toString().padStart(2, '0');
-                      return <option value={`${day}`}>{day}</option>;
-                    })}
-                  </Field>
-                  <ErrorMessage name="day" />
-                </div>
+                <Field
+                  name="day"
+                  as="select"
+                  className={`${styles.form__select} ${styles.form__field}`}
+                >
+                  <option value="DD">DD</option>
+                  {daysArray.map((i) => {
+                    const day = i.toString().padStart(2, '0');
+                    return <option value={`${day}`}>{day}</option>;
+                  })}
+                </Field>
+                <ErrorMessage name="day" component={Tooltip} className={styles.error} />
               </div>
 
               <div className={`${styles['form__select-wrapper']} u__flex flex__aic`}>
                 <div className={`${styles['form__select-arrow']}`}></div>
-                <div className="u__relative">
-                  <Field
-                    name="year"
-                    as="select"
-                    className={`${styles.form__select} ${styles.form__field}`}
-                  >
-                    <option value="YYYY">YYYY</option>
-                    {yearsArray.map((i) => {
-                      return <option value={`${i}`}>{i}</option>;
-                    })}
-                  </Field>
-                  <ErrorMessage name="year" />
-                </div>
+                <Field
+                  name="year"
+                  as="select"
+                  className={`${styles.form__select} ${styles.form__field}`}
+                >
+                  <option value="YYYY">YYYY</option>
+                  {yearsArray.map((i) => {
+                    return <option value={`${i}`}>{i}</option>;
+                  })}
+                </Field>
+                <ErrorMessage name="year" component={Tooltip} className={styles.error} />
               </div>
             </div>
           </div>
         </div>
 
         <div className={`${styles.form__row}`}>
-          <Field
-            name="address1"
-            type="text"
-            placeholder="Address 1"
-            className={`${styles.form__field}`}
-          />
-          <ErrorMessage name="address1" />
+          <div className="u__relative">
+            <Field
+              name="address1"
+              type="text"
+              placeholder="Address 1*"
+              className={`${styles.form__field}`}
+            />
+            <ErrorMessage name="address1" component={Tooltip} className={styles.error} />
+          </div>
 
-          <Field
-            name="address2"
-            type="text"
-            placeholder="Address 2"
-            className={`${styles.form__field}`}
-          />
-          <ErrorMessage name="address2" />
+          <div className="u__relative">
+            <Field
+              name="address2"
+              type="text"
+              placeholder="Address 2"
+              className={`${styles.form__field}`}
+            />
+            <ErrorMessage name="address2" component={Tooltip} className={styles.error} />
+          </div>
 
-          <Field name="city" type="text" placeholder="City" className={`${styles.form__field}`} />
-          <ErrorMessage name="city" />
+          <div className="u__relative">
+            <Field
+              name="city"
+              type="text"
+              placeholder="City*"
+              className={`${styles.form__field}`}
+            />
+            <ErrorMessage name="city" component={Tooltip} className={styles.error} />
+          </div>
 
           <div className={`${styles['form__state-zip']}`}>
             <div className={`${styles['form__select-wrapper']} u__flex flex__aic`}>
@@ -303,37 +309,48 @@ const DepositForm = (props) => {
                 as="select"
                 className={`${styles.form__select} ${styles.form__field}`}
               >
-                <option value="state">State</option>
+                <option value="state">State*</option>
                 {statesArray.map((i) => {
                   return <option value={`${i}`}>{i}</option>;
                 })}
               </Field>
-              <ErrorMessage name="state" />
+              <ErrorMessage name="state" component={Tooltip} className={styles.error} />
             </div>
 
-            <Field name="zip" type="text" placeholder="Zip" className={`${styles.form__field}`} />
-            <ErrorMessage name="zip" />
+            <div className="u__relative">
+              <Field
+                name="zip"
+                type="text"
+                placeholder="Zip*"
+                className={`${styles.form__field}`}
+              />
+              <ErrorMessage name="zip" component={Tooltip} className={styles.error} />
+            </div>
           </div>
         </div>
 
         <div className={`${styles.form__row}`}>
-          <Field
-            name="itemName"
-            type="text"
-            placeholder="Vaulted item name"
-            className={`${styles.form__field}`}
-          />
-          <ErrorMessage name="itemName" />
+          <div className="u__relative">
+            <Field
+              name="itemName"
+              type="text"
+              placeholder="Vaulted item name*"
+              className={`${styles.form__field}`}
+            />
+            <ErrorMessage name="itemName" component={Tooltip} className={styles.error} />
+          </div>
 
           <div>&nbsp;</div>
 
-          <Field
-            name="itemDesc"
-            as="textarea"
-            placeholder="Vaulted item description"
-            className={`${styles.form__field} ${styles.form__textarea} grid__full`}
-          />
-          <ErrorMessage name="itemDesc" />
+          <div className="u__relative grid__full">
+            <Field
+              name="itemDesc"
+              as="textarea"
+              placeholder="Vaulted item description*"
+              className={`${styles.form__field} ${styles.form__textarea} grid__full`}
+            />
+            <ErrorMessage name="itemDesc" component={Tooltip} className={styles.error} />
+          </div>
         </div>
         <div className="u__w100 u__center">
           <button type="submit" className="btn gradient__green">

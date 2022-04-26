@@ -297,7 +297,7 @@ const WithdrawForm = (props) => {
             </div>
 
             <Field name="zip" type="text" placeholder="Zip" className={`${styles.form__field}`} />
-            {/* <ErrorMessage name="zip" /> */}
+            <ErrorMessage name="zip" />
           </div>
         </div>
 

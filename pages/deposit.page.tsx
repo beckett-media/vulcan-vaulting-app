@@ -47,9 +47,10 @@ export default function DepositPage() {
         <div className={`${styles['deposit__wallet-buttons']} u__relative flex__aic`}>
           <Tooltip
             className={`${styles['deposit__tooltip--left']}`}
-            message={'Please fill out the form below and your concierge will help you create one.'}
             direction={'right'}
-          />
+          >
+            Please fill out the form below and your concierge will help you create one.
+          </Tooltip>
           <div className={`btn__outline--outer gradient__orange`}>
             {currentAccount ? (
               <button
