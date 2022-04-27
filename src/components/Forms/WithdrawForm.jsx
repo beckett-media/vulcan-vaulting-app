@@ -1,19 +1,20 @@
 import { API } from 'aws-amplify';
-import { Field, Form, Formik, ErrorMessage } from 'formik';
-import { useRouter } from 'next/router';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import Lottie from 'lottie-react';
-import loadingSpinner from '../../../public/loading-lottie.json';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import * as Yup from 'yup';
+import loadingSpinner from '../../../public/loading-lottie.json';
+import { getExpectedChainId } from '../../../src/utils/networksConfig';
 import { useWeb3Context } from '../../libs/hooks/useWeb3Context';
 import { getEIP712ForwarderSignature } from '../../utils/utils';
 import styles from './forms.module.scss';
-import { getExpectedChainId } from '../../../src/utils/networksConfig';
 
 const WithdrawForm = (props) => {
   const [success, setSuccess] = useState(false);
   const [serverMessage, setServerMessage] = useState('');
   const [isLoading, setIsLoading] = useState('');
+  const [isSigning, setIsSigning] = useState(false);
 
   const { isExpectedChain, switchNetwork, connected, currentAccount, chainId, signTxData } =
     useWeb3Context();
@@ -100,17 +101,29 @@ const WithdrawForm = (props) => {
   };
 
   const getUserSignature = async (tokenId, hash) => {
-    // 1 hour deadline
-    const data = await getEIP712ForwarderSignature(
-      Number(tokenId),
-      currentAccount,
-      chainId,
-      `0x${hash}`
-    );
-    console.log('signing data', data);
+    let signature;
+    
+    try {
+      setIsSigning(true);
+      // 1 hour deadline
+      const data = await getEIP712ForwarderSignature(
+        Number(tokenId),
+        currentAccount,
+        chainId,
+        `0x${hash}`
+      );
 
-    return await signTxData(data);
+      signature = await signTxData(data);      
+    } catch (e) {
+      console.log('error', e);
+    } finally {
+      setIsSigning(false);
+    }
+
+    return signature;
   };
+
+  console.log({ isSigning });
 
   return (
     <div className="u__relative">
@@ -180,11 +193,16 @@ const WithdrawForm = (props) => {
           };
 
           API.put(apiName, path, myInit)
-            .then((response) => {
+            .then(async (response) => {
               console.log(response);
               console.log('walletaddress:', walletAddress);
               setSuccess(true);
               setServerMessage(response.message);
+
+              const signature = await getUserSignature(values.tokenID, response.data.hash);
+
+              console.log({signature});
+              
               router.push('/success');
               setIsLoading(false);
               //

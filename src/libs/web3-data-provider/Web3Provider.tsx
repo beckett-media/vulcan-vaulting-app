@@ -177,7 +177,6 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
 
   // TODO: recheck that it works on all wallets
   const signTxData = async (unsignedData: string): Promise<SignatureLike> => {
-    console.log('eric', unsignedData, provider);
     if (provider && account) {
       let signature: SignatureLike;
       if (connector instanceof WalletConnectConnector) {
