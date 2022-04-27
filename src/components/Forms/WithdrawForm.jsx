@@ -345,7 +345,7 @@ const WithdrawForm = (props) => {
             {isLoading && (
               <Lottie animationData={loadingSpinner} loop={true} className="btn__loading" />
             )}
-            {!isLoading && 'Submit'}
+            {!isLoading && 'Next'}
           </button>
         </div>
       </Form>
