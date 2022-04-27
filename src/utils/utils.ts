@@ -50,11 +50,9 @@ export const optimizedPath = (currentChainId: ChainId) => {
   );
 };
 
-export const getEIP712ForwarderSignature = async (nftId: number, from: string, chainId: number) => {
+export const getEIP712ForwarderSignature = async (nftId: number, from: string, chainId: number, hash: string) => {
   const config = getNetworkConfig(chainId);
   const provider = getProvider(chainId);
-  const userInputHash = utils.keccak256('testHash');
-  console.log('start', userInputHash);
 
   // types
   const domainTypes = [
@@ -110,7 +108,7 @@ export const getEIP712ForwarderSignature = async (nftId: number, from: string, c
       name: 'lock',
       type: 'function',
     },
-    [nftId, userInputHash]
+    [nftId, hash]
   );
 
   // estimate gas

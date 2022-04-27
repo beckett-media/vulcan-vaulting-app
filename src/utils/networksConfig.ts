@@ -13,10 +13,7 @@ export type Pool = {
   address: string;
 };
 
-export const NEXT_PUBLIC_ENABLE_TESTNET =
-  (!global?.window?.localStorage.getItem('testnetsEnabled') &&
-    process.env.NEXT_PUBLIC_ENABLE_TESTNET === 'true') ||
-  global?.window?.localStorage.getItem('testnetsEnabled') === 'true';
+export const NEXT_PUBLIC_IS_TESTNET: boolean = JSON.parse(process.env.NEXT_PUBLIC_IS_TESTNET || 'true') === true;
 
 // determines if forks should be shown
 const FORK_ENABLED = global?.window?.localStorage.getItem('forkEnabled') === 'true';
@@ -74,8 +71,8 @@ export function getNetworkConfig(chainId: ChainId): NetworkConfig {
   };
 }
 
-export function getDefaultChainId() {
-  return 137;
+export function getExpectedChainId() {
+  return NEXT_PUBLIC_IS_TESTNET ? 80001 : 137;
 }
 
 export function getSupportedChainIds(): number[] {

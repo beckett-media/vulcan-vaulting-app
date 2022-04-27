@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { API } from 'aws-amplify';
-import Link from 'next/link';
-import styles from './forms.module.scss';
-import * as Yup from 'yup';
-import { Button } from '@aws-amplify/ui-react';
+import { Field, Form, Formik, ErrorMessage } from 'formik';
 import { useRouter } from 'next/router';
 import Lottie from 'lottie-react';
 import loadingSpinner from '../../../public/loading-lottie.json';
+import React, { useState } from 'react';
+import * as Yup from 'yup';
+import { useWeb3Context } from '../../libs/hooks/useWeb3Context';
+import { getEIP712ForwarderSignature } from '../../utils/utils';
+import styles from './forms.module.scss';
+import { getExpectedChainId } from '../../../src/utils/networksConfig';
 
 const WithdrawForm = (props) => {
+  const [success, setSuccess] = useState(false);
+  const [serverMessage, setServerMessage] = useState('');
+  const [isLoading, setIsLoading] = useState('');
+
+  const { isExpectedChain, switchNetwork, connected, currentAccount, chainId, signTxData } =
+    useWeb3Context();
+
   const router = useRouter();
   const d = new Date();
   const daysArray = [...Array(32).keys()].slice(1);
@@ -79,277 +87,315 @@ const WithdrawForm = (props) => {
   const walletAddress = props.additionalData;
 
   const apiName = 'vulcanAPI';
-  const path = '/deposit';
-  const [success, setSuccess] = useState(false);
-  const [serverMessage, setServerMessage] = useState('');
-  const [isLoading, setIsLoading] = useState('');
+  const path = '/withdraw';
+
+  const handleSwitchClick = async () => {
+    console.log('success');
+
+    if (isExpectedChain) {
+      return;
+    }
+
+    await switchNetwork(getExpectedChainId());
+  };
+
+  const getUserSignature = async (tokenId, hash) => {
+    // 1 hour deadline
+    const data = await getEIP712ForwarderSignature(
+      Number(tokenId),
+      currentAccount,
+      chainId,
+      `0x${hash}`
+    );
+    console.log('signing data', data);
+
+    return await signTxData(data);
+  };
 
   return (
-    <Formik
-      initialValues={{
-        firstName: '',
-        lastName: '',
-        email: '',
-        month: 'MM',
-        day: 'DD',
-        year: 'YYYY',
-        address1: '',
-        address2: '',
-        city: '',
-        state: '',
-        zip: '',
-        tokenID: '',
-      }}
-      validationSchema={Yup.object({
-        firstName: Yup.string().required('Required'),
-        lastName: Yup.string().required('Required'),
-        email: Yup.string().email('Invalid email address').required('Required'),
-        month: Yup.string()
-          .test('is-month', 'Required', (value) => value !== 'MM')
-          .required('Required'),
-        day: Yup.string()
-          .test('is-day', 'Required', (value) => value !== 'DD')
-          .required('Required'),
-        year: Yup.string()
-          .test('is-year', 'Required', (value) => value !== 'YYYY')
-          .required('Required'),
-        address1: Yup.string().required('Required'),
-        address2: '',
-        city: Yup.string().required('Required'),
-        state: Yup.string()
-          .test('is-state', 'Required', (value) => value !== 'state')
-          .required('Required'),
-        zip: Yup.number().required('Required'),
-        tokenID: Yup.string().required('Required'),
-      })}
-      onSubmit={(values, { setSubmitting }) => {
-        values.walletAddress = props.additionalData.currentAccount;
-        setIsLoading(true);
-
-        const myInit = {
-          body: {
-            dateOfBirth: `${values.year}-${values.month}-${values.day}`,
-            walletAddress: values.walletAddress,
-            ...values,
-          },
-        };
-
-        API.put(apiName, path, myInit)
-          .then((response) => {
-            console.log(response);
-            console.log('walletaddress:', walletAddress);
-            setSuccess(true);
-            setServerMessage(response.message);
-            router.push('/success');
-            setIsLoading(false);
-            //
-
-            setSubmitting(false);
-          })
-          .catch((error) => {
-            console.log(error);
-            setServerMessage(error.message);
-            setSubmitting(false);
-            setIsLoading(false);
-          });
-        // const createDateOfBirth = (values) => {
-        //   const dateOfBirth = `${values.year}-${values.month}-${values.day}`;
-        //   return dateOfBirth;
-        // };
-
-        // const myInit = {
-        //   body: {
-        //     ...values,
-        //     dateOfBirth: createDateOfBirth(values),
-        //     walletAddress: values.walletAddress,
-        //   },
-        // };
-
-        // API.put(apiName, path, myInit)
-        //   .then((response) => {
-        //     console.log(response);
-        //     setSubmitting(false);
-        //   })
-        //   .catch((error) => {
-        //     console.log(error.response);
-        //     setSubmitting(false);
-        //   });
-
-        // setTimeout(() => {
-        //   alert(JSON.stringify(values, null, 2));
-        //   setSubmitting(false);
-        // }, 400);
-      }}
-    >
-      <Form className={`${styles.form} u__left`}>
-        <div className={`${styles.form__row}`}>
-          <div className="u__relative">
-            <Field
-              name="firstName"
-              type="text"
-              placeholder="First Name*"
-              className={`${styles.form__field}`}
-            />
-            <ErrorMessage name="firstName" component="div" className={styles.error} />
-          </div>
-
-          <div className="u__relative">
-            <Field
-              name="lastName"
-              type="text"
-              placeholder="Last Name*"
-              className={`${styles.form__field}`}
-            />
-            <ErrorMessage name="lastName" component="div" className={styles.error} />
-          </div>
-
-          <div className="u__relative">
-            <Field
-              name="email"
-              type="email"
-              placeholder="Email Address*"
-              className={`${styles.form__field}`}
-            />
-            <ErrorMessage name="email" component="div" className={styles.error} />
+    <div className="u__relative">
+      {!currentAccount && (
+        <div className={styles.disabled}>Please connect your wallet to continue.</div>
+      )}
+      {currentAccount && !isExpectedChain && (
+        <div className={styles.disabled}>
+          <span className="mb__16">Please switch wallet to Polygon Mainnet to continue</span>
+          <br></br>
+          <div
+            className="btn gradient__green"
+            style={{ color: 'black' }}
+            onClick={() => handleSwitchClick()}
+          >
+            Connect to Polygon
           </div>
         </div>
+      )}
+      <Formik
+        initialValues={{
+          firstName: '',
+          lastName: '',
+          email: '',
+          month: 'MM',
+          day: 'DD',
+          year: 'YYYY',
+          address1: '',
+          address2: '',
+          city: '',
+          state: '',
+          zip: '',
+          tokenID: '',
+        }}
+        validationSchema={Yup.object({
+          firstName: Yup.string().required('Required'),
+          lastName: Yup.string().required('Required'),
+          email: Yup.string().email('Invalid email address').required('Required'),
+          month: Yup.string()
+            .test('is-month', 'Required', (value) => value !== 'MM')
+            .required('Required'),
+          day: Yup.string()
+            .test('is-day', 'Required', (value) => value !== 'DD')
+            .required('Required'),
+          year: Yup.string()
+            .test('is-year', 'Required', (value) => value !== 'YYYY')
+            .required('Required'),
+          address1: Yup.string().required('Required'),
+          address2: '',
+          city: Yup.string().required('Required'),
+          state: Yup.string()
+            .test('is-state', 'Required', (value) => value !== 'state')
+            .required('Required'),
+          zip: Yup.number().required('Required'),
+          tokenID: Yup.string().required('Required'),
+        })}
+        onSubmit={(values, { setSubmitting }) => {
+          values.walletAddress = props.additionalData.currentAccount;
+          setIsLoading(true);
 
-        <div className={`${styles.form__row}`}>
-          <div className={`${styles.form__col}`}>
-            <label htmlFor="month" className="mb16 u__block">
-              Birthday*
-            </label>
-            <div className={`${styles['form__select-group']}`}>
-              <div className={`${styles['form__select-wrapper']} u__flex flex__aic`}>
-                <div className={`${styles['form__select-arrow']}`}></div>
-                <Field
-                  name="month"
-                  as="select"
-                  className={`${styles.form__select} ${styles.form__field}`}
-                >
-                  <option value="MM">MM</option>
-                  {monthsArray.map((i) => {
-                    const month = i.toString().padStart(2, '0');
-                    return <option value={`${month}`}>{month}</option>;
-                  })}
-                </Field>
-                <ErrorMessage name="month" component="div" className={styles.error} />
-              </div>
+          const myInit = {
+            body: {
+              dateOfBirth: `${values.year}-${values.month}-${values.day}`,
+              walletAddress: values.walletAddress,
+              ...values,
+            },
+          };
 
-              <div className={`${styles['form__select-wrapper']} u__flex flex__aic`}>
-                <div className={`${styles['form__select-arrow']}`}></div>
-                <Field
-                  name="day"
-                  as="select"
-                  className={`${styles.form__select} ${styles.form__field}`}
-                >
-                  <option value="DD">DD</option>
-                  {daysArray.map((i) => {
-                    const day = i.toString().padStart(2, '0');
-                    return <option value={`${day}`}>{day}</option>;
-                  })}
-                </Field>
-                <ErrorMessage name="day" component="div" className={styles.error} />
-              </div>
+          API.put(apiName, path, myInit)
+            .then((response) => {
+              console.log(response);
+              console.log('walletaddress:', walletAddress);
+              setSuccess(true);
+              setServerMessage(response.message);
+              router.push('/success');
+              setIsLoading(false);
+              //
 
-              <div className={`${styles['form__select-wrapper']} u__flex flex__aic`}>
-                <div className={`${styles['form__select-arrow']}`}></div>
-                <Field
-                  name="year"
-                  as="select"
-                  className={`${styles.form__select} ${styles.form__field}`}
-                >
-                  <option value="YYYY">YYYY</option>
-                  {yearsArray.map((i) => {
-                    return <option value={`${i}`}>{i}</option>;
-                  })}
-                </Field>
-                <ErrorMessage name="year" component="div" className={styles.error} />
-              </div>
-            </div>
-          </div>
-        </div>
+              setSubmitting(false);
+            })
+            .catch((error) => {
+              console.log(error);
+              setServerMessage(error.message);
+              setSubmitting(false);
+              setIsLoading(false);
+            });
+          // const createDateOfBirth = (values) => {
+          //   const dateOfBirth = `${values.year}-${values.month}-${values.day}`;
+          //   return dateOfBirth;
+          // };
 
-        <div className={`${styles.form__row}`}>
-          <div className="u__relative">
-            <Field
-              name="address1"
-              type="text"
-              placeholder="Address 1*"
-              className={`${styles.form__field}`}
-            />
-            <ErrorMessage name="address1" component="div" className={styles.error} />
-          </div>
+          // const myInit = {
+          //   body: {
+          //     ...values,
+          //     dateOfBirth: createDateOfBirth(values),
+          //     walletAddress: values.walletAddress,
+          //   },
+          // };
 
-          <div className="u__relative">
-            <Field
-              name="address2"
-              type="text"
-              placeholder="Address 2"
-              className={`${styles.form__field}`}
-            />
-            <ErrorMessage name="address2" component="div" className={styles.error} />
-          </div>
+          // API.put(apiName, path, myInit)
+          //   .then((response) => {
+          //     console.log(response);
+          //     setSubmitting(false);
+          //   })
+          //   .catch((error) => {
+          //     console.log(error.response);
+          //     setSubmitting(false);
+          //   });
 
-          <div className="u__relative">
-            <Field
-              name="city"
-              type="text"
-              placeholder="City*"
-              className={`${styles.form__field}`}
-            />
-            <ErrorMessage name="city" component="div" className={styles.error} />
-          </div>
-
-          <div className={`${styles['form__state-zip']}`}>
-            <div className={`${styles['form__select-wrapper']} u__flex flex__aic`}>
-              <div className={`${styles['form__select-arrow']}`}></div>
+          // setTimeout(() => {
+          //   alert(JSON.stringify(values, null, 2));
+          //   setSubmitting(false);
+          // }, 400);
+        }}
+      >
+        <Form className={`${styles.form} u__left`}>
+          <div className={`${styles.form__row}`}>
+            <div className="u__relative">
               <Field
-                name="state"
-                as="select"
-                className={`${styles.form__select} ${styles.form__field}`}
-              >
-                <option value="state">State*</option>
-                {statesArray.map((i) => {
-                  return <option value={`${i}`}>{i}</option>;
-                })}
-              </Field>
-              <ErrorMessage name="state" component="div" className={styles.error} />
+                name="firstName"
+                type="text"
+                placeholder="First Name*"
+                className={`${styles.form__field}`}
+              />
+              <ErrorMessage name="firstName" component="div" className={styles.error} />
             </div>
 
             <div className="u__relative">
               <Field
-                name="zip"
+                name="lastName"
                 type="text"
-                placeholder="Zip*"
+                placeholder="Last Name*"
                 className={`${styles.form__field}`}
               />
-              <ErrorMessage name="zip" component="div" className={styles.error} />
+              <ErrorMessage name="lastName" component="div" className={styles.error} />
+            </div>
+
+            <div className="u__relative">
+              <Field
+                name="email"
+                type="email"
+                placeholder="Email Address*"
+                className={`${styles.form__field}`}
+              />
+              <ErrorMessage name="email" component="div" className={styles.error} />
             </div>
           </div>
-        </div>
 
-        <div className={`${styles.form__row}`}>
-          <div className="u__relative">
-            <Field
-              name="tokenID"
-              type="text"
-              placeholder="NFT Token ID*"
-              className={`${styles.form__field} u__w100`}
-            />
-            <ErrorMessage name="tokenID" component="div" className={styles.error} />
+          <div className={`${styles.form__row}`}>
+            <div className={`${styles.form__col}`}>
+              <label htmlFor="month" className="mb16 u__block">
+                Birthday*
+              </label>
+              <div className={`${styles['form__select-group']}`}>
+                <div className={`${styles['form__select-wrapper']} u__flex flex__aic`}>
+                  <div className={`${styles['form__select-arrow']}`}></div>
+                  <Field
+                    name="month"
+                    as="select"
+                    className={`${styles.form__select} ${styles.form__field}`}
+                  >
+                    <option value="MM">MM</option>
+                    {monthsArray.map((i) => {
+                      const month = i.toString().padStart(2, '0');
+                      return <option value={`${month}`}>{month}</option>;
+                    })}
+                  </Field>
+                  <ErrorMessage name="month" component="div" className={styles.error} />
+                </div>
+
+                <div className={`${styles['form__select-wrapper']} u__flex flex__aic`}>
+                  <div className={`${styles['form__select-arrow']}`}></div>
+                  <Field
+                    name="day"
+                    as="select"
+                    className={`${styles.form__select} ${styles.form__field}`}
+                  >
+                    <option value="DD">DD</option>
+                    {daysArray.map((i) => {
+                      const day = i.toString().padStart(2, '0');
+                      return <option value={`${day}`}>{day}</option>;
+                    })}
+                  </Field>
+                  <ErrorMessage name="day" component="div" className={styles.error} />
+                </div>
+
+                <div className={`${styles['form__select-wrapper']} u__flex flex__aic`}>
+                  <div className={`${styles['form__select-arrow']}`}></div>
+                  <Field
+                    name="year"
+                    as="select"
+                    className={`${styles.form__select} ${styles.form__field}`}
+                  >
+                    <option value="YYYY">YYYY</option>
+                    {yearsArray.map((i) => {
+                      return <option value={`${i}`}>{i}</option>;
+                    })}
+                  </Field>
+                  <ErrorMessage name="year" component="div" className={styles.error} />
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="u__w100 u__center">
-          <button type="submit" className="btn gradient__green">
-            {isLoading && (
-              <Lottie animationData={loadingSpinner} loop={true} className="btn__loading" />
-            )}
-            {!isLoading && 'Next'}
-          </button>
-        </div>
-      </Form>
-    </Formik>
+
+          <div className={`${styles.form__row}`}>
+            <div className="u__relative">
+              <Field
+                name="address1"
+                type="text"
+                placeholder="Address 1*"
+                className={`${styles.form__field}`}
+              />
+              <ErrorMessage name="address1" component="div" className={styles.error} />
+            </div>
+
+            <div className="u__relative">
+              <Field
+                name="address2"
+                type="text"
+                placeholder="Address 2"
+                className={`${styles.form__field}`}
+              />
+              <ErrorMessage name="address2" component="div" className={styles.error} />
+            </div>
+
+            <div className="u__relative">
+              <Field
+                name="city"
+                type="text"
+                placeholder="City*"
+                className={`${styles.form__field}`}
+              />
+              <ErrorMessage name="city" component="div" className={styles.error} />
+            </div>
+
+            <div className={`${styles['form__state-zip']}`}>
+              <div className={`${styles['form__select-wrapper']} u__flex flex__aic`}>
+                <div className={`${styles['form__select-arrow']}`}></div>
+                <Field
+                  name="state"
+                  as="select"
+                  className={`${styles.form__select} ${styles.form__field}`}
+                >
+                  <option value="state">State*</option>
+                  {statesArray.map((i) => {
+                    return <option value={`${i}`}>{i}</option>;
+                  })}
+                </Field>
+                <ErrorMessage name="state" component="div" className={styles.error} />
+              </div>
+
+              <div className="u__relative">
+                <Field
+                  name="zip"
+                  type="text"
+                  placeholder="Zip*"
+                  className={`${styles.form__field}`}
+                />
+                <ErrorMessage name="zip" component="div" className={styles.error} />
+              </div>
+            </div>
+          </div>
+
+          <div className={`${styles.form__row}`}>
+            <div className="u__relative">
+              <Field
+                name="tokenID"
+                type="text"
+                placeholder="NFT Token ID*"
+                className={`${styles.form__field} u__w100`}
+              />
+              <ErrorMessage name="tokenID" component="div" className={styles.error} />
+            </div>
+          </div>
+          <div className="u__w100 u__center">
+            <button type="submit" className="btn gradient__green">
+              {isLoading && (
+                <Lottie animationData={loadingSpinner} loop={true} className="btn__loading" />
+              )}
+              {!isLoading && 'Next'}
+            </button>
+          </div>
+        </Form>
+      </Formik>
+    </div>
   );
 };
 

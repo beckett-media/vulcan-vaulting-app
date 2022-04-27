@@ -3,6 +3,7 @@ import styles from './deposit.module.scss';
 import { useRef } from 'react';
 import { useWeb3Context } from '../src/libs/hooks/useWeb3Context';
 import { ConnectWalletButton } from '../src/components/WalletConnection/ConnectWalletButton';
+import { getExpectedChainId } from '../src/utils/networksConfig';
 
 import Logo from '../public/logo.svg';
 
@@ -11,7 +12,7 @@ import Tooltip from '../src/components/Tooltip/Tooltip';
 import gsap from 'gsap';
 
 export default function DepositPage() {
-  const { currentAccount, loading: web3Loading, disconnectWallet } = useWeb3Context();
+  const { currentAccount, loading: web3Loading, disconnectWallet, isExpectedChain, switchNetwork} = useWeb3Context();
 
   const el = useRef();
   const q = gsap.utils.selector(el);
@@ -29,6 +30,16 @@ export default function DepositPage() {
     };
   };
 
+  const handleSwitchClick = async () => {
+    console.log('success');
+    
+    if (isExpectedChain) {
+      return;
+    }
+
+    await switchNetwork(getExpectedChainId());
+  }
+
   return (
     <div className={`${styles.deposit} u__center`} ref={el}>
       <div className={`${styles.deposit__hero} u__center`}>
@@ -39,13 +50,14 @@ export default function DepositPage() {
         <img className={`${styles['deposit__hero-image']}`} alt=""></img>
         <div className={`${styles['deposit__hero-content']} u__center`}>
           <p>Tell us about yourself and the collectible you would like to withdraw. If you originally vaulted this collectible, check the box below and tell us your wallet address and NFT ID to continue.</p>
+          {/* {(currentAccount && !isExpectedChain) && <div className={`${styles.notice} u__absolute`}>You are connected to a network that isn't Polygon Mainnet. <br></br><span style={{outline: '1px solid grey'}} className='btn btn__outline--inner' onClick={() => handleSwitchClick()}>Click here to switch to Polygon Mainnet</span></div>} */}
         </div>
         <div className={`${styles['deposit__wallet-buttons']} u__relative flex__aic`}>
-          <Tooltip
+          {!currentAccount && <Tooltip
             className={`${styles['deposit__tooltip--left']}`}
-            message={'Please fill out the form below and your concierge will help you create one.'}
+            message={'Please connect your wallet first.'}
             direction={'right'}
-          />
+          />}
           <div className={`btn__outline--outer bg__grey`}>
             {currentAccount ? (
               <button
@@ -56,7 +68,7 @@ export default function DepositPage() {
               </button>
             ) : (
               <button
-                className={`btn__outline--inner btn btn__inactive ${styles.deposit__btn}`}
+                className={`btn__outline--inner btn btn__disabled ${styles.deposit__btn}`}
                 onClick={() => fadeIn(`.${styles['deposit__tooltip--left']}`)}
               >
                 Disconnect Wallet
