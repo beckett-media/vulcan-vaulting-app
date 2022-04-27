@@ -9,7 +9,7 @@ const Tooltip = (props) => {
       )}
       <div className={`${styles['tooltip-body']}`}>{props.message}</div>
       {props.direction === 'right' && (
-        <div className={`${styles['tooltip-arrow']} ${styles['tooltip-arrow--left']}`}></div>
+        <div className={`${styles['tooltip-arrow']} ${styles['tooltip-arrow--right']}`}></div>
       )}
     </div>
   );

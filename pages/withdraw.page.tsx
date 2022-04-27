@@ -50,14 +50,14 @@ export default function DepositPage() {
         <img className={`${styles['deposit__hero-image']}`} alt=""></img>
         <div className={`${styles['deposit__hero-content']} u__center`}>
           <p>Tell us about yourself and the collectible you would like to withdraw. If you originally vaulted this collectible, check the box below and tell us your wallet address and NFT ID to continue.</p>
-          {(currentAccount && !isExpectedChain) && <div className={`${styles.notice} u__absolute`}>You are connected to a network that isn't Mumbai. <br></br><span style={{outline: '1px solid grey'}} className='btn btn__outline--inner' onClick={() => handleSwitchClick()}>Click here to switch to Mumbai</span></div>}
+          {/* {(currentAccount && !isExpectedChain) && <div className={`${styles.notice} u__absolute`}>You are connected to a network that isn't Polygon Mainnet. <br></br><span style={{outline: '1px solid grey'}} className='btn btn__outline--inner' onClick={() => handleSwitchClick()}>Click here to switch to Polygon Mainnet</span></div>} */}
         </div>
         <div className={`${styles['deposit__wallet-buttons']} u__relative flex__aic`}>
-          <Tooltip
+          {!currentAccount && <Tooltip
             className={`${styles['deposit__tooltip--left']}`}
-            message={'Please fill out the form below and your concierge will help you create one.'}
+            message={'Please connect your wallet first.'}
             direction={'right'}
-          />
+          />}
           <div className={`btn__outline--outer bg__grey`}>
             {currentAccount ? (
               <button
@@ -68,10 +68,10 @@ export default function DepositPage() {
               </button>
             ) : (
               <button
-                className={`btn__outline--inner btn ${styles.deposit__btn}`}
+                className={`btn__outline--inner btn btn__disabled ${styles.deposit__btn}`}
                 onClick={() => fadeIn(`.${styles['deposit__tooltip--left']}`)}
               >
-                I don't have a wallet
+                Disconnect Wallet
               </button>
             )}
           </div>
