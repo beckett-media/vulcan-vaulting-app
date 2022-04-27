@@ -50,6 +50,7 @@ export default function DepositPage() {
         <img className={`${styles['deposit__hero-image']}`} alt=""></img>
         <div className={`${styles['deposit__hero-content']} u__center`}>
           <p>Tell us about yourself and the collectible you would like to withdraw. If you originally vaulted this collectible, check the box below and tell us your wallet address and NFT ID to continue.</p>
+          {(currentAccount && !isExpectedChain) && <div className={`${styles.notice} u__absolute`}>You are connected to a network that isn't Mumbai. <br></br><span style={{outline: '1px solid grey'}} className='btn btn__outline--inner' onClick={() => handleSwitchClick()}>Click here to switch to Mumbai</span></div>}
         </div>
         <div className={`${styles['deposit__wallet-buttons']} u__relative flex__aic`}>
           <Tooltip
@@ -77,7 +78,6 @@ export default function DepositPage() {
 
           <ConnectWalletButton />
         </div>
-        {!isExpectedChain && <div>Please connect to Polygon two use this service by clicking here: <span onClick={() => handleSwitchClick()}>Switch to Polygon</span></div>}
       </div>
       <div className={`${styles['deposit__form']} u__flex flex__jcc`}>
         <WithdrawForm additionalData={{ currentAccount }} />

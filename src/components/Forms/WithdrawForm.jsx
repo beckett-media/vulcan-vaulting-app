@@ -4,8 +4,15 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import * as Yup from 'yup';
 import styles from './forms.module.scss';
+import { useWeb3Context } from '../../libs/hooks/useWeb3Context';
+import { getExpectedChainId } from '../../../src/utils/networksConfig';
 
 const WithdrawForm = (props) => {
+  const [success, setSuccess] = useState(false);
+  const [serverMessage, setServerMessage] = useState('');
+
+  const { isExpectedChain, switchNetwork } = useWeb3Context();
+
   const router = useRouter();
   const d = new Date();
   const daysArray = [...Array(32).keys()].slice(1);
@@ -76,8 +83,16 @@ const WithdrawForm = (props) => {
 
   const apiName = 'vulcanAPI';
   const path = '/withdraw';
-  const [success, setSuccess] = useState(false);
-  const [serverMessage, setServerMessage] = useState('');
+
+  const handleSwitchClick = async () => {
+    console.log('success');
+
+    if (isExpectedChain) {
+      return;
+    }
+
+    await switchNetwork(getExpectedChainId());
+  };
 
   return (
     <Formik
@@ -305,9 +320,15 @@ const WithdrawForm = (props) => {
           <div>&nbsp;</div>
         </div>
         <div className="u__w100 u__center">
-          <button type="submit" className="btn gradient__green">
-            Submit
-          </button>
+          {props.additionalData.currentAccount && !isExpectedChain ? (
+            <button className={`btn gradient__green`} onClick={() => handleSwitchClick()}>
+              Switch to Mumbai
+            </button>
+          ) : (
+            <button type="submit" className={`btn gradient__green`}>
+              Submit
+            </button>
+          )}
         </div>
       </Form>
     </Formik>

@@ -37,12 +37,12 @@ export const ConnectWalletButton = () => {
                 '...' +
                 String(currentAccount).substring(38)}
             </span>
-            <div className={`status-dot ${currentAccount ? 'bg__green' : 'bg__grey'}`}></div>
+            <div className={`status-dot ${(currentAccount && !isExpectedChain) ? 'bg__orange' : 'bg__green'}`}></div>
           </>
         ) : (
           <>
             <div>Connect Wallet</div>{' '}
-            <div className={`status-dot ${currentAccount ? 'bg__green' : 'bg__grey'}`}></div>
+            <div className={`status-dot bg__grey`}></div>
           </>
         )}
       </button>
