@@ -206,7 +206,9 @@ const WithdrawForm = (props) => {
 
               console.log({ signature });
 
-              router.push('/success');
+              if (signature) {
+                router.push('/success');
+              }
               setIsLoading(false);
               //
 
