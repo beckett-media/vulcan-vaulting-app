@@ -110,9 +110,6 @@ const DepositForm = (props) => {
   }
   return (
     <div className="u__relative">
-      {!currentAccount && (
-        <div className={styles.disabled}>Please connect your wallet to continue.</div>
-      )}
       {currentAccount && !isExpectedChain && (
         <div className={styles.disabled}>
           <span className="mb__16">Please switch wallet to Polygon Mainnet to continue</span>
