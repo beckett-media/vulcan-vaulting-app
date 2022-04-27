@@ -82,5 +82,14 @@
 }
 
 .error {
-  top: 5rem
+  position: absolute;
+  z-index: 1000;
+  top: 5rem;
+  background-color: var(--grey-dark);
+  font-size: 1.8rem;
+  line-height: 155%;
+  padding: 8px;
+  border-radius: 1rem;
+  max-width: 29.5rem;
+  text-align: center;
 }

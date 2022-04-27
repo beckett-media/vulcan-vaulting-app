@@ -197,7 +197,7 @@ const DepositForm = (props) => {
               placeholder="First Name*"
               className={`${styles.form__field}`}
             />
-            <ErrorMessage name="firstName" component={Tooltip} className={styles.error} />
+            <ErrorMessage name="firstName" component="div" className={styles.error} />
           </div>
 
           <div className="u__relative">
@@ -207,7 +207,7 @@ const DepositForm = (props) => {
               placeholder="Last Name*"
               className={`${styles.form__field}`}
             />
-            <ErrorMessage name="lastName" component={Tooltip} className={styles.error} />
+            <ErrorMessage name="lastName" component="div" className={styles.error} />
           </div>
 
           <div className="u__relative">
@@ -217,7 +217,7 @@ const DepositForm = (props) => {
               placeholder="Email Address*"
               className={`${styles.form__field}`}
             />
-            <ErrorMessage name="email" component={Tooltip} className={styles.error} />
+            <ErrorMessage name="email" component="div" className={styles.error} />
           </div>
         </div>
 
@@ -240,7 +240,7 @@ const DepositForm = (props) => {
                     return <option value={`${month}`}>{month}</option>;
                   })}
                 </Field>
-                <ErrorMessage name="month" component={Tooltip} className={styles.error} />
+                <ErrorMessage name="month" component="div" className={styles.error} />
               </div>
 
               <div className={`${styles['form__select-wrapper']} u__flex flex__aic`}>
@@ -256,7 +256,7 @@ const DepositForm = (props) => {
                     return <option value={`${day}`}>{day}</option>;
                   })}
                 </Field>
-                <ErrorMessage name="day" component={Tooltip} className={styles.error} />
+                <ErrorMessage name="day" component="div" className={styles.error} />
               </div>
 
               <div className={`${styles['form__select-wrapper']} u__flex flex__aic`}>
@@ -271,7 +271,7 @@ const DepositForm = (props) => {
                     return <option value={`${i}`}>{i}</option>;
                   })}
                 </Field>
-                <ErrorMessage name="year" component={Tooltip} className={styles.error} />
+                <ErrorMessage name="year" component="div" className={styles.error} />
               </div>
             </div>
           </div>
@@ -285,7 +285,7 @@ const DepositForm = (props) => {
               placeholder="Address 1*"
               className={`${styles.form__field}`}
             />
-            <ErrorMessage name="address1" component={Tooltip} className={styles.error} />
+            <ErrorMessage name="address1" component="div" className={styles.error} />
           </div>
 
           <div className="u__relative">
@@ -295,7 +295,7 @@ const DepositForm = (props) => {
               placeholder="Address 2"
               className={`${styles.form__field}`}
             />
-            <ErrorMessage name="address2" component={Tooltip} className={styles.error} />
+            <ErrorMessage name="address2" component="div" className={styles.error} />
           </div>
 
           <div className="u__relative">
@@ -305,7 +305,7 @@ const DepositForm = (props) => {
               placeholder="City*"
               className={`${styles.form__field}`}
             />
-            <ErrorMessage name="city" component={Tooltip} className={styles.error} />
+            <ErrorMessage name="city" component="div" className={styles.error} />
           </div>
 
           <div className={`${styles['form__state-zip']}`}>
@@ -321,7 +321,7 @@ const DepositForm = (props) => {
                   return <option value={`${i}`}>{i}</option>;
                 })}
               </Field>
-              <ErrorMessage name="state" component={Tooltip} className={styles.error} />
+              <ErrorMessage name="state" component="div" className={styles.error} />
             </div>
 
             <div className="u__relative">
@@ -331,7 +331,7 @@ const DepositForm = (props) => {
                 placeholder="Zip*"
                 className={`${styles.form__field}`}
               />
-              <ErrorMessage name="zip" component={Tooltip} className={styles.error} />
+              <ErrorMessage name="zip" component="div" className={styles.error} />
             </div>
           </div>
         </div>
@@ -344,7 +344,7 @@ const DepositForm = (props) => {
               placeholder="Vaulted item name*"
               className={`${styles.form__field}`}
             />
-            <ErrorMessage name="itemName" component={Tooltip} className={styles.error} />
+            <ErrorMessage name="itemName" component="div" className={styles.error} />
           </div>
 
           <div>&nbsp;</div>
@@ -356,7 +356,7 @@ const DepositForm = (props) => {
               placeholder="Vaulted item description*"
               className={`${styles.form__field} ${styles.form__textarea} grid__full`}
             />
-            <ErrorMessage name="itemDesc" component={Tooltip} className={styles.error} />
+            <ErrorMessage name="itemDesc" component="div" className={styles.error} />
           </div>
         </div>
         <div className="u__w100 u__center">

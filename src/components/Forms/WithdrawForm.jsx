@@ -6,6 +6,8 @@ import styles from './forms.module.scss';
 import * as Yup from 'yup';
 import { Button } from '@aws-amplify/ui-react';
 import { useRouter } from 'next/router';
+import Lottie from 'lottie-react';
+import loadingSpinner from '../../../public/loading-lottie.json';
 
 const WithdrawForm = (props) => {
   const router = useRouter();
@@ -80,6 +82,7 @@ const WithdrawForm = (props) => {
   const path = '/deposit';
   const [success, setSuccess] = useState(false);
   const [serverMessage, setServerMessage] = useState('');
+  const [isLoading, setIsLoading] = useState('');
 
   return (
     <Formik
@@ -95,8 +98,7 @@ const WithdrawForm = (props) => {
         city: '',
         state: '',
         zip: '',
-        itemName: '',
-        itemDesc: '',
+        tokenID: '',
       }}
       validationSchema={Yup.object({
         firstName: Yup.string().required('Required'),
@@ -118,11 +120,11 @@ const WithdrawForm = (props) => {
           .test('is-state', 'Required', (value) => value !== 'state')
           .required('Required'),
         zip: Yup.number().required('Required'),
-        itemName: Yup.string().required('Required'),
-        itemDesc: Yup.string().required('Required'),
+        tokenID: Yup.string().required('Required'),
       })}
       onSubmit={(values, { setSubmitting }) => {
         values.walletAddress = props.additionalData.currentAccount;
+        setIsLoading(true);
 
         const myInit = {
           body: {
@@ -139,6 +141,7 @@ const WithdrawForm = (props) => {
             setSuccess(true);
             setServerMessage(response.message);
             router.push('/success');
+            setIsLoading(false);
             //
 
             setSubmitting(false);
@@ -147,6 +150,7 @@ const WithdrawForm = (props) => {
             console.log(error);
             setServerMessage(error.message);
             setSubmitting(false);
+            setIsLoading(false);
           });
         // const createDateOfBirth = (values) => {
         //   const dateOfBirth = `${values.year}-${values.month}-${values.day}`;
@@ -179,35 +183,41 @@ const WithdrawForm = (props) => {
     >
       <Form className={`${styles.form} u__left`}>
         <div className={`${styles.form__row}`}>
-          <Field
-            name="firstName"
-            type="text"
-            placeholder="First Name"
-            className={`${styles.form__field}`}
-          />
-          {/* <ErrorMessage name="firstName" /> */}
+          <div className="u__relative">
+            <Field
+              name="firstName"
+              type="text"
+              placeholder="First Name*"
+              className={`${styles.form__field}`}
+            />
+            <ErrorMessage name="firstName" component="div" className={styles.error} />
+          </div>
 
-          <Field
-            name="lastName"
-            type="text"
-            placeholder="Last Name"
-            className={`${styles.form__field}`}
-          />
-          {/* <ErrorMessage name="lastName" /> */}
+          <div className="u__relative">
+            <Field
+              name="lastName"
+              type="text"
+              placeholder="Last Name*"
+              className={`${styles.form__field}`}
+            />
+            <ErrorMessage name="lastName" component="div" className={styles.error} />
+          </div>
 
-          <Field
-            name="email"
-            type="email"
-            placeholder="Email Address"
-            className={`${styles.form__field}`}
-          />
-          {/* <ErrorMessage name="email" /> */}
+          <div className="u__relative">
+            <Field
+              name="email"
+              type="email"
+              placeholder="Email Address*"
+              className={`${styles.form__field}`}
+            />
+            <ErrorMessage name="email" component="div" className={styles.error} />
+          </div>
         </div>
 
         <div className={`${styles.form__row}`}>
           <div className={`${styles.form__col}`}>
             <label htmlFor="month" className="mb16 u__block">
-              Birthday
+              Birthday*
             </label>
             <div className={`${styles['form__select-group']}`}>
               <div className={`${styles['form__select-wrapper']} u__flex flex__aic`}>
@@ -223,7 +233,7 @@ const WithdrawForm = (props) => {
                     return <option value={`${month}`}>{month}</option>;
                   })}
                 </Field>
-                {/* <ErrorMessage name="month" /> */}
+                <ErrorMessage name="month" component="div" className={styles.error} />
               </div>
 
               <div className={`${styles['form__select-wrapper']} u__flex flex__aic`}>
@@ -239,7 +249,7 @@ const WithdrawForm = (props) => {
                     return <option value={`${day}`}>{day}</option>;
                   })}
                 </Field>
-                {/* <ErrorMessage name="day" /> */}
+                <ErrorMessage name="day" component="div" className={styles.error} />
               </div>
 
               <div className={`${styles['form__select-wrapper']} u__flex flex__aic`}>
@@ -254,31 +264,42 @@ const WithdrawForm = (props) => {
                     return <option value={`${i}`}>{i}</option>;
                   })}
                 </Field>
-                {/* <ErrorMessage name="year" /> */}
+                <ErrorMessage name="year" component="div" className={styles.error} />
               </div>
             </div>
           </div>
         </div>
 
         <div className={`${styles.form__row}`}>
-          <Field
-            name="address1"
-            type="text"
-            placeholder="Address 1"
-            className={`${styles.form__field}`}
-          />
-          {/* <ErrorMessage name="address1" /> */}
+          <div className="u__relative">
+            <Field
+              name="address1"
+              type="text"
+              placeholder="Address 1*"
+              className={`${styles.form__field}`}
+            />
+            <ErrorMessage name="address1" component="div" className={styles.error} />
+          </div>
 
-          <Field
-            name="address2"
-            type="text"
-            placeholder="Address 2"
-            className={`${styles.form__field}`}
-          />
-          {/* <ErrorMessage name="address2" /> */}
+          <div className="u__relative">
+            <Field
+              name="address2"
+              type="text"
+              placeholder="Address 2"
+              className={`${styles.form__field}`}
+            />
+            <ErrorMessage name="address2" component="div" className={styles.error} />
+          </div>
 
-          <Field name="city" type="text" placeholder="City" className={`${styles.form__field}`} />
-          {/* <ErrorMessage name="city" /> */}
+          <div className="u__relative">
+            <Field
+              name="city"
+              type="text"
+              placeholder="City*"
+              className={`${styles.form__field}`}
+            />
+            <ErrorMessage name="city" component="div" className={styles.error} />
+          </div>
 
           <div className={`${styles['form__state-zip']}`}>
             <div className={`${styles['form__select-wrapper']} u__flex flex__aic`}>
@@ -288,34 +309,43 @@ const WithdrawForm = (props) => {
                 as="select"
                 className={`${styles.form__select} ${styles.form__field}`}
               >
-                <option value="state">State</option>
+                <option value="state">State*</option>
                 {statesArray.map((i) => {
                   return <option value={`${i}`}>{i}</option>;
                 })}
               </Field>
-              {/* <ErrorMessage name="state" /> */}
+              <ErrorMessage name="state" component="div" className={styles.error} />
             </div>
 
-            <Field name="zip" type="text" placeholder="Zip" className={`${styles.form__field}`} />
-            <ErrorMessage name="zip" />
+            <div className="u__relative">
+              <Field
+                name="zip"
+                type="text"
+                placeholder="Zip*"
+                className={`${styles.form__field}`}
+              />
+              <ErrorMessage name="zip" component="div" className={styles.error} />
+            </div>
           </div>
         </div>
 
         <div className={`${styles.form__row}`}>
-          <Field
-            name="itemName"
-            type="text"
-            placeholder="NFT Token ID"
-            className={`${styles.form__field} u__w100`}
-          />
-          {/* <ErrorMessage name="itemName" /> */}
-
-          <div>&nbsp;</div>
-          {/* <ErrorMessage name="itemDesc" /> */}
+          <div className="u__relative">
+            <Field
+              name="tokenID"
+              type="text"
+              placeholder="NFT Token ID*"
+              className={`${styles.form__field} u__w100`}
+            />
+            <ErrorMessage name="tokenID" component="div" className={styles.error} />
+          </div>
         </div>
         <div className="u__w100 u__center">
           <button type="submit" className="btn gradient__green">
-            Submit
+            {isLoading && (
+              <Lottie animationData={loadingSpinner} loop={true} className="btn__loading" />
+            )}
+            {!isLoading && 'Submit'}
           </button>
         </div>
       </Form>
