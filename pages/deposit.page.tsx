@@ -9,9 +9,10 @@ import Logo from '../public/logo.svg';
 import DepositForm from '../src/components/Forms/DepositForm';
 import Tooltip from '../src/components/Tooltip/Tooltip';
 import gsap from 'gsap';
+import { getExpectedChainId } from '../src/utils/networksConfig';
 
 export default function DepositPage() {
-  const { currentAccount, loading: web3Loading, disconnectWallet } = useWeb3Context();
+  const { currentAccount, loading: web3Loading, disconnectWallet, isExpectedChain, switchNetwork } = useWeb3Context();
 
   const el = useRef();
   const q = gsap.utils.selector(el);
@@ -29,10 +30,18 @@ export default function DepositPage() {
     };
   };
 
+  const handleSwitchClick = async () => {
+    if (isExpectedChain) {
+      return;
+    }
+
+    await switchNetwork(getExpectedChainId());
+  }
+
   return (
     <div className={`${styles.deposit} u__center`} ref={el}>
       <div className={`${styles.deposit__hero} u__center`}>
-        <img src={Logo.src} className={`heading ${styles.deposit__logo}`} />
+        <img src={Logo.src} className={`heading ${styles.deposit__logo}`} alt="Deposit" />
 
         <h2 className={`heading heading__secondary ${styles.deposit__heading}`}>Item Deposit</h2>
 
