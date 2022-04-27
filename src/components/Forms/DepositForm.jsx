@@ -8,6 +8,10 @@ import { Button } from '@aws-amplify/ui-react';
 import { useRouter } from 'next/router';
 import { useWeb3Context } from '../../libs/hooks/useWeb3Context';
 import { getExpectedChainId } from '../../../src/utils/networksConfig';
+import Tooltip from '../Tooltip/Tooltip';
+import { gsap } from 'gsap';
+import Lottie from 'lottie-react';
+import loadingSpinner from '../../../public/loading-lottie.json';
 
 const DepositForm = (props) => {
   const { isExpectedChain, switchNetwork, connected, currentAccount, chainId, signTxData } =
@@ -88,6 +92,7 @@ const DepositForm = (props) => {
 
   const [success, setSuccess] = useState(false);
   const [serverMessage, setServerMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSwitchClick = async () => {
     console.log('success');
@@ -357,7 +362,10 @@ const DepositForm = (props) => {
           </div>
           <div className="u__w100 u__center">
             <button type="submit" className="btn gradient__green">
-              Submit
+              {isLoading && (
+                <Lottie animationData={loadingSpinner} loop={true} className="btn__loading" />
+              )}
+              {!isLoading && 'Submit'}
             </button>
           </div>
         </Form>
