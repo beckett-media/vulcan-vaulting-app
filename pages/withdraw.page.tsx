@@ -29,6 +29,8 @@ export default function DepositPage() {
     };
   };
 
+  console.log({ isExpectedChain });
+
   return (
     <div className={`${styles.deposit} u__center`} ref={el}>
       <div className={`${styles.deposit__hero} u__center`}>
