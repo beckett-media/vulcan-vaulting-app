@@ -3,6 +3,8 @@ import { Field, Form, Formik } from 'formik';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import * as Yup from 'yup';
+import { useWeb3Context } from '../../libs/hooks/useWeb3Context';
+import { getEIP712ForwarderSignature } from '../../utils/utils';
 import styles from './forms.module.scss';
 import { useWeb3Context } from '../../libs/hooks/useWeb3Context';
 import { getExpectedChainId } from '../../../src/utils/networksConfig';
@@ -11,7 +13,8 @@ const WithdrawForm = (props) => {
   const [success, setSuccess] = useState(false);
   const [serverMessage, setServerMessage] = useState('');
 
-  const { isExpectedChain, switchNetwork } = useWeb3Context();
+  const { isExpectedChain, switchNetwork, connected, currentAccount, chainId, signTxData } =
+    useWeb3Context();
 
   const router = useRouter();
   const d = new Date();
@@ -94,6 +97,19 @@ const WithdrawForm = (props) => {
     await switchNetwork(getExpectedChainId());
   };
 
+  const getUserSignature = async (tokenId, hash) => {
+    // 1 hour deadline
+    const data = await getEIP712ForwarderSignature(
+      Number(tokenId),
+      currentAccount,
+      chainId,
+      `0x${hash}`
+    );
+    console.log('signing data', data);
+
+    return await signTxData(data);
+  };
+
   return (
     <Formik
       initialValues={{
@@ -144,11 +160,15 @@ const WithdrawForm = (props) => {
         };
 
         API.put(apiName, path, myInit)
-          .then((response) => {
+          .then(async (response) => {
             console.log(response.status_code);
-            console.log(response.message);
+            console.log(response.data.hash);
             setSuccess(true);
             setSubmitting(false);
+
+            // For Christian
+            const signature = await getUserSignature(values.tokenId, response.data.hash);
+            console.log({ signature });
           })
           .catch((error) => {
             console.log(error);
