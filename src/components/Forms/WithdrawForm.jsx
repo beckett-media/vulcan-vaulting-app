@@ -102,7 +102,7 @@ const WithdrawForm = (props) => {
 
   const getUserSignature = async (tokenId, hash) => {
     let signature;
-    
+
     try {
       setIsSigning(true);
       // 1 hour deadline
@@ -113,7 +113,7 @@ const WithdrawForm = (props) => {
         `0x${hash}`
       );
 
-      signature = await signTxData(data);      
+      signature = await signTxData(data);
     } catch (e) {
       console.log('error', e);
     } finally {
@@ -129,6 +129,9 @@ const WithdrawForm = (props) => {
     <div className="u__relative">
       {!currentAccount && (
         <div className={styles.disabled}>Please connect your wallet to continue.</div>
+      )}
+      {isSigning && (
+        <div className={styles.disabled}>Please complete transaction in signature dialog.</div>
       )}
       {currentAccount && !isExpectedChain && (
         <div className={styles.disabled}>
@@ -201,8 +204,8 @@ const WithdrawForm = (props) => {
 
               const signature = await getUserSignature(values.tokenID, response.data.hash);
 
-              console.log({signature});
-              
+              console.log({ signature });
+
               router.push('/success');
               setIsLoading(false);
               //
