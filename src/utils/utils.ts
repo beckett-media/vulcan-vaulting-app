@@ -54,9 +54,11 @@ export const getEIP712ForwarderSignature = async (nftId: number, from: string, c
   const config = getNetworkConfig(chainId);
   const provider = getProvider(chainId);
 
+  console.log({nftId, from, chainId, hash});
+
   // types
   const domainTypes = [
-    { name: 'type', type: 'bytes32' },
+    // { name: 'type', type: 'bytes32' },
     { name: 'name', type: 'string' },
     { name: 'version', type: 'string' },
     { name: 'chainId', type: 'uint256' },
@@ -64,7 +66,7 @@ export const getEIP712ForwarderSignature = async (nftId: number, from: string, c
   ];
 
   const forwardRequestTypes = [
-    { name: 'type', type: 'bytes32' },
+    // { name: 'type', type: 'bytes32' },
     { name: 'from', type: 'address' },
     { name: 'to', type: 'address' },
     { name: 'value', type: 'uint256' },
@@ -74,16 +76,16 @@ export const getEIP712ForwarderSignature = async (nftId: number, from: string, c
   ];
 
   // data
-  const typeHashDomain = utils.keccak256(
-    'EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)'
-  );
+  // const typeHashDomain = utils.keccak256(
+  //   'EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)'
+  // );
 
-  const typeHashStruct = utils.keccak256(
-    'ForwardRequest(address from,address to,uint256 value,uint256 gas,uint256 nonce,bytes data)'
-  );
+  // const typeHashStruct = utils.keccak256(
+  //   'ForwardRequest(address from,address to,uint256 value,uint256 gas,uint256 nonce,bytes data)'
+  // );
 
   const domainData = {
-    type: typeHashDomain,
+    // type: typeHashDomain,
     name: 'MinimalForwarder',
     version: '0.0.1',
     chainId,
@@ -122,7 +124,7 @@ export const getEIP712ForwarderSignature = async (nftId: number, from: string, c
   const nonce = await forwarder.getNonce(from);
 
   var message = {
-    type: typeHashStruct,
+    // type: typeHashStruct,
     from,
     to: config.retrievalManagerAddress,
     value: 0,
@@ -132,12 +134,12 @@ export const getEIP712ForwarderSignature = async (nftId: number, from: string, c
   };
 
   const data = JSON.stringify({
+    domain: domainData,
+    primaryType: 'Struct',
     types: {
       EIP712Domain: domainTypes,
       Struct: forwardRequestTypes,
     },
-    domain: domainData,
-    primaryType: 'Struct',
     message: message,
   });
 
