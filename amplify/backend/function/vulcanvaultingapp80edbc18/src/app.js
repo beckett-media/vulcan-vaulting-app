@@ -162,7 +162,6 @@ app.put("/withdraw", async function (req, res) {
 
   const { v4: uuidv4 } = require("uuid");
   const crypto = require("crypto");
-  const keccak256 = require("keccak256")
   const utils = require('web3-utils')
 
   // ######################## FOUNDRY API PARAMS ############################
