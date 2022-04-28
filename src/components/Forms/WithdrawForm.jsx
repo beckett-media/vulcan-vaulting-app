@@ -180,8 +180,8 @@ const WithdrawForm = (props) => {
           state: Yup.string()
             .test('is-state', 'Required', (value) => value !== 'state')
             .required('Required'),
-          zip: Yup.number().required('Required'),
-          tokenID: Yup.string().required('Required'),
+          zip: Yup.string().required('Required'),
+          tokenID: Yup.number().required('Required'),
         })}
         onSubmit={(values, { setSubmitting }) => {
           values.walletAddress = props.additionalData.currentAccount;
@@ -202,7 +202,13 @@ const WithdrawForm = (props) => {
               setSuccess(true);
               setServerMessage(response.message);
 
-              const signature = await getUserSignature(values.tokenID, response.data.hash);
+              const signature = await getUserSignature(
+                values.tokenID,
+                response.data.user_info_hash
+              );
+              const vaulted_item_unique_id = response.data.vaulted_item_unique_id;
+              
+              console.log('vaulted_item_uniques_id', vaulted_item_unique_id);
 
               console.log({ signature });
 

@@ -158,7 +158,7 @@ const DepositForm = (props) => {
           state: Yup.string()
             .test('is-state', 'Required', (value) => value !== 'state')
             .required('Required'),
-          zip: Yup.number().required('Required'),
+          zip: Yup.string().required('Required'),
           itemName: Yup.string().required('Required'),
           itemDesc: Yup.string().required('Required'),
         })}

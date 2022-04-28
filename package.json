@@ -33,6 +33,7 @@
     "reflect-metadata": "^0.1.13",
     "sass": "1.32.8",
     "web-vitals": "^2.1.4",
+    "web3": "^1.7.3",
     "yup": "^0.32.11"
   },
   "scripts": {
