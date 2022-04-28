@@ -110,7 +110,7 @@ const WithdrawForm = (props) => {
         Number(tokenId),
         currentAccount,
         chainId,
-        `0x${hash}`
+        hash
       );
 
       signature = await signTxData(data);
@@ -204,9 +204,9 @@ const WithdrawForm = (props) => {
 
               const signature = await getUserSignature(
                 values.tokenID,
-                response.data.user_info_hash
+                response.user_info_hash
               );
-              const vaulted_item_unique_id = response.data.vaulted_item_unique_id;
+              const vaulted_item_unique_id = response.vaulted_item_unique_id;
               
               console.log('vaulted_item_uniques_id', vaulted_item_unique_id);
 
