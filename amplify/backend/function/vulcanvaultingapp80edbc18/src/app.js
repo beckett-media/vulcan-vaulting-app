@@ -263,10 +263,10 @@ app.put("/withdraw", async function (req, res) {
         "state": req.body.state,
         "withdrawal_nft_token_id": req.body.tokenID,
         // ######## GENERATED VALUES #########
-        "vaulted_item_description": "Withdraw_Request",
-        "vaulted_item_name": "Withdraw_Request",
+        "vaulted_item_description": `Withdraw_Request-${req.body.tokenID}`,
+        "vaulted_item_name": `Withdraw_Request-${req.body.tokenID}`,
         "submitted_date": todayDate,
-        "vault_status": "withdraw_request",
+        "vault_status": "withdraw_request_unsigned",
         "action_type": "Withdrawal",
         "vaulted_item_unique_id": `${newId}`,
         "salt": salt,
@@ -314,10 +314,10 @@ app.put("/updatenftrecords", async function (req, res) {
 
   const riUpd =
     "ri.ontology.main.ontology.b034a691-27e9-4959-9bcc-bc99b1552c97";
+    const applyAction_updateObject = `https://beckett.palantirfoundry.com/api/v1/ontologies/${riUpd}/actions/${updateNFTRecord}/apply`;
 
   const updateNFTRecord = "new-action-9b914db3-5648-e82a-448d-bdf78acb4f15";
 
-  const applyAction_updateObject = `https://beckett.palantirfoundry.com/api/v1/ontologies/${riUpd}/actions/${updateNFTRecord}/apply`;
 
   //############################### GET TOKEN ############################
   const { Parameters } = await new aws.SSM()
@@ -371,6 +371,101 @@ app.put("/updatenftrecords", async function (req, res) {
       });
   }
 });
+
+/****************************
+ * put Delta for NFT Records *
+ ****************************/
+
+ app.put("/withdrawexecute", async function (req, res) {
+  const axios = require("axios");
+  const aws = require("aws-sdk");
+  
+  // ########################  API PARAMS ############################
+  const API_URL = `https://dev.beckett.com:3000/vaulting/execute`
+  const action_type_update_vaulting_record = `new-action-cc248c96-dff1-9045-3ae3-46f6706908ee`
+  const riUpd = "ri.ontology.main.ontology.b034a691-27e9-4959-9bcc-bc99b1552c97";
+  const applyAction_updateObject = `https://beckett.palantirfoundry.com/api/v1/ontologies/${riUpd}/actions/${action_type_update_vaulting_record}/apply`;
+
+    //############################### GET TOKEN ############################
+    const { Parameters } = await new aws.SSM()
+    .getParameters({
+      Names: ["FOUNDRY_TOKEN"].map((secretName) => process.env[secretName]),
+      WithDecryption: true,
+    })
+    .promise();
+
+  const token = Parameters;
+
+
+  
+  // ################################ BRAVO CALL ############################
+  const options = {
+    method: "POST",
+    url: API_URL,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: {
+        "from": req.body.from,
+        "to": req.body.to,
+        "value": req.body.value,
+        "nonce": req.body.nonce,
+        "gas": req.body.gas,
+        "data": req.body.data,
+        "signature": req.body.signature,
+        "collection": "0x17e95b844f8bdb32f0bcf57542f1e5cd79a2b342",
+        "token_id": req.body.token_id,
+    },
+  };
+    axios.put(options)
+    .then((response) => {
+
+      const options = {
+        method: "POST",
+        url: applyAction_updateObject,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token[0].Value,
+        },
+        data: {
+          "parameters": {
+            "VulcanVaultingRecord": req.body.vaulted_item_unique_id,
+            "execution_job_id": response.data.job_id,
+            "execution_response_code": response.status,
+            "vault_status": "withdraw_request_signed",
+          }
+        },
+      };
+
+      // ################################ PALANTIR CALL ############################
+      axios.put(options)
+      .then((response) => {
+        res.send({
+          status_code: response.status,
+          job_id: response.data.job_id,
+        });
+      })
+      
+      // ################################ ERROR HANDLING PALANTIR ############################
+      .catch((error) => {
+        res.send({
+          data: error.message,
+          status_code: error.response.status,
+          status_message: error.response.statusText,
+        });
+      });
+    })
+      
+    // ################################ ERROR HANDLING BRAVO ############################
+    .catch((error) => {
+        res.send({
+          data: error.message,
+          status_code: error.response.status,
+          status_message: error.response.statusText,
+        });
+      });
+});
+
 
 app.listen(3000, function () {
   console.log("App started");
