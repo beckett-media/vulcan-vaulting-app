@@ -197,27 +197,52 @@ const WithdrawForm = (props) => {
 
           API.put(apiName, path, myInit)
             .then(async (response) => {
-              console.log(response);
-              console.log('walletaddress:', walletAddress);
               setSuccess(true);
               setServerMessage(response.message);
 
-              const signature = await getUserSignature(
-                values.tokenID,
-                response.user_info_hash
-              );
+              const signature = await getUserSignature(values.tokenID, response.user_info_hash);
               const vaulted_item_unique_id = response.vaulted_item_unique_id;
-              
-              console.log('vaulted_item_uniques_id', vaulted_item_unique_id);
 
+              console.log('vaulted_item_uniques_id', vaulted_item_unique_id);
+              console.log(response);
+              console.log('walletaddress:', walletAddress);
               console.log({ signature });
+
+              // Need Anthony's help here to create variables for the following data:
+              // "from": req.body.from,
+              // "to": req.body.to,
+              // "value": "10000",
+              // "nonce": "20000",
+              // "gas": "1056azc",
+              // "data": "0x17E95B844F8BDb32f0bcf57542F1E5CD79A2B342",
+
+              const executeData = {
+                body: {
+                  from: '', //to be filled in with Anthony's help
+                  to: '', //to be filled in with Anthony's help
+                  value: '', //to be filled in with Anthony's help
+                  nonce: '', //to be filled in with Anthony's help
+                  gas: '', //to be filled in with Anthony's help
+                  data: '', //to be filled in with Anthony's help
+                  signature: signature, //to be filled in with Anthony's help
+                  token_id: values.tokenID, //to be filled in with Anthony's help
+                  vaulted_item_unique_id: vaulted_item_unique_id, //to be filled in with Anthony's help
+                },
+              };
+
+              await API.post(apiName, '/withdrawexecute', executeData)
+                .then((response) => {
+                  console.log(response);
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
 
               if (signature) {
                 router.push('/success');
               }
-              setIsLoading(false);
-              //
 
+              setIsLoading(false);
               setSubmitting(false);
             })
             .catch((error) => {
@@ -226,33 +251,6 @@ const WithdrawForm = (props) => {
               setSubmitting(false);
               setIsLoading(false);
             });
-          // const createDateOfBirth = (values) => {
-          //   const dateOfBirth = `${values.year}-${values.month}-${values.day}`;
-          //   return dateOfBirth;
-          // };
-
-          // const myInit = {
-          //   body: {
-          //     ...values,
-          //     dateOfBirth: createDateOfBirth(values),
-          //     walletAddress: values.walletAddress,
-          //   },
-          // };
-
-          // API.put(apiName, path, myInit)
-          //   .then((response) => {
-          //     console.log(response);
-          //     setSubmitting(false);
-          //   })
-          //   .catch((error) => {
-          //     console.log(error.response);
-          //     setSubmitting(false);
-          //   });
-
-          // setTimeout(() => {
-          //   alert(JSON.stringify(values, null, 2));
-          //   setSubmitting(false);
-          // }, 400);
         }}
       >
         <Form className={`${styles.form} u__left`}>

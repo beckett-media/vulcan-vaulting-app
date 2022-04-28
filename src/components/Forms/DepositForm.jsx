@@ -153,7 +153,7 @@ const DepositForm = (props) => {
             .test('is-year', 'Required', (value) => value !== 'YYYY')
             .required('Required'),
           address1: Yup.string().required('Required'),
-          address2: '',
+                address2: '',
           city: Yup.string().required('Required'),
           state: Yup.string()
             .test('is-state', 'Required', (value) => value !== 'state')

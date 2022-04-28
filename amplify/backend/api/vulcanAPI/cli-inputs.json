@@ -21,6 +21,13 @@
       "permissions": {
         "setting": "open"
       }
+    },
+    "/withdrawexecute": {
+      "name": "/withdrawexecute",
+      "lambdaFunction": "vulcanvaultingapp80edbc18",
+      "permissions": {
+        "setting": "open"
+      }
     }
   }
 }
