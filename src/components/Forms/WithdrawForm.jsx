@@ -102,6 +102,7 @@ const WithdrawForm = (props) => {
 
   const getUserSignature = async (tokenId, hash) => {
     let signature;
+    let message = {};
 
     try {
       setIsSigning(true);
@@ -113,14 +114,19 @@ const WithdrawForm = (props) => {
         hash
       );
 
-      signature = await signTxData(data);
+      message = data.message;
+      signature = await signTxData(JSON.stringify(data));
+
     } catch (e) {
       console.log('error', e);
     } finally {
       setIsSigning(false);
     }
 
-    return signature;
+    return {
+      signature,
+      message
+    };
   };
 
   console.log({ isSigning });
@@ -202,7 +208,7 @@ const WithdrawForm = (props) => {
               setSuccess(true);
               setServerMessage(response.message);
 
-              const signature = await getUserSignature(
+              const { signature, message } = await getUserSignature(
                 values.tokenID,
                 response.user_info_hash
               );

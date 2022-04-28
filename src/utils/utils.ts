@@ -1,12 +1,16 @@
+
+import { TypedDataDomain, TypedDataField } from "@ethersproject/abstract-signer";
+import { _TypedDataEncoder } from "@ethersproject/hash";
 import { ChainId } from '@aave/contract-helpers';
 import { getNetworkConfig } from './networksConfig';
 import { getProvider } from './networksConfig';
 import { Contract } from 'ethers';
+import forwarderABI from '../../abi/MinimalForwarder.json';
 
 import utils from 'web3-utils';
 const abi = require('web3-eth-abi');
 
-import forwarderABI from '../../abi/MinimalForwarder.json';
+
 
 export function hexToAscii(_hex: string): string {
   const hex = _hex.toString();
@@ -54,42 +58,22 @@ export const getEIP712ForwarderSignature = async (nftId: number, from: string, c
   const config = getNetworkConfig(chainId);
   const provider = getProvider(chainId);
 
-  console.log({nftId, from, chainId, hash});
-
-  // types
-  const domainTypes = [
-    // { name: 'type', type: 'bytes32' },
-    { name: 'name', type: 'string' },
-    { name: 'version', type: 'string' },
-    { name: 'chainId', type: 'uint256' },
-    { name: 'verifyingContract', type: 'address' },
-  ];
-
-  const forwardRequestTypes = [
-    // { name: 'type', type: 'bytes32' },
-    { name: 'from', type: 'address' },
-    { name: 'to', type: 'address' },
-    { name: 'value', type: 'uint256' },
-    { name: 'gas', type: 'uint256' },
-    { name: 'nonce', type: 'uint256' },
-    { name: 'data', type: 'bytes' },
-  ];
-
-  // data
-  // const typeHashDomain = utils.keccak256(
-  //   'EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)'
-  // );
-
-  // const typeHashStruct = utils.keccak256(
-  //   'ForwardRequest(address from,address to,uint256 value,uint256 gas,uint256 nonce,bytes data)'
-  // );
-
-  const domainData = {
-    // type: typeHashDomain,
+  const domain: TypedDataDomain = {
     name: 'MinimalForwarder',
     version: '0.0.1',
     chainId,
     verifyingContract: config.forwarderAddress,
+  };
+
+  const requestTypes: Record<string, Array<TypedDataField>> = {
+    ForwardRequest: [
+      { name: 'from', type: 'address' },
+      { name: 'to', type: 'address' },
+      { name: 'value', type: 'uint256' },
+      { name: 'gas', type: 'uint256' },
+      { name: 'nonce', type: 'uint256' },
+      { name: 'data', type: 'bytes' },
+    ],
   };
 
   // encode function call
@@ -123,8 +107,7 @@ export const getEIP712ForwarderSignature = async (nftId: number, from: string, c
   const forwarder = new Contract(config.forwarderAddress, forwarderABI, provider);
   const nonce = await forwarder.getNonce(from);
 
-  var message = {
-    // type: typeHashStruct,
+  const message = {
     from,
     to: config.retrievalManagerAddress,
     value: 0,
@@ -133,15 +116,15 @@ export const getEIP712ForwarderSignature = async (nftId: number, from: string, c
     data: calldata,
   };
 
-  const data = JSON.stringify({
-    domain: domainData,
-    primaryType: 'Struct',
-    types: {
-      EIP712Domain: domainTypes,
-      Struct: forwardRequestTypes,
-    },
-    message: message,
+  // Populate any ENS names (in-place)
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const populated = await _TypedDataEncoder.resolveNames(domain, requestTypes, message, (name: string) => {
+    return provider.resolveName(name);
   });
+  const rpcData = _TypedDataEncoder.getPayload(populated.domain, requestTypes, populated.value);
 
-  return data;
+  console.log({rpcData});
+
+  return rpcData;
 };
