@@ -231,7 +231,7 @@ const WithdrawForm = (props) => {
                 },
               };
 
-              await API.post(apiName, '/withdrawexecute', executeData)
+              await API.put(apiName, '/withdrawexecute', executeData)
                 .then((response) => {
                   console.log(response);
                 })
