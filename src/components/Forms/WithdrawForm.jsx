@@ -234,14 +234,17 @@ const WithdrawForm = (props) => {
               await API.put(apiName, '/withdrawexecute', executeData)
                 .then((response) => {
                   console.log(response);
+                  if (signature) {
+                    router.push('/success');
+                  }
                 })
                 .catch((error) => {
-                  console.log(error);
+                  console.log({
+                    error,
+                    type: "withdrawexecute error",
+                  });
                 });
 
-              if (signature) {
-                router.push('/success');
-              }
 
               setIsLoading(false);
               setSubmitting(false);
