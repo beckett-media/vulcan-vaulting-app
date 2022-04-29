@@ -312,11 +312,11 @@ app.put("/updatenftrecords", async function (req, res) {
 
   // ######################## FOUNDRY API PARAMS ############################
 
+  const updateNFTRecord = "new-action-9b914db3-5648-e82a-448d-bdf78acb4f15";
   const riUpd =
     "ri.ontology.main.ontology.b034a691-27e9-4959-9bcc-bc99b1552c97";
     const applyAction_updateObject = `https://beckett.palantirfoundry.com/api/v1/ontologies/${riUpd}/actions/${updateNFTRecord}/apply`;
 
-  const updateNFTRecord = "new-action-9b914db3-5648-e82a-448d-bdf78acb4f15";
 
 
   //############################### GET TOKEN ############################
@@ -382,6 +382,7 @@ app.put("/updatenftrecords", async function (req, res) {
   
   // ########################  API PARAMS ############################
   const API_URL = `https://dev.beckett.com:3000/vaulting/execute`
+
   const action_type_update_vaulting_record = `new-action-cc248c96-dff1-9045-3ae3-46f6706908ee`
   const riUpd = "ri.ontology.main.ontology.b034a691-27e9-4959-9bcc-bc99b1552c97";
   const applyAction_updateObject = `https://beckett.palantirfoundry.com/api/v1/ontologies/${riUpd}/actions/${action_type_update_vaulting_record}/apply`;
@@ -414,10 +415,10 @@ app.put("/updatenftrecords", async function (req, res) {
         "data": req.body.data,
         "signature": req.body.signature,
         "collection": "0x17e95b844f8bdb32f0bcf57542f1e5cd79a2b342",
-        "token_id": req.body.token_id,
+        "token_id": parseInt(req.body.token_id),
     },
   };
-    axios.put(options)
+    axios(options)
     .then((response) => {
 
       const options = {
@@ -438,7 +439,7 @@ app.put("/updatenftrecords", async function (req, res) {
       };
 
       // ################################ PALANTIR CALL ############################
-      axios.put(options)
+      axios(options)
       .then((response) => {
         res.send({
           status_code: response.status,
@@ -449,9 +450,9 @@ app.put("/updatenftrecords", async function (req, res) {
       // ################################ ERROR HANDLING PALANTIR ############################
       .catch((error) => {
         res.send({
+          type_err: "palantir",
           data: error.message,
-          status_code: error.response.status,
-          status_message: error.response.statusText,
+          status_code: error.status,
         });
       });
     })
@@ -459,9 +460,9 @@ app.put("/updatenftrecords", async function (req, res) {
     // ################################ ERROR HANDLING BRAVO ############################
     .catch((error) => {
         res.send({
+          type_err: "bravo",
           data: error.message,
-          status_code: error.response.status,
-          status_message: error.response.statusText,
+          status_code: error.status,
         });
       });
 });
