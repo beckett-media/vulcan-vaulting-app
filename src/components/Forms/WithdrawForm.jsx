@@ -212,7 +212,6 @@ const WithdrawForm = (props) => {
               );
               const vaulted_item_unique_id = response.vaulted_item_unique_id;
 
-              console.log('vaulted_item_uniques_id', vaulted_item_unique_id);
               console.log(response);
               console.log('walletaddress:', walletAddress);
               console.log({ signature });
