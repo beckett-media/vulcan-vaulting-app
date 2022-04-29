@@ -217,25 +217,17 @@ const WithdrawForm = (props) => {
               console.log('walletaddress:', walletAddress);
               console.log({ signature });
 
-              // Need Anthony's help here to create variables for the following data:
-              // "from": req.body.from,
-              // "to": req.body.to,
-              // "value": "10000",
-              // "nonce": "20000",
-              // "gas": "1056azc",
-              // "data": "0x17E95B844F8BDb32f0bcf57542F1E5CD79A2B342",
-
               const executeData = {
                 body: {
-                  from: '', //to be filled in with Anthony's help
-                  to: '', //to be filled in with Anthony's help
-                  value: '', //to be filled in with Anthony's help
-                  nonce: '', //to be filled in with Anthony's help
-                  gas: '', //to be filled in with Anthony's help
-                  data: '', //to be filled in with Anthony's help
-                  signature: signature, //to be filled in with Anthony's help
-                  token_id: values.tokenID, //to be filled in with Anthony's help
-                  vaulted_item_unique_id: vaulted_item_unique_id, //to be filled in with Anthony's help
+                  from: message.from,
+                  to: message.to,
+                  value: message.value,
+                  nonce: message.nonce,
+                  gas: message.gas,
+                  data: message.data,
+                  signature: signature, 
+                  token_id: values.tokenID, 
+                  vaulted_item_unique_id: vaulted_item_unique_id, 
                 },
               };
 
