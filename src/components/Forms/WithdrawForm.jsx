@@ -212,7 +212,7 @@ const WithdrawForm = (props) => {
               return;
             }
           } catch (e) {
-            console.log("Can't get token owner", e);
+            console.log(" Can't get token owner", e);
             setIsLoading(false);
             setServerMessage('There was an error verifying the token id');
             return;
