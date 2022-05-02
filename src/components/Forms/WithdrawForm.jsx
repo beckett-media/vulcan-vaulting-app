@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import loadingSpinner from '../../../public/loading-lottie.json';
 import { getExpectedChainId } from '../../../src/utils/networksConfig';
 import { useWeb3Context } from '../../libs/hooks/useWeb3Context';
-import { getEIP712ForwarderSignature } from '../../utils/utils';
+import { getEIP712ForwarderSignature, getTokenOwnerOf } from '../../utils/utils';
 import styles from './forms.module.scss';
 
 const WithdrawForm = (props) => {
@@ -130,8 +130,6 @@ const WithdrawForm = (props) => {
     };
   };
 
-  console.log({ isSigning });
-
   return (
     <div className="u__relative">
       {!currentAccount && (
@@ -190,7 +188,7 @@ const WithdrawForm = (props) => {
           zip: Yup.string().required('Required'),
           tokenID: Yup.number().required('Required'),
         })}
-        onSubmit={(values, { setSubmitting }) => {
+        onSubmit={async (values, { setSubmitting }) => {
           values.walletAddress = props.additionalData.currentAccount;
           setIsLoading(true);
 
@@ -205,7 +203,21 @@ const WithdrawForm = (props) => {
             },
           };
 
-          // ############# API POST TO /withdraw #############
+          try {
+            const owner = await getTokenOwnerOf(Number(values.tokenID), chainId);
+
+            if (owner.toLowerCase() !== currentAccount.toLowerCase()) {
+              setIsLoading(false);
+              setServerMessage('You are not the owner of this token');
+              return;
+            }
+          } catch (e) {
+            console.log("Can't get token owner", e);
+            setIsLoading(false);
+            setServerMessage('There was an error verifying the token id');
+            return;
+          }
+
           API.put(apiName, path, myInit)
             .then(async (response) => {
               // ######## START OF / withdraw API RESPONSE ########

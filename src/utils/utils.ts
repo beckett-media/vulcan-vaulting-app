@@ -4,8 +4,9 @@ import { _TypedDataEncoder } from "@ethersproject/hash";
 import { ChainId } from '@aave/contract-helpers';
 import { getNetworkConfig } from './networksConfig';
 import { getProvider } from './networksConfig';
-import { Contract } from 'ethers';
+import { Contract, VoidSigner } from 'ethers';
 import forwarderABI from '../../abi/MinimalForwarder.json';
+import erc721ABI from '../../abi/ERC721.json';
 
 import utils from 'web3-utils';
 const abi = require('web3-eth-abi');
@@ -54,9 +55,19 @@ export const optimizedPath = (currentChainId: ChainId) => {
   );
 };
 
+export const getTokenOwnerOf = async (tokenId: number, chainId: number) => {
+  const config = getNetworkConfig(chainId);
+  const provider = getProvider(chainId);
+  const contract = new Contract(config.vaultAddress, erc721ABI, provider);
+  const address = await contract.ownerOf(tokenId);
+
+  return address;
+}
+
 export const getEIP712ForwarderSignature = async (nftId: number, from: string, chainId: number, hash: string) => {
   const config = getNetworkConfig(chainId);
   const provider = getProvider(chainId);
+  const signer = new VoidSigner(from, provider);
 
   const domain: TypedDataDomain = {
     name: 'MinimalForwarder',
@@ -98,7 +109,7 @@ export const getEIP712ForwarderSignature = async (nftId: number, from: string, c
   );
 
   // estimate gas
-  const estimatedGas = await provider.estimateGas({
+  const estimatedGas = await signer.estimateGas({
     to: config.retrievalManagerAddress,
     data: calldata,
   });
