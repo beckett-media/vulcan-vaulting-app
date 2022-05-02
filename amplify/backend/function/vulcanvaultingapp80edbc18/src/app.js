@@ -400,7 +400,7 @@ app.put("/updatenftrecords", async function (req, res) {
 
   
   // ################################ BRAVO CALL ############################
-  const options = {
+  const options1 = {
     method: "POST",
     url: API_URL,
     headers: {
@@ -418,10 +418,10 @@ app.put("/updatenftrecords", async function (req, res) {
         "token_id": parseInt(req.body.token_id),
     },
   };
-    axios(options)
+    axios(options1)
     .then((response) => {
 
-      const options = {
+      const options2 = {
         method: "POST",
         url: applyAction_updateObject,
         headers: {
@@ -439,7 +439,7 @@ app.put("/updatenftrecords", async function (req, res) {
       };
 
       // ################################ PALANTIR CALL ############################
-      axios(options)
+      axios(options2)
       .then((response) => {
         res.send({
           status_code: response.status,
@@ -466,6 +466,7 @@ app.put("/updatenftrecords", async function (req, res) {
         });
       });
 });
+
 
 
 app.listen(3000, function () {

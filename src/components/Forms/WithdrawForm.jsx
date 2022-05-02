@@ -452,7 +452,7 @@ const WithdrawForm = (props) => {
             </button>
             <div className={`${styles['deposit__hero-content']} u__center`}>
               <h3 className={`heading ${styles.deposit__heading}`}>
-                {isSignatureValid && 'There was an error processing your request'}
+                {isSignatureValid && 'There was an error processing your request.'}
               </h3>
               {isSignatureValid && (
                 <p>
