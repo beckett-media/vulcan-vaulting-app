@@ -15,6 +15,7 @@ const WithdrawForm = (props) => {
   const [serverMessage, setServerMessage] = useState('');
   const [isLoading, setIsLoading] = useState('');
   const [isSigning, setIsSigning] = useState(false);
+  const [isSignatureValid, setIsSignatureValid] = useState(null);
 
   const { isExpectedChain, switchNetwork, connected, currentAccount, chainId, signTxData } =
     useWeb3Context();
@@ -88,7 +89,6 @@ const WithdrawForm = (props) => {
   const walletAddress = props.additionalData;
 
   const apiName = 'vulcanAPI';
-  const path = '/withdraw';
 
   const handleSwitchClick = async () => {
     console.log('success');
@@ -116,16 +116,17 @@ const WithdrawForm = (props) => {
 
       message = data.message;
       signature = await signTxData(JSON.stringify(data));
-
     } catch (e) {
-      console.log('error', e);
+      console.log('error [getUserSignature] LOGS', e.message.split(';')[0]);
+      console.log('error [getUserSignature] LOGS', e.message);
+      setIsSignatureValid(e.message);
     } finally {
       setIsSigning(false);
     }
 
     return {
       signature,
-      message
+      message,
     };
   };
 
@@ -193,6 +194,9 @@ const WithdrawForm = (props) => {
           values.walletAddress = props.additionalData.currentAccount;
           setIsLoading(true);
 
+          // API PATH to
+          const path = '/withdraw';
+          //####### API BODY FROM FORM #######
           const myInit = {
             body: {
               dateOfBirth: `${values.year}-${values.month}-${values.day}`,
@@ -201,8 +205,10 @@ const WithdrawForm = (props) => {
             },
           };
 
+          // ############# API POST TO /withdraw #############
           API.put(apiName, path, myInit)
             .then(async (response) => {
+              // ######## START OF / withdraw API RESPONSE ########
               setSuccess(true);
               setServerMessage(response.message);
 
@@ -212,9 +218,9 @@ const WithdrawForm = (props) => {
               );
               const vaulted_item_unique_id = response.vaulted_item_unique_id;
 
-              console.log(response);
-              console.log('walletaddress:', walletAddress);
-              console.log({ signature });
+              console.log('First Response LOG::', response);
+              console.log('walletaddress LOG:', walletAddress);
+              console.log({ 'SIGNATURE WALLET LOG::': signature });
 
               const executeData = {
                 body: {
@@ -224,32 +230,42 @@ const WithdrawForm = (props) => {
                   nonce: message.nonce,
                   gas: message.gas,
                   data: message.data,
-                  signature: signature, 
-                  token_id: values.tokenID, 
-                  vaulted_item_unique_id: vaulted_item_unique_id, 
+                  signature: signature,
+                  token_id: values.tokenID,
+                  vaulted_item_unique_id: vaulted_item_unique_id,
                 },
               };
 
-              await API.put(apiName, '/withdrawexecute', executeData)
-                .then((response) => {
-                  console.log(response);
-                  if (signature) {
-                    router.push('/success');
-                  }
-                })
-                .catch((error) => {
-                  console.log({
-                    error,
-                    type: "withdrawexecute error",
-                  });
-                });
+              console.log('executeData LOG::', executeData);
 
+              // ############# API POST TO /withdrawexecute #############
+
+              if (executeData.body.signature === undefined) {
+                setIsLoading(false);
+                setSubmitting(false);
+              } else {
+                await API.put(apiName, '/withdrawexecute', executeData)
+                  .then((response) => {
+                    console.log('SECOND RESPONSE', response);
+                    if (signature) {
+                      router.push('/success');
+                    }
+                  })
+                  .catch((error) => {
+                    console.log({
+                      'ERROR WITHDRAW EXECUTE:: LOG': error,
+                    });
+                  });
+              }
 
               setIsLoading(false);
               setSubmitting(false);
+
+              // ############## END API POST RESPONSE FROM /withdraw ##############
             })
             .catch((error) => {
-              console.log(error);
+              console.log('withdraw LOG', error);
+
               setServerMessage(error.message);
               setSubmitting(false);
               setIsLoading(false);
@@ -422,6 +438,16 @@ const WithdrawForm = (props) => {
               )}
               {!isLoading && 'Next'}
             </button>
+            <div className={`${styles['deposit__hero-content']} u__center`}>
+              <h3 className={`heading ${styles.deposit__heading}`}>
+                {isSignatureValid && 'There was an error processing your request'}
+              </h3>
+              {isSignatureValid && (
+                <p>
+                  Error: {isSignatureValid} <br />
+                </p>
+              )}
+            </div>
           </div>
         </Form>
       </Formik>
