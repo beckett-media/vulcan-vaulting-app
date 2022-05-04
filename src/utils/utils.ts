@@ -64,6 +64,25 @@ export const getTokenOwnerOf = async (tokenId: number, chainId: number) => {
   return address;
 }
 
+export const getTokenIdsOwnedBy = async (address: string) => {
+  const URL = `${process.env.NEXT_PUBLIC_MORALIS_SERVER_URL}/functions/getTokensByOwerAddress/?ApplicationId=${process.env.NEXT_PUBLIC_MORALIS_APP_ID}&address=${address}`;
+
+  const response = await fetch(URL, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    console.log('getTokenIdsOwnedBy error: ', response.statusText);
+    return [];
+  }
+
+  const json = await response.json();
+
+  return json.result;
+}
+
 export const getEIP712ForwarderSignature = async (nftId: number, from: string, chainId: number, hash: string) => {
   const config = getNetworkConfig(chainId);
   const provider = getProvider(chainId);
