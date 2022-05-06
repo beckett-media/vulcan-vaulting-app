@@ -5,4 +5,7 @@ module.exports = {
   reactStrictMode: true,
   trailingSlash: true,
   pageExtensions,
+  images: {
+    domains: ['picsum.photos'],
+  },
 };
