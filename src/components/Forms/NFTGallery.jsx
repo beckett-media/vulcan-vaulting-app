@@ -39,12 +39,18 @@ const NFTGallery = (props) => {
 
   React.useEffect(() => {
     (async () => {
-      for (const tokenId of ownedTokenIds) {
+      for await (const tokenId of ownedTokenIds) {
         const tokenUri = await getTokenURI(tokenId, chainId);
         
+        // Moralis.Web3API.token.getTokenIdMetadata({
+        //   chainId,
+        //   address: getNetworkConfig(chainId).vaultAddress,
+        //   token_id: tokenId
+        // }).then(response => {
+        //   console.log('tokenId metadata', tokenId, response);
+        // }).catch(err => console.log('metadata error', err));
         console.log('tokenURI', tokenId, tokenUri);
       }
-      
     })();
   }, [ownedTokenIds, chainId]);
 

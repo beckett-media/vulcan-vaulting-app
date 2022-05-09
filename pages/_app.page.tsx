@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { NextPage } from 'next';
 import { AppProps } from 'next/app';
+import Moralis from 'moralis';
 import { Authenticator, Heading, View, Text } from '@aws-amplify/ui-react';
 import Amplify from 'aws-amplify';
 import { providers } from 'ethers';
@@ -41,6 +42,17 @@ interface MyAppProps extends AppProps {
 function MyApp(props: MyAppProps) {
   const { Component, pageProps } = props;
   const getLayout = Component.getLayout ?? ((page: React.ReactNode) => page);
+
+  React.useEffect(() => {
+    console.log('Moralis initialize', process.env.NEXT_PUBLIC_MORALIS_SERVER_URL);
+    setTimeout(() => {
+      Moralis.start({
+        serverUrl: process.env.NEXT_PUBLIC_MORALIS_SERVER_URL,
+        appId: process.env.NEXT_PUBLIC_MORALIS_APP_ID,
+      });
+    }, 100);
+  }, []);
+
   return (
     <div>
       <Authenticator hideSignUp={true} components={components} formFields={formFields}>
