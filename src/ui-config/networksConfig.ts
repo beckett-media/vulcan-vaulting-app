@@ -57,8 +57,8 @@ export type BaseNetworkConfig = Omit<NetworkConfig, 'explorerLinkBuilder'>;
 export const networkConfigs: Record<string, BaseNetworkConfig> = {
   [ChainId.polygon]: {
     name: 'Polygon POS',
-    publicJsonRPCUrl: ['https://polygon-rpc.com'],
-    publicJsonRPCWSUrl: 'wss://polygon-rpc.com',
+    publicJsonRPCUrl: ['https://speedy-nodes-nyc.moralis.io/eca3ead3e9bd51ceef17ada2/polygon/mainnet'],
+    publicJsonRPCWSUrl: 'wss://speedy-nodes-nyc.moralis.io/eca3ead3e9bd51ceef17ada2/polygon/mainnet/ws',
     // cachingServerUrl: 'https://cache-api-137.aave.com/graphql',
     // cachingWSServerUrl: 'wss://cache-api-137.aave.com/graphql',
     // protocolDataUrl: 'https://api.thegraph.com/subgraphs/name/aave/aave-v2-matic',
@@ -79,8 +79,8 @@ export const networkConfigs: Record<string, BaseNetworkConfig> = {
   },
   [ChainId.mumbai]: {
     name: 'Mumbai',
-    publicJsonRPCUrl: ['https://rpc-mumbai.matic.today'],
-    publicJsonRPCWSUrl: 'wss://rpc-mumbai.matic.today',
+    publicJsonRPCUrl: ['https://speedy-nodes-nyc.moralis.io/eca3ead3e9bd51ceef17ada2/polygon/mumbai'],
+    publicJsonRPCWSUrl: 'wss://speedy-nodes-nyc.moralis.io/eca3ead3e9bd51ceef17ada2/polygon/mumbai/ws',
     // protocolDataUrl: 'https://api.thegraph.com/subgraphs/name/aave/aave-v2-polygon-mumbai',
     baseAssetSymbol: 'MATIC',
     wrappedBaseAssetSymbol: 'WMATIC',
