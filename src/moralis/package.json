@@ -1,0 +1,12 @@
+{
+  "name": "moralis-starter-scripts",
+  "author": "@juanobligado",
+  "license": "MIT",
+  "version": "1.0.0",
+  "scripts": {
+    "log": "moralis-admin-cli get-logs",
+    "cloud": "moralis-admin-cli watch-cloud-folder --autoSave 1 --moralisCloudfolder ./cloud"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
