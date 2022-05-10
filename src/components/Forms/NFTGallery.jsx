@@ -14,6 +14,7 @@ const NFTGallery = (props) => {
   const [isLoading, setIsLoading] = useState('');
   const [isSigning, setIsSigning] = useState(false);
   const [isSignatureValid, setIsSignatureValid] = useState(null);
+  const [tokenInfos, setTokenInfos] = useState([]);
 
   const {
     isExpectedChain,
@@ -39,6 +40,7 @@ const NFTGallery = (props) => {
 
   React.useEffect(() => {
     (async () => {
+      const info = [];
       for await (const tokenId of ownedTokenIds) {
         const tokenUri = await getTokenURI(tokenId, chainId);
         
@@ -50,7 +52,25 @@ const NFTGallery = (props) => {
         //   console.log('tokenId metadata', tokenId, response);
         // }).catch(err => console.log('metadata error', err));
         console.log('tokenURI', tokenId, tokenUri);
+
+        if (tokenUri && tokenUri.startsWith('ipfs://')) {
+          const ipfsUrl = tokenUri.replace('ipfs://', 'https://ipfs.io/ipfs/');
+
+          const response = await fetch(ipfsUrl);
+          if (response.ok) {
+            const json = await response.json();
+
+            info.push({
+              ...json,
+              tokenId,
+              image: json.image.replace('ipfs://', 'https://ipfs.io/ipfs/'),
+            })
+          }
+        }
       }
+
+      setTokenInfos(info);
+      console.log('infpo', info);
     })();
   }, [ownedTokenIds, chainId]);
 
@@ -76,9 +96,10 @@ const NFTGallery = (props) => {
         </div>
       )}
       <div className={`${styles.form__row}`}>
-        {ownedTokenIds.map((tokenId) => (
-          <div key={tokenId} className="u__relative">
-            <Image src="https://picsum.photos/300/300/?blur" width={300} height={300} />
+        {tokenInfos.map((info) => (
+          <div key={info.tokenId} className="u__relative">
+            <h4 style={{textAlign: 'center'}}>{info.name}</h4>
+            <Image src={info.image} width={300} height={300} />
           </div>
         ))}
       </div>

@@ -6,6 +6,6 @@ module.exports = {
   trailingSlash: true,
   pageExtensions,
   images: {
-    domains: ['picsum.photos'],
+    domains: ['ipfs.io'],
   },
 };
