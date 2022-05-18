@@ -1,6 +1,6 @@
 import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 
-import { hexToAscii } from '../../utils/utils';
+import { getTokenIdsOwnedBy, hexToAscii } from '../../utils/utils';
 import { getExpectedChainId, getNetworkConfig } from '../../utils/networksConfig';
 
 import { Web3Context } from '../hooks/useWeb3Context';
@@ -30,6 +30,7 @@ export type Web3Data = {
   disconnectWallet: () => void;
   currentAccount: string;
   connected: boolean;
+  ownedTokenIds: string[];
   loading: boolean;
   provider: JsonRpcProvider | undefined;
   chainId: number;
@@ -60,6 +61,7 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
   // const [provider, setProvider] = useState<JsonRpcProvider>();
   const [connector, setConnector] = useState<AbstractConnector>();
   const [loading, setLoading] = useState(false);
+  const [ownedTokenIds, setOwnedTokenIds] = useState([]);
   const [tried, setTried] = useState(false);
   const [deactivated, setDeactivated] = useState(false);
   const [switchNetworkError, setSwitchNetworkError] = useState<Error>();
@@ -273,6 +275,14 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
     return false;
   };
 
+  React.useEffect(() => {
+    if (active && account) {
+      getTokenIdsOwnedBy(account)
+        .then((ids) => setOwnedTokenIds(ids))
+        .catch((e) => console.log('ownedTokenIds error', e));
+    }
+  }, [active, chainId, account]);
+
   return (
     <Web3Context.Provider
       value={{
@@ -280,6 +290,7 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
           connectWallet,
           disconnectWallet,
           provider,
+          ownedTokenIds,
           connected: active,
           loading,
           chainId,

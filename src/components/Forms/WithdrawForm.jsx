@@ -17,7 +17,7 @@ const WithdrawForm = (props) => {
   const [isSigning, setIsSigning] = useState(false);
   const [isSignatureValid, setIsSignatureValid] = useState(null);
 
-  const { isExpectedChain, switchNetwork, connected, currentAccount, chainId, signTxData } =
+  const { isExpectedChain, switchNetwork, connected, currentAccount, chainId, signTxData, ownedTokenIds } =
     useWeb3Context();
 
   const router = useRouter();
@@ -434,12 +434,14 @@ const WithdrawForm = (props) => {
 
           <div className={`${styles.form__row}`}>
             <div className="u__relative">
-              <Field
-                name="tokenID"
-                type="text"
-                placeholder="NFT Token ID*"
-                className={`${styles.form__field} u__w100`}
-              />
+              <Field as="select" name="tokenID" placeholder="NFT Token ID*"
+                className={`${styles.form__field} u__w100`}>
+                {
+                  ownedTokenIds.map(tokenId => (
+                    <option value={tokenId} key={tokenId}>{tokenId}</option>
+                  ))
+                }
+              </Field>
               <ErrorMessage name="tokenID" component="div" className={styles.error} />
             </div>
           </div>
