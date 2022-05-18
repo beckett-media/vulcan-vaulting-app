@@ -64,6 +64,15 @@ export const getTokenOwnerOf = async (tokenId: number, chainId: number) => {
   return address;
 }
 
+export const getTokenURI = async (tokenId: number | string, chainId: number) => {
+  const config = getNetworkConfig(chainId);
+  const provider = getProvider(chainId);
+  const contract = new Contract(config.vaultAddress, erc721ABI, provider);
+  const address = await contract.tokenURI(Number(tokenId));
+
+  return address;
+}
+
 export const getTokenIdsOwnedBy = async (address: string) => {
   const URL = `${process.env.NEXT_PUBLIC_MORALIS_SERVER_URL}/functions/getTokensByOwerAddress/?ApplicationId=${process.env.NEXT_PUBLIC_MORALIS_APP_ID}&address=${address}`;
 

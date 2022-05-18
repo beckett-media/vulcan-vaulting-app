@@ -1,5 +1,7 @@
 {
-  "providers": ["awscloudformation"],
+  "providers": [
+    "awscloudformation"
+  ],
   "projectName": "vulcanvaultingapp",
   "version": "3.1",
   "frontend": "javascript",
@@ -7,9 +9,9 @@
     "framework": "react",
     "config": {
       "SourceDir": "src",
-      "DistributionDir": ".next",
-      "BuildCommand": "yarn build",
-      "StartCommand": "yarn start"
+      "DistributionDir": "build",
+      "BuildCommand": "npm run-script build",
+      "StartCommand": "npm run-script start"
     }
   }
 }
