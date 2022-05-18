@@ -57,7 +57,7 @@ const linkBuilder =
   };
 
 export function getNetworkConfig(chainId: ChainId): NetworkConfig {
-  const config = networkConfigs[chainId];
+  const config = networkConfigs[getExpectedChainId() || chainId];
   if (!config) {
     // this case can only ever occure when a wallet is connected with a unknown chainId which will not allow interaction
     const name = ChainIdToNetwork[chainId];
