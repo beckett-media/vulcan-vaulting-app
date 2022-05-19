@@ -44,11 +44,10 @@ function MyApp(props: MyAppProps) {
   const getLayout = Component.getLayout ?? ((page: React.ReactNode) => page);
 
   React.useEffect(() => {
-    console.log('Moralis initialize', process.env.NEXT_PUBLIC_MORALIS_SERVER_URL);
     setTimeout(() => {
       Moralis.start({
-        serverUrl: process.env.NEXT_PUBLIC_MORALIS_SERVER_URL,
-        appId: process.env.NEXT_PUBLIC_MORALIS_APP_ID,
+        serverUrl: process.env.NEXT_PUBLIC_MORALIS_SERVER_URL || 'https://9zo3rpz4iymh.usemoralis.com:2053/server',
+        appId: process.env.NEXT_PUBLIC_MORALIS_APP_ID || 'Ftx6YJO9aP4EmAq8wN7pAxHeQKKLvVv909gQq0OK',
       });
     }, 100);
   }, []);

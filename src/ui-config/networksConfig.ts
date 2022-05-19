@@ -79,7 +79,7 @@ export const networkConfigs: Record<string, BaseNetworkConfig> = {
   },
   [ChainId.mumbai]: {
     name: 'Mumbai',
-    publicJsonRPCUrl: ['https://speedy-nodes-nyc.moralis.io/eca3ead3e9bd51ceef17ada2/polygon/mumbai'],
+    publicJsonRPCUrl: ['https://rpc-mumbai.matic.today/'],
     publicJsonRPCWSUrl: 'wss://speedy-nodes-nyc.moralis.io/eca3ead3e9bd51ceef17ada2/polygon/mumbai/ws',
     // protocolDataUrl: 'https://api.thegraph.com/subgraphs/name/aave/aave-v2-polygon-mumbai',
     baseAssetSymbol: 'MATIC',

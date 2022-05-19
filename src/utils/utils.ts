@@ -74,7 +74,7 @@ export const getTokenURI = async (tokenId: number | string, chainId: number) => 
 }
 
 export const getTokenIdsOwnedBy = async (address: string) => {
-  const URL = `${process.env.NEXT_PUBLIC_MORALIS_SERVER_URL}/functions/getTokensByOwerAddress/?ApplicationId=${process.env.NEXT_PUBLIC_MORALIS_APP_ID}&address=${address}`;
+  const URL = `${process.env.NEXT_PUBLIC_MORALIS_SERVER_URL || 'https://9zo3rpz4iymh.usemoralis.com:2053/server'}/functions/getTokensByOwerAddress/?ApplicationId=${process.env.NEXT_PUBLIC_MORALIS_APP_ID || 'Ftx6YJO9aP4EmAq8wN7pAxHeQKKLvVv909gQq0OK'}&address=${address}`;
 
   const response = await fetch(URL, {
     headers: {
