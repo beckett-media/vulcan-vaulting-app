@@ -10,7 +10,7 @@ export const WalletModalContext = createContext<WalletModalContextType>(
   {} as WalletModalContextType
 );
 
-export const WalletModalContextProvider: React.FC = ({ children }) => {
+export const WalletModalContextProvider = ({ children }) => {
   const { connected } = useWeb3Context();
 
   const [isWalletModalOpen, setWalletModalOpen] = useState(false);

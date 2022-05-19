@@ -14,7 +14,7 @@ export interface ConnectionStatusProviderData {
 
 const ConnectionStatusDataContext = React.createContext({} as ConnectionStatusProviderData);
 
-export const ConnectionStatusProvider: React.FC = ({ children }) => {
+export const ConnectionStatusProvider = ({ children }) => {
   const RPC_ONLY_MODE = true;
   const [preferredConnectionMode, setPreferredConnectionMode] = useState<ConnectionMode>(
     RPC_ONLY_MODE ? ConnectionMode.rpc : ConnectionMode.normal
