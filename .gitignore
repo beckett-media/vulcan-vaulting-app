@@ -29,8 +29,6 @@ yarn-error.log*
 # next.js
 /.next/
 /out/
-
-
 src/moralis/.env
 
 #amplify-do-not-edit-begin
@@ -52,4 +50,3 @@ amplify-gradle-config.json
 amplifytools.xcconfig
 .secret-*
 **.sample
-#amplify-do-not-edit-end

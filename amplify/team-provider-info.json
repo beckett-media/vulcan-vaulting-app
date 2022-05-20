@@ -1,15 +1,27 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-vulcanvaultingapp-dev-92832-authRole",
-      "UnauthRoleArn": "arn:aws:iam::548281136650:role/amplify-vulcanvaultingapp-dev-92832-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::548281136650:role/amplify-vulcanvaultingapp-dev-92832-authRole",
+      "AuthRoleName": "amplify-vulcanprod-dev-125015-authRole",
+      "UnauthRoleArn": "arn:aws:iam::548281136650:role/amplify-vulcanprod-dev-125015-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::548281136650:role/amplify-vulcanprod-dev-125015-authRole",
       "Region": "us-west-1",
-      "DeploymentBucketName": "amplify-vulcanvaultingapp-dev-92832-deployment",
-      "UnauthRoleName": "amplify-vulcanvaultingapp-dev-92832-unauthRole",
-      "StackName": "amplify-vulcanvaultingapp-dev-92832",
-      "StackId": "arn:aws:cloudformation:us-west-1:548281136650:stack/amplify-vulcanvaultingapp-dev-92832/78707b90-b5ad-11ec-988a-02edd99d9dc7",
-      "AmplifyAppId": "d2c9h8fzhu3a6o"
+      "DeploymentBucketName": "amplify-vulcanprod-dev-125015-deployment",
+      "UnauthRoleName": "amplify-vulcanprod-dev-125015-unauthRole",
+      "StackName": "amplify-vulcanprod-dev-125015",
+      "StackId": "arn:aws:cloudformation:us-west-1:548281136650:stack/amplify-vulcanprod-dev-125015/ed88f750-d85c-11ec-9c8d-068975fc6faf",
+      "AmplifyAppId": "dulvlcy52fksv"
+    },
+    "categories": {
+      "function": {
+        "vulcanLambdaFunction": {
+          "secretsPathAmplifyAppId": "dulvlcy52fksv",
+          "deploymentBucketName": "amplify-vulcanprod-dev-125015-deployment",
+          "s3Key": "amplify-builds/vulcanLambdaFunction-51704a356c4752547445-build.zip"
+        }
+      },
+      "auth": {
+        "vulcanprod28603ab3": {}
+      }
     }
   }
 }
