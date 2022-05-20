@@ -12,15 +12,15 @@
       "AmplifyAppId": "dulvlcy52fksv"
     },
     "categories": {
-      "function": {
-        "vulcanLambdaFunction": {
-          "secretsPathAmplifyAppId": "dulvlcy52fksv",
-          "deploymentBucketName": "amplify-vulcanprod-dev-125015-deployment",
-          "s3Key": "amplify-builds/vulcanLambdaFunction-51704a356c4752547445-build.zip"
-        }
-      },
       "auth": {
         "vulcanprod28603ab3": {}
+      },
+      "function": {
+        "vulcanLambdaFunction": {
+          "deploymentBucketName": "amplify-vulcanprod-dev-125015-deployment",
+          "s3Key": "amplify-builds/vulcanLambdaFunction-51704a356c4752547445-build.zip",
+          "secretsPathAmplifyAppId": "dulvlcy52fksv"
+        }
       }
     }
   }
