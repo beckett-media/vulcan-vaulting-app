@@ -1,6 +1,6 @@
 {
   "function": {
-    "vulcanvaultingapp80edbc18": {
+    "vulcanLambdaFunction": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
@@ -14,7 +14,7 @@
       "dependsOn": [
         {
           "category": "function",
-          "resourceName": "vulcanvaultingapp80edbc18",
+          "resourceName": "vulcanLambdaFunction",
           "attributes": [
             "Name",
             "Arn"
@@ -24,11 +24,11 @@
     }
   },
   "auth": {
-    "vulcanvaultingapp": {
+    "vulcanprod28603ab3": {
       "service": "Cognito",
-      "serviceType": "managed",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
+      "customAuth": false,
       "frontendAuthConfig": {
         "socialProviders": [],
         "usernameAttributes": [],

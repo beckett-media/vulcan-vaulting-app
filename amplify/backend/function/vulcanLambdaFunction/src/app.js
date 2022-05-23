@@ -1,8 +1,8 @@
 /* Amplify Params - DO NOT EDIT
-	API_VULCANAPI_APIID
-	API_VULCANAPI_APINAME
-	ENV
-	REGION
+  API_VULCANAPI_APIID
+  API_VULCANAPI_APINAME
+  ENV
+  REGION
 Amplify Params - DO NOT EDIT */ /*
 Use the following code to retrieve configured secrets from SSM:
 

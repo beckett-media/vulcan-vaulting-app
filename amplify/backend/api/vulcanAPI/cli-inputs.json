@@ -1,30 +1,30 @@
 {
   "version": 1,
   "paths": {
-    "/deposit": {
-      "name": "/deposit",
-      "lambdaFunction": "vulcanvaultingapp80edbc18",
+    "/updatenftrecords": {
+      "name": "/updatenftrecords",
+      "lambdaFunction": "vulcanLambdaFunction",
       "permissions": {
         "setting": "open"
       }
     },
-    "/updatenftrecords": {
-      "name": "/updatenftrecords",
-      "lambdaFunction": "vulcanvaultingapp80edbc18",
+    "/deposit": {
+      "name": "/deposit",
+      "lambdaFunction": "vulcanLambdaFunction",
       "permissions": {
         "setting": "open"
       }
     },
     "/withdraw": {
       "name": "/withdraw",
-      "lambdaFunction": "vulcanvaultingapp80edbc18",
+      "lambdaFunction": "vulcanLambdaFunction",
       "permissions": {
         "setting": "open"
       }
     },
     "/withdrawexecute": {
       "name": "/withdrawexecute",
-      "lambdaFunction": "vulcanvaultingapp80edbc18",
+      "lambdaFunction": "vulcanLambdaFunction",
       "permissions": {
         "setting": "open"
       }

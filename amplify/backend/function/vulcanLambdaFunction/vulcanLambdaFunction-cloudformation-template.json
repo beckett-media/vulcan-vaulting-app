@@ -18,14 +18,6 @@
     },
     "secretsPathAmplifyAppId": {
       "Type": "String"
-    },
-    "apivulcanAPIApiName": {
-      "Type": "String",
-      "Default": "apivulcanAPIApiName"
-    },
-    "apivulcanAPIApiId": {
-      "Type": "String",
-      "Default": "apivulcanAPIApiId"
     }
   },
   "Conditions": {
@@ -58,12 +50,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "vulcanvaultingapp80edbc18",
+            "vulcanLambdaFunction",
             {
               "Fn::Join": [
                 "",
                 [
-                  "vulcanvaultingapp80edbc18",
+                  "vulcanLambdaFunction",
                   "-",
                   {
                     "Ref": "env"
@@ -95,19 +87,13 @@
                         "env": {
                           "Ref": "env"
                         },
-                        "functionName": "vulcanvaultingapp80edbc18"
+                        "functionName": "vulcanLambdaFunction"
                       }
                     ]
                   },
                   "FOUNDRY_TOKEN"
                 ]
               ]
-            },
-            "API_VULCANAPI_APINAME": {
-              "Ref": "apivulcanAPIApiName"
-            },
-            "API_VULCANAPI_APIID": {
-              "Ref": "apivulcanAPIApiId"
             }
           }
         },
@@ -128,12 +114,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "vulcanvaultingappLambdaRolea0bb4a8a",
+            "vulcanprodLambdaRolea611f86c",
             {
               "Fn::Join": [
                 "",
                 [
-                  "vulcanvaultingappLambdaRolea0bb4a8a",
+                  "vulcanprodLambdaRolea611f86c",
                   "-",
                   {
                     "Ref": "env"
@@ -245,7 +231,7 @@
                           "env": {
                             "Ref": "env"
                           },
-                          "functionName": "vulcanvaultingapp80edbc18"
+                          "functionName": "vulcanLambdaFunction"
                         }
                       ]
                     },
@@ -260,50 +246,6 @@
       "DependsOn": [
         "LambdaExecutionRole"
       ]
-    },
-    "AmplifyResourcesPolicy": {
-      "DependsOn": [
-        "LambdaExecutionRole"
-      ],
-      "Type": "AWS::IAM::Policy",
-      "Properties": {
-        "PolicyName": "amplify-lambda-execution-policy",
-        "Roles": [
-          {
-            "Ref": "LambdaExecutionRole"
-          }
-        ],
-        "PolicyDocument": {
-          "Version": "2012-10-17",
-          "Statement": [
-            {
-              "Effect": "Allow",
-              "Action": [
-                "apigateway:POST",
-                "apigateway:PUT"
-              ],
-              "Resource": [
-                {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:aws:apigateway:",
-                      {
-                        "Ref": "AWS::Region"
-                      },
-                      "::/restapis/",
-                      {
-                        "Ref": "apivulcanAPIApiName"
-                      },
-                      "/*"
-                    ]
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      }
     }
   },
   "Outputs": {

@@ -1,6 +1,6 @@
 export type AmplifyDependentResourcesAttributes = {
     "function": {
-        "vulcanvaultingapp80edbc18": {
+        "vulcanLambdaFunction": {
             "Name": "string",
             "Arn": "string",
             "Region": "string",
@@ -15,7 +15,7 @@ export type AmplifyDependentResourcesAttributes = {
         }
     },
     "auth": {
-        "vulcanvaultingapp": {
+        "vulcanprod28603ab3": {
             "IdentityPoolId": "string",
             "IdentityPoolName": "string",
             "UserPoolId": "string",

@@ -2,14 +2,14 @@
   "providers": [
     "awscloudformation"
   ],
-  "projectName": "vulcanvaultingapp",
+  "projectName": "vulcanprod",
   "version": "3.1",
   "frontend": "javascript",
   "javascript": {
     "framework": "react",
     "config": {
       "SourceDir": "src",
-      "DistributionDir": "build",
+      "DistributionDir": ".next",
       "BuildCommand": "npm run-script build",
       "StartCommand": "npm run-script start"
     }
