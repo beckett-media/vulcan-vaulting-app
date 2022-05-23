@@ -18,8 +18,33 @@
       "function": {
         "vulcanvaultingapp80edbc18": {
           "deploymentBucketName": "amplify-vulcanvaultingapp-dev-92832-deployment",
-          "s3Key": "amplify-builds/vulcanvaultingapp80edbc18-6465506d4b654274676b-build.zip",
+          "s3Key": "amplify-builds/vulcanvaultingapp80edbc18-34454439512b38536945-build.zip",
           "secretsPathAmplifyAppId": "d2c9h8fzhu3a6o"
+        }
+      }
+    }
+  },
+  "production": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-vulcanvaultingapp-production-93504-authRole",
+      "UnauthRoleArn": "arn:aws:iam::548281136650:role/amplify-vulcanvaultingapp-production-93504-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::548281136650:role/amplify-vulcanvaultingapp-production-93504-authRole",
+      "Region": "us-west-1",
+      "DeploymentBucketName": "amplify-vulcanvaultingapp-production-93504-deployment",
+      "UnauthRoleName": "amplify-vulcanvaultingapp-production-93504-unauthRole",
+      "StackName": "amplify-vulcanvaultingapp-production-93504",
+      "StackId": "arn:aws:cloudformation:us-west-1:548281136650:stack/amplify-vulcanvaultingapp-production-93504/285e6bc0-da9d-11ec-a834-02776274bfab",
+      "AmplifyAppId": "d2c9h8fzhu3a6o"
+    },
+    "categories": {
+      "auth": {
+        "vulcanvaultingapp": {}
+      },
+      "function": {
+        "vulcanvaultingapp80edbc18": {
+          "secretsPathAmplifyAppId": "d2c9h8fzhu3a6o",
+          "deploymentBucketName": "amplify-vulcanvaultingapp-production-93504-deployment",
+          "s3Key": "amplify-builds/vulcanvaultingapp80edbc18-34454439512b38536945-build.zip"
         }
       }
     }
